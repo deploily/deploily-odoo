@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="deploily_signup_fields" inherit_id="auth_signup.fields">
+        <xpath expr="//div[@class='mb-3 field-confirm_password']" position="after">
+            <div class="mb-3 field-terms d-flex align-items-start gap-2">
+                <input type="checkbox"
+                    name="terms_conditions"
+                    id="terms_conditions"
+                    class="form-check-input mt-1"
+                    required="required" />
+
+                <label for="terms_conditions" class="form-check-label text-muted small"> By creating an account, you confirm that you have read and agree to our <a href="/terms" target="_blank">Terms of Use</a> and <a href="/privacy" target="_blank">Privacy Policy</a>, and you consent to the
+                    processing of your personal data in accordance with <strong>Law 18-07 on the Protection of Individuals</strong>. </label>
+            </div>
+        </xpath>
+    </template>
+    <template id="deploily_signup" inherit_id="auth_signup.signup" name="Sign up">
+        <xpath expr="//div" position="before">
+            <t t-call="deploily_signup_recaptcha" />
+
+        </xpath>
+    </template>
+    <template id="deploily_signup_recaptcha" inherit_id="auth_signup.signup" name="Add reCAPTCHA to Signup">
+        <xpath expr="//div[contains(@class, 'oe_login_form')]" position="inside">
+            <!-- Add reCAPTCHA widget before the signup button -->
+            <div class="mb-3" style="margin-top: 10px;">
+                <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY_HERE"></div>
+            </div>
+        </xpath>
+
+        <!-- Load Google reCAPTCHA JS -->
+        <xpath expr="//t[@t-call-assets='web.assets_frontend']" position="after">
+            <script src="https://www.google.com/recaptcha/api.js" ></script>
+        </xpath>
+    </template>
+</odoo>
