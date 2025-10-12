@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y curl software-properties-common
 
 # Upgrade Python tools safely inside Docker
 RUN pip3 install --break-system-packages --ignore-installed --upgrade pip setuptools wheel \
- && pip3 install --break-system-packages cryptography==36.0.2 pyOpenSSL
+ && pip3 install --break-system-packages  pyOpenSSL
 
 
 COPY src /mnt/extra-addons
