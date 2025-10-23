@@ -64,12 +64,20 @@ class DeploilySignup(AuthSignupHome):
 
     @http.route("/web/signup", type="http", auth="public", website=True, sitemap=False)
     def web_auth_signup(self, *args, **kw):
-        _logger.info(f"RESiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
         qcontext = self.get_auth_signup_qcontext()
 
         if not qcontext.get("token") and not qcontext.get("signup_enabled"):
             raise werkzeug.exceptions.NotFound()
 
+        # Get terms and conditions link
+        website = request.env["website"].sudo().get_current_website()
+        qcontext["terms_conditions_page"] = (
+            website.terms_conditions_page.url if website.terms_conditions_page else None
+        )
+        qcontext["privacy_policy_page"] = (
+            website.privacy_policy_page.url if website.privacy_policy_page else None
+        )
+        
         if "error" not in qcontext and request.httprequest.method == "POST":
             try:
                 # if not request.env["ir.http"]._verify_request_recaptcha_token("signup"):

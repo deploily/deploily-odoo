@@ -15,6 +15,7 @@
     # always loaded
     "data": [
         "views/signup_login_templates.xml",
+        "views/website_views.xml",
     ],
     "license": "Other proprietary",
     "assets": {
