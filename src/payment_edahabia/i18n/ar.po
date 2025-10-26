@@ -1,0 +1,654 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_cib_ipay
+# 	* payment_edahabia
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0-20210809\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-27 22:48+0000\n"
+"PO-Revision-Date: 2021-10-27 23:59+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Language: ar\n"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.cibipay_payment_token_list
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.edahabia_payment_token_list
+msgid "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: code:addons/payment_cib_ipay/models/models.py:0
+#: code:addons/payment_edahabia/models/models.py:0
+#, python-format
+msgid "; multiple order found"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: code:addons/payment_cib_ipay/models/models.py:0
+#: code:addons/payment_edahabia/models/models.py:0
+#, python-format
+msgid "; no order found"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation
+msgid ""
+"<i class=\"fa fa-envelope\"/>\n"
+"                <span> Envoyer par mail </span>"
+msgstr ""
+"<i class=\"fa fa-envelope\"/>\n"
+"                <span> إبعث عبر البريد الإلكتروني </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_refund
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_refund
+msgid ""
+"<span class=\"fa fa-shopping-cart\"/>\n"
+"                    <span> Rembourser le montant </span>"
+msgstr ""
+"<span class=\"fa fa-shopping-cart\"/>\n"
+"                    <span> تسديد المبلغ </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation_status
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation_status
+msgid "<span> Date et heure de la transaction : </span>"
+msgstr "<span> تاريخ و ساعة العملية : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation_status
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation_status
+msgid "<span> Identifiant de la transaction : </span>"
+msgstr "<span> رمز العملية : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.cibipay_payment_token_list
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.edahabia_payment_token_list
+msgid "<span> J'accepte les </span>"
+msgstr "<span> أوافق على الشروط </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation_status
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation_status
+msgid "<span> Numéro d'autorisation : </span>"
+msgstr "<span> رقم الترخيص : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.cibipay_payment
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.edahabia_payment
+msgid "<span> Numéro de la Commande : </span>"
+msgstr "<span> رقم الطلبية : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_refund_status
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_refund_status
+msgid "<span> Status de votre remboursement : </span>"
+msgstr "<span> حالة طلب التسديد : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation_sendmail
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation_sendmail
+msgid "<span> Un mail a été transmis à l'adresse suivant : </span>"
+msgstr "<span> بريد إلكتروني قد بعت إلى العنوان التالي : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.cibipay_payment_sale_order_report
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.edahabia_payment_sale_order_report
+msgid "<strong>Date et heure de la transaction :</strong>"
+msgstr "<span> تاريخ و ساعة العملية : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.cibipay_payment_sale_order_report
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.edahabia_payment_sale_order_report
+msgid "<strong>Identifiant de la transaction :</strong>"
+msgstr "<span> رمز العملية : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.cibipay_payment_sale_order_report
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.edahabia_payment_sale_order_report
+msgid "<strong>Numéro d'autorisation :</strong>"
+msgstr "<span> رقم الترخيص : </span>"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields.selection,name:payment_cib_ipay.selection__payment_acquirer__cibipay_currency__012
+#: model:ir.model.fields.selection,name:payment_edahabia.selection__payment_acquirer__edahabia_currency__012
+msgid "Algerian Dinars (DZD)"
+msgstr "الدينار الجزائري"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields.selection,name:payment_cib_ipay.selection__payment_acquirer__cibipay_language__ar
+#: model:ir.model.fields.selection,name:payment_edahabia.selection__payment_acquirer__edahabia_language__ar
+msgid "Arabic"
+msgstr "العربية"
+
+#. module: payment_cib_ipay
+#: model:payment.acquirer,name:payment_cib_ipay.payment_acquirer_cibipay
+msgid "CIB IPay Gateway"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model:ir.model.fields.selection,name:payment_cib_ipay.selection__payment_acquirer__provider__cibipay
+msgid "CIBIPay"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: code:addons/payment_cib_ipay/models/models.py:0
+#, python-format
+msgid "CIBIPay: received data for reference {}"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: code:addons/payment_cib_ipay/models/models.py:0
+#, python-format
+msgid "CIBIPay: received data with missing reference ({})"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Cancel"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Cannot setup the payment"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_action_code
+msgid "Code d'action"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_error_code
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_error_code
+msgid "Code d'erreur"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_approval_code
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_approval_code
+msgid "Code d'pprobation"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_action_code_description
+msgid "Code de description d'action"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_order_status_description
+msgid "Code de description de la réponse"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_resp_code
+msgid "Code de réponse"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Confirm Deletion"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation_sendmail
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation_sendmail
+msgid "Confirmation de mail"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_currency
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_currency
+msgid "Curency"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_resp_code_desc
+msgid "Description du code de réponse"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__display_name
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__display_name
+msgid "Display Name"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_refund
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_refund
+msgid "Do refund"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:payment.acquirer,name:payment_edahabia.payment_acquirer_edahabia
+msgid "EDAHABIA Gateway"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_mdorder
+msgid "EDAHABIA order ID"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model.fields.selection,name:payment_edahabia.selection__payment_acquirer__provider__edahabia
+msgid "Edahabia"
+msgstr ""
+
+#. module: payment_edahabia
+#: code:addons/payment_edahabia/models/models.py:0
+#, python-format
+msgid "Edahabia: received data for reference {}"
+msgstr ""
+
+#. module: payment_edahabia
+#: code:addons/payment_edahabia/models/models.py:0
+#, python-format
+msgid "Edahabia: received data with missing reference ({})"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields.selection,name:payment_cib_ipay.selection__payment_acquirer__cibipay_language__en
+#: model:ir.model.fields.selection,name:payment_edahabia.selection__payment_acquirer__edahabia_language__en
+msgid "English"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Error: "
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_expiration
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_expiration
+msgid "Expiration"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields.selection,name:payment_cib_ipay.selection__payment_acquirer__cibipay_language__fr
+#: model:ir.model.fields.selection,name:payment_edahabia.selection__payment_acquirer__edahabia_language__fr
+msgid "French"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__id
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__id
+msgid "ID"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_ip
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_ip
+msgid "IP"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_refund
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_refund
+msgid "Identifiant de la transaction"
+msgstr "رمز العملية"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_language
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_language
+msgid "Language"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer____last_update
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation_status
+msgid "Logo Algerie Poste"
+msgstr ""
+
+#. module: payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation_status
+msgid "Logo EDAHABIA"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_error_message
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_error_message
+msgid "Message d'erreur"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_refund
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_refund
+msgid "Montant"
+msgstr "المبلغ الإجمالي"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_deposit_amount
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_deposit_amount
+msgid "Montant déposé"
+msgstr "المبلغ المدفوع"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_refund
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_refund
+msgid "Montant à rembourser"
+msgstr "مبلغ التسديد"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "No payment method selected"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_cardholder_name
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_cardholder_name
+msgid "Nom du propriétaire de la carte"
+msgstr "إسم مالك البطاقة"
+
+#. module: payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation_status
+msgid "Numero vert Algerie Poste"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Ok"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_pan
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_pan
+msgid "PAN"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_password
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_password
+msgid "Password"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model,name:payment_edahabia.model_payment_acquirer
+msgid "Payment Acquirer"
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model,name:payment_edahabia.model_payment_transaction
+msgid "Payment Transaction"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Please select a payment method."
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Please select the option to add a new payment method."
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__provider
+msgid "Provider"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_refund
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_refund
+msgid "Remboursement"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_svfe_response
+msgid "Réponse SVFE"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_mdorder
+msgid "SATIM order ID"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation
+msgid "Sen by mail"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_sale_confirmation
+msgid "Send by mail"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Server Error"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Server error"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_refund_status
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.payment_edahabia_refund_status
+msgid "Status du remboursement"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_order_status
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_order_status
+msgid "Statut de la commande"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_terminal_id
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_terminal_id
+msgid "Terminal ID"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_terms_page
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_terms_page
+msgid "Terms and conditions page"
+msgstr "صفحة الشروط و الأحكام"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "This card is currently linked to the following records:"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_udf1
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_udf1
+msgid "User defined value 1"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_udf2
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_udf2
+msgid "User defined value 2"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_udf3
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_udf3
+msgid "User defined value 3"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_udf4
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_udf4
+msgid "User defined value 4"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_udf5
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_udf5
+msgid "User defined value 5"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_username
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_username
+msgid "User name"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:payment.acquirer,cancel_msg:payment_cib_ipay.payment_acquirer_cibipay
+#: model_terms:payment.acquirer,cancel_msg:payment_edahabia.payment_acquirer_edahabia
+msgid "Votre paiement a été annulé."
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:payment.acquirer,auth_msg:payment_cib_ipay.payment_acquirer_cibipay
+#: model_terms:payment.acquirer,auth_msg:payment_edahabia.payment_acquirer_edahabia
+msgid "Votre paiement a été autorisé."
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:payment.acquirer,pending_msg:payment_cib_ipay.payment_acquirer_cibipay
+#: model_terms:payment.acquirer,pending_msg:payment_edahabia.payment_acquirer_edahabia
+msgid "Votre paiement a été traité avec succès mais est en attente de validation."
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:payment.acquirer,done_msg:payment_cib_ipay.payment_acquirer_cibipay
+#: model_terms:payment.acquirer,done_msg:payment_edahabia.payment_acquirer_edahabia
+msgid "Votre paiement a été traité avec succès. Merci!"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "Warning!"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "We are not able to add your payment method at the moment."
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "We are not able to delete your payment method at the moment."
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "We are not able to redirect you to the payment form."
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "We're unable to process your payment."
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_transaction__cibipay_auth_code
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_transaction__edahabia_auth_code
+msgid "code d'autentification"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.cibipay_payment_token_list
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.edahabia_payment_token_list
+msgid "conditions d'utilisation"
+msgstr "الشروط و الأحكام"
+
+#. modules: payment_cib_ipay, payment_edahabia
+#. openerp-web
+#: code:addons/payment_cib_ipay/static/src/js/cibipay_scripts.js:0
+#: code:addons/payment_edahabia/static/src/js/edahabia_scripts.js:0
+#, python-format
+msgid "e.g. Your credit card details are wrong. Please verify."
+msgstr ""
+
+#. module: payment_edahabia
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__formUrl
+msgid "formUrl"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.cibipay_payment_token_list
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation_status
+msgid "logo CIB"
+msgstr ""
+
+#. module: payment_edahabia
+#: model_terms:ir.ui.view,arch_db:payment_edahabia.edahabia_payment_token_list
+msgid "logo EDAHABIA"
+msgstr ""
+
+#. module: payment_cib_ipay
+#: model_terms:ir.ui.view,arch_db:payment_cib_ipay.payment_cibipay_sale_confirmation_status
+msgid "numero vert SATIM"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_captcha_secret
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_captcha_secret
+msgid "reCaptcha v2 secret key"
+msgstr ""
+
+#. modules: payment_cib_ipay, payment_edahabia
+#: model:ir.model.fields,field_description:payment_cib_ipay.field_payment_acquirer__cibipay_captcha_sitekey
+#: model:ir.model.fields,field_description:payment_edahabia.field_payment_acquirer__edahabia_captcha_sitekey
+msgid "reCaptcha v2 site key"
+msgstr ""

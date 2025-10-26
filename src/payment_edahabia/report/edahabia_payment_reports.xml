@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    © 2021 SARL TransformaTek (<https://transformatek.dz/>)
+    Licence : Odoo Proprietary License v1.0 (see LICENCE)
+ -->
+
+<odoo>
+    <data>
+        <template id="edahabia_payment_sale_order_report" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//div[@id='informations']" position="after">
+                <t t-foreach="doc.transaction_ids" t-as="tx">
+                    <div t-if="tx.acquirer_id.provider == 'edahabia'">
+                        <t t-if="tx.state == 'done'">
+                            <div class="row mt32 mb32" id="transactions">
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong> Mode de paiement : </strong>
+                                    <p class="m-0" > Carte EDAHABIA </p>
+                                </div>
+                                <div t-if="tx.edahabia_mdorder" class="col-auto col-3 mw-100 mb-2">
+                                    <strong> Identifiant de la transaction : </strong>
+                                    <p class="m-0" t-field="tx.edahabia_mdorder" />
+                                </div>
+                                <div t-if="tx.edahabia_approval_code" class="col-auto col-3 mw-100 mb-2">
+                                    <strong> Numéro d'autorisation : </strong>
+                                    <p class="m-0" t-field="tx.edahabia_approval_code" />
+                                </div>
+                                <div t-if="tx.date" class="col-auto col-3 mw-100 mb-2">
+                                    <strong> Date et heure de la transaction : </strong>
+                                    <p class="m-0" t-field="tx.date" t-options='{"widget": "datetime"}' />
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+
+            </xpath>
+        </template>
+    </data>
+</odoo>

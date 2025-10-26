@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    © 2021 SARL TransformaTek (<https://transformatek.dz/>)
+    Licence : Odoo Proprietary License v1.0 (see LICENCE)
+ -->
+
+<odoo>
+    <record id="cibipay_transaction_form" model="ir.ui.view">
+        <field name="name">payment.cibipay.transaction.form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.transaction_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button t-if="acquirer_id.provider == 'cibipay'" type="object" name="action_refund" states="done" string="Refund" class="oe_highlight" />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="after">
+                <t t-if="acquirer_id.provider == 'cibipay'">
+                    <t t-esc="state" />
+                    <group>
+                        <group>
+                            <field name="cibipay_mdorder" readonly="1" />
+                            <field name="cibipay_approval_code" readonly="1" />
+                            <!-- <field name="cibipay_order_status_description" readonly="1" /> -->
+                            <field name="cibipay_auth_code" readonly="1" />
+                            <field name="cibipay_expiration" readonly="1" />
+                            <field name="cibipay_cardholder_name" readonly="1" />
+                        </group>
+                        <group>
+                            <field name="cibipay_deposit_amount" readonly="1" />
+                            <field name="cibipay_order_status" readonly="1" />
+                            <field name="cibipay_error_code" readonly="1" />
+                            <field name="cibipay_error_message" readonly="1" />
+                            <field name="cibipay_pan" readonly="1" />
+                            <field name="cibipay_ip" readonly="1" />
+                        </group>
+                    </group>
+                </t>
+            </xpath>
+        </field>
+    </record>
+</odoo>

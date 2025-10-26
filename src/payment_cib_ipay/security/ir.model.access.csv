@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_cibipay_transaction,access.payment.cibipay.transaction,model_payment_cibipay_refund_wizard,base.group_system,1,1,1,0

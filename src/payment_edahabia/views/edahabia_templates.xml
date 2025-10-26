@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    © 2021 SARL TransformaTek (<https://transformatek.dz/>)
+    Licence : Odoo Proprietary License v1.0 (see LICENCE)
+ -->
+
+<odoo>
+    <template id="payment_edahabia_assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/css" href="/payment_edahabia/static/src/css/edahabia_styles.css" />
+        </xpath>
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+            <script type="text/javascript" src="/payment_edahabia/static/src/js/edahabia_scripts.js"></script>
+        </xpath>
+    </template>
+
+
+    <template id="edahabia_form">
+        <div>
+            <input type="hidden" name="data_set" t-att-data-action-url="tx_url" data-remove-me="" />
+            <input type="hidden" name="mdOrder" t-att-value="mdOrder" />
+        </div>
+    </template>
+
+    <template id="edahabia_payment" inherit_id="website_sale.payment">
+        <xpath expr='//div[@id="shipping_and_billing"]' position='inside'>
+            <t t-set="providers" t-value="[acq.provider for acq in acquirers if acq.state == 'enabled']" />
+            <t t-if="'edahabia' in providers and 'cibipay' not in providers">
+                <div class="mt-4">
+                    <h4>
+                        <span> Numéro de la Commande : </span>
+                        <b>
+                            <em t-esc='order.name' />
+                        </b>
+                    </h4>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="edahabia_payment_token_list" inherit_id="payment.payment_tokens_list">
+        <xpath expr='//div[@class="float-left mt-2"]' position='before'>
+            <t t-set="providers" t-value="[acq.provider for acq in acquirers if acq.state == 'enabled']" />
+            <div class="row m-3">
+                <t t-set="captcha_sitekey"> 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI </t>
+                <t t-if="'edahabia' in providers and 'cibipay' not in providers">
+                    <t t-set="acq_list" t-value="[acq for acq in acquirers if acq.provider == 'edahabia']" />
+                    <t t-set="acq" t-value="acq_list[0]" />
+                    <t t-if="acq.edahabia_captcha_sitekey">
+                        <t t-set="captcha_sitekey">
+                            <t t-esc="acq.edahabia_captcha_sitekey" />
+                        </t>
+                    </t>
+                    <div class="col-md-6">
+                        <div class="g-recaptcha" t-att-data-sitekey="captcha_sitekey" data-callback="updateSubmit" />
+                    </div>
+                    <div class="col-md-6">
+                        <input type="checkbox" name="checkbox" value="check" id="agree" onchange="updateSubmit();" />
+                        <span> J'accepte les </span>
+                        <a t-att-href="acq.edahabia_terms_page" target="_blank"> conditions d'utilisation </a>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+        <!-- <xpath expr='//button[@id="o_payment_form_pay"]' position='inside'>
+            <t t-set="providers" t-value="[acq.provider for acq in acquirers if acq.state == 'enabled']" />
+            <t t-if="'edahabia' in providers">
+                <img src="/payment_edahabia/static/src/image/logo_edahabia.png" height="47" alt="logo EDAHABIA" />
+            </t>
+        </xpath> -->
+
+    </template>
+
+
+    <template id="payment_edahabia_sale_confirmation_status" inherit_id="website_sale.payment_confirmation_status">
+        <xpath expr='//div/div' position='after'>
+            <div t-if="payment_tx_id.acquirer_id.provider == 'edahabia'" class="text-center  p-3">
+                <img src="/payment_edahabia/static/src/image/logo_edahabia.png" height="64" alt="Logo EDAHABIA" />
+                <img src="/payment_edahabia/static/src/image/logo_alg_poste.png" height="64" alt="Logo Algerie Poste" />
+                <img src="/payment_edahabia/static/src/image/ap_1530.png" height="64" alt="Numero vert Algerie Poste" />
+            </div>
+        </xpath>
+        <xpath expr='//div[@class="card-header"]' position='inside'>
+            <div t-if="payment_tx_id.acquirer_id.provider == 'edahabia'" class="text-left p-4">
+                <t t-if="payment_tx_id.state == 'done'">
+                    <h3>
+                        <em t-esc="payment_tx_id.edahabia_order_status_description" />
+                    </h3>
+                    <h5>
+                        <span> Identifiant de la transaction : </span>
+                        <em t-field="payment_tx_id.edahabia_mdorder" />
+                    </h5>
+                    <h5>
+                        <span> Numéro d'autorisation : </span>
+                        <em t-field="payment_tx_id.edahabia_approval_code" />
+                    </h5>
+                    <h5>
+                        <span> Date et heure de la transaction : </span>
+                        <em t-field="payment_tx_id.date" />
+                    </h5>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="payment_edahabia_sale_confirmation" inherit_id="website_sale.confirmation">
+        <xpath expr='//a[@href="/shop/print"]' position='after'>
+            <t t-if="payment_tx_id.acquirer_id.provider == 'edahabia'">
+                <a role="button" class="btn btn-primary d-none d-md-inline-block" href="/shop/edahabia/sendbymail" target="_blank" aria-label="Sen by mail" title="Send by mail">
+                    <i class="fa fa-envelope"></i>
+                    <span> Envoyer par mail </span>
+                </a>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="payment_edahabia_sale_confirmation_sendmail" name="Products">
+        <t t-call="website.layout">
+            <t t-set="additional_title"> Confirmation de mail </t>
+            <div class="text-left p-4">
+                <h5>
+                    <span> Un mail a été transmis à l'adresse suivant : </span>
+                    <em t-esc="mail_address" />
+                </h5>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="payment_edahabia_refund" name="Refund">
+        <t t-call="website.layout">
+            <t t-set="additional_title"> Remboursement </t>
+            <form action="/payment/edahabia/refund/status" method="post" class="card col-md-4 col-md-offset-4 m-4">
+                <div class="form-group">
+                    <label for="order_id"> Identifiant de la transaction </label>
+                    <input class="form-control" id="order_id" name="order_id" aria-describedby="OrderId" placeholder="Identifiant de la transaction" required="" />
+                </div>
+                <div class="form-group">
+                    <label for="amount"> Montant à rembourser </label>
+                    <input type="number" class="form-control" id="amount" name="amount" placeholder="Montant" data-bind="value:amount" required="" />
+                </div>
+                <button type="submit" class="btn btn-primary a-submit mb-4" aria-label="Do refund" title="Do refund">
+                    <span class="fa fa-shopping-cart" />
+                    <span> Rembourser le montant </span>
+                </button>
+            </form>
+        </t>
+    </template>
+
+
+    <template id="payment_edahabia_refund_status" name="Refund">
+        <t t-call="website.layout">
+            <t t-set="additional_title"> Status du remboursement </t>
+            <div class="text-left p-4">
+                <h5>
+                    <span> Status de votre remboursement : </span>
+                    <em t-esc="refund_status" />
+                    (
+                    <em t-esc="refund_response_code" />
+                    )
+                </h5>
+            </div>
+        </t>
+    </template>
+
+</odoo>

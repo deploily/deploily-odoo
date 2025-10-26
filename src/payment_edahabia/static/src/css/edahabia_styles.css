@@ -1,0 +1,24 @@
+
+input[type="submit"], input[type="submit"]:hover {
+  background: #222 url('../images/logo_edahabia.png') no-repeat top left;
+  background-size: 48px 48px;  
+  background-position: 16px;
+  padding-left: 48px;
+  min-width: 30%;
+  height: 60px;
+  cursor: pointer; 
+}
+
+@media all and (max-width:480px) {
+  .button-proceed { width: 100%; display:block; }
+}   
+
+input[disabled], input[disabled]:hover{
+  background: #767676 url('../images/logo_edahabia.png') no-repeat center left;
+  background-size: 48px 48px;  
+  background-position: 16px;
+  padding-left: 48px;
+  min-width: 30%;
+  height: 60px;
+  cursor: not-allowed; 
+}

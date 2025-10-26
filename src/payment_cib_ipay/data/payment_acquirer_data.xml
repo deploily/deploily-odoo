@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    © 2021 SARL TransformaTek (<https://transformatek.dz/>)
+    Licence : Odoo Proprietary License v1.0 (see LICENCE)
+ -->
+
+<odoo noupdate="1">
+    <record id="payment_acquirer_cibipay" model="payment.acquirer">
+        <field name="name">CIB/EDAHABIA Payment Gateway</field>
+        <field name="description" type="html">
+            <p>
+                A payment gateway from TransformaTek to accept online payments via Algerian CIB cards
+            </p>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <i class="fa fa-check"></i>
+                    Online Payment
+                </li>
+                <li class="list-inline-item">
+                    <i class="fa fa-check"></i>
+                    Payment Status Tracking
+                </li>
+            </ul>
+        </field>
+        <field name="provider">cibipay</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="view_template_id" ref="cibipay_form" />
+        <field name="image_128" type="base64" file="payment_cib_ipay/static/description/icon.png" />
+    </record>
+
+    <record model="payment.icon" id="payment_icon_cibipay">
+        <field name="name">CIB/EDAHABIA Payment Gateway</field>
+        <field name="acquirer_ids" eval="[(4,ref('payment_acquirer_cibipay'))]" />
+        <field name="image" type="base64" file="payment_cib_ipay/static/src/image/logo_cib.png" />
+    </record>
+
+</odoo>

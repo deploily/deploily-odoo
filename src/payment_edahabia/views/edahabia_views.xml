@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    © 2021 SARL TransformaTek (<https://transformatek.dz/>)
+    Licence : Odoo Proprietary License v1.0 (see LICENCE)
+ --> 
+
+<odoo>
+    <record id="payment_acquirer_view_form_inherit_payment_edahabia" model="ir.ui.view">
+        <field name="name">payment.acquirer.view.form.inherit.payment.edahabia</field>
+        <field name="model">payment.acquirer</field>
+        <field name="inherit_id" ref="payment.acquirer_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//group[@name="acquirer"]' position='inside'>
+                <group attrs="{'invisible': [('provider', '!=', 'edahabia')]}">
+                    <field name="edahabia_username" attrs="{'required':[ ('provider', '=', 'edahabia'), ('state', '!=', 'disabled')]}"/>
+                    <field name="edahabia_password" attrs="{'required':[ ('provider', '=', 'edahabia'), ('state', '!=', 'disabled')]}"/>
+                    <field name="edahabia_terminal_id"/>
+                    <field name="edahabia_udf1"/>
+                    <field name="edahabia_udf2"/>
+                    <field name="edahabia_udf3"/>
+                    <field name="edahabia_udf4"/>
+                    <field name="edahabia_udf5"/>
+                    <field name="edahabia_captcha_sitekey"/>
+                    <field name="edahabia_captcha_secret"/>
+                    <field name="edahabia_language" widget="radio"/>
+                    <field name="edahabia_currency" widget="radio"/>
+                    <field name="edahabia_terms_page" default="terms"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
