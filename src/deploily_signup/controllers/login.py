@@ -77,13 +77,14 @@ class DeploilySignup(AuthSignupHome):
         qcontext["privacy_policy_page"] = (
             website.privacy_policy_page.url if website.privacy_policy_page else None
         )
-        
+
         if "error" not in qcontext and request.httprequest.method == "POST":
             try:
-                # if not request.env["ir.http"]._verify_request_recaptcha_token("signup"):
-                #     raise UserError(
-                #         _("Suspicious activity detected by Google reCaptcha.")
-                #     )
+
+                if not request.env["ir.http"]._verify_request_recaptcha_token("signup"):
+                    raise UserError(
+                        _("Suspicious activity detected by Google reCaptcha.")
+                    )
 
                 if not kw.get("terms_conditions"):
                     raise UserError(
@@ -91,8 +92,21 @@ class DeploilySignup(AuthSignupHome):
                             "You must accept the Terms and Conditions to create an account."
                         )
                     )
+                # rECAPTCHA validation
+                recaptcha_response = kw.get("g-recaptcha-response")
 
+                if not recaptcha_response:
+                    raise UserError("Please verify that you are not a robot.")
+
+                secret_key = website.recaptcha_secret_key
+                payload = {"secret": secret_key, "response": recaptcha_response}
+                verify_url = "https://www.google.com/recaptcha/api/siteverify"
+                response = requests.post(verify_url, data=payload)
+                result = response.json()
                 self.do_signup(qcontext)
+
+                if not result.get("success"):
+                    raise UserError("Suspicious activity detected by Google reCAPTCHA.")
 
                 # Set user to public if they were not signed in by do_signup
                 # (mfa enabled)
