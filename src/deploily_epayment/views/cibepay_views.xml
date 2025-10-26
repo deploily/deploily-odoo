@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- <record id="payment_provider_view_form_inherit_payment_cibipay" model="ir.ui.view">
+        <field name="name">payment.provider.view.form.inherit.payment.cibipay</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form" />
+        <field name="arch" type="xml">
+            <xpath expr='//group[@name="provider_config"]' position='inside'>
+                <group name="cibipay_fields" invisible="code != 'cibipay'">
+                    <field name="cibipay_username"
+                        required="code == 'cibipay' and state != 'disabled'" />
+                    <field name="cibipay_password"
+                        required="code == 'cibipay' and state != 'disabled'" />
+                    <field name="cibipay_terminal_id"
+                        required="code == 'cibipay' and state != 'disabled'" />
+                    <field name="cibipay_udf1" />
+                    <field name="cibipay_udf2" />
+                    <field name="cibipay_udf3" />
+                    <field name="cibipay_udf4" />
+                    <field name="cibipay_udf5" />
+                    <field name="cibipay_captcha_sitekey" />
+                    <field name="cibipay_captcha_secret" />
+                    <field name="cibipay_language" widget="radio" />
+                    <field name="cibipay_currency" widget="radio" />
+                    <field name="cibipay_terms_page" default="terms" />
+                </group>
+            </xpath>
+        </field>
+    </record> -->
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">CIB Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form" />
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position='inside'>
+                <group invisible="code != 'cibipay'">
+                    <field name="cibipay_username"
+                        required="code == 'cibipay' and state != 'disabled'" />
+                    <field name="cibipay_password"
+                        required="code == 'cibipay' and state != 'disabled'" />
+                    <field name="cibipay_terminal_id"
+                        required="code == 'cibipay' and state != 'disabled'" />
+                    <field name="cibipay_udf1" />
+                    <field name="cibipay_udf2" />
+                    <field name="cibipay_udf3" />
+                    <field name="cibipay_udf4" />
+                    <field name="cibipay_udf5" />
+                    <field name="cibipay_captcha_sitekey" />
+                    <field name="cibipay_captcha_secret" />
+                    <field name="cibipay_language" widget="radio" />
+                    <field name="cibipay_currency" widget="radio" />
+                    <field name="cibipay_terms_page" default="terms" />
+                </group>
+            </group>
+            <group name="provider_config" position='before'>
+                <div invisible="code != 'cibipay' or not capture_manually"
+                    class="alert alert-warning"
+                    role="alert">
+                    <strong>Warning:</strong> To capture the amount manually, you also need to set the Capture Delay to manual on your Adyen account settings. <widget name="documentation_link" path="/applications/finance/payment_providers/adyen.html#place-a-hold-on-a-card" label="Learn More" />
+                </div>
+            </group>
+        </field>
+    </record>
+
+</odoo>

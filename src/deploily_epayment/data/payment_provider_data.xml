@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <record id="payment.payment_provider_cibepay" model="payment.provider">
+        <field name="code">cibepay</field>
+        <field name="name">CIB/EDAHABIA Payment Gateway</field>
+    </record>
+
+</odoo>
