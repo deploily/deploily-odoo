@@ -20,7 +20,7 @@ class CibepaymentProvider(models.Model):
     _inherit = "payment.provider"
 
     code = fields.Selection(
-        selection_add=[("cibepay", "CIBIPay")], ondelete={"cibepay": "set default"}
+        selection_add=[("cibepay", "CIB Epay")], ondelete={"cibepay": "set default"}
     )
 
     cibipay_username = fields.Char("User name")

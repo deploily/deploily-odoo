@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="0">
-
-    <record id="payment.payment_provider_cibepay" model="payment.provider">
+    <record id="payment_provider_cibepay" model="payment.provider">
         <field name="code">cibepay</field>
-        <field name="name">CIB/EDAHABIA Payment Gateway</field>
+        <field name="name">CIB/EDAHABIYA Payment Gateway</field>
+        <field name="image_128" type="base64" file="deploily_epayment/static/src/images/logo_cib.png" />
     </record>
-
 </odoo>

@@ -17,6 +17,7 @@
     # always loaded
     "data": [
         "views/cibepay_views.xml",
+        "data/payment_provider_data.xml",
     ],
     # "installable": True,
     # "application": True,
