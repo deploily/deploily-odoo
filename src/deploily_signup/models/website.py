@@ -21,3 +21,7 @@ class DeploilyWebsite(models.Model):
     def get_recaptcha_site_key(self):
         self.ensure_one()
         return self.recaptcha_site_key
+
+    # def terms_conditions_page(self):
+    #     self.ensure_one()
+    #     return self.terms_conditions_page.url

@@ -21,8 +21,10 @@
         </xpath>
     </template>
     <template id="deploily_signup.recaptcha" name="Add reCAPTCHA to Signup">
-        <div class="mb-3" style="margin-top: 10px;">
+        <div class="mb-3 o_recaptcha" style="margin-top: 10px;">
             <div class="g-recaptcha" name="recaptcha" t-att-data-sitekey="website.get_recaptcha_site_key()" data-callback="updateSubmit_signup"></div>
+            <input type="checkbox" name="recaptcha_checked" id="recaptcha_checked"  />
+
         </div>
         <script src="https://www.google.com/recaptcha/api.js"></script>
     </template>

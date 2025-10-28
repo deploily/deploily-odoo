@@ -18,9 +18,15 @@
     "data": [
         "views/payment_provider_views.xml",
         "views/payment_transaction_views.xml",
+        "views/cibepay_templates.xml",
         "data/payment_provider_data.xml",
         "data/payment_method_data.xml",
     ],
+    "assets": {
+        "web.assets_frontend": [
+            "deploily_epayment/static/src/js/payment_button.js",
+        ],
+    },
     # "installable": True,
     # "application": True,
     "post_init_hook": "post_init_hook",

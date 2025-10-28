@@ -9,12 +9,12 @@
     </template>
 
 
-    <!-- <template id="cibepay_payment_token_list" inherit_id="payment.payment_tokens_list">
-        <xpath expr='//div[@class="float-left mt-2"]' position='before'>
-            <div class="row m-3">
-                <t t-set="providers" t-value="[acq.provider for acq in acquirers if acq.state in ['test', 'enabled']]" />
-                <t t-set="captcha_sitekey"> 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI </t>
-                <t t-if="'cibepay' in providers">
+    <template id="cibepay_payment_method_form" inherit_id="payment.method_form">
+        <xpath expr='//small[@class="text-600"]' position='replace'>
+            <span> J'accepte les </span>
+            <a t-att-href="website.terms_conditions_page.url" target="_blank"> conditions d'utilisation </a>
+           
+            <!-- <t t-if="'cibepay' in providers_sudo">
                     <t t-set="acq_list" t-value="[acq for acq in acquirers if acq.provider == 'cibepay']" />
                     <t t-set="acq" t-value="acq_list[0]" />
                     <t t-if="acq.cibepay_captcha_sitekey">
@@ -30,17 +30,22 @@
                         <span> J'accepte les </span>
                         <a t-att-href="acq.cibepay_terms_page" target="_blank"> conditions d'utilisation </a>
                     </div>
-                </t>
-            </div>
+                </t> -->
+
         </xpath>
-        <xpath expr='//button[@id="o_payment_form_pay"]' position='inside'>
+        <xpath expr='//div[@class="o-checkbox form-check m-0"]' position='inside'>
+            <t t-call="deploily_signup.recaptcha" />
+        </xpath>
+        <!-- <xpath expr='//button[@id="o_payment_form_pay"]' position='inside'>
             <t t-set="providers" t-value="[acq.provider for acq in acquirers if acq.state in ['test', 'enabled']]" />
             <t t-if="'cibepay' in providers">
                 <img src="/payment_cib_ipay/static/src/image/logo_cib.png" height="47" alt="logo CIB" />
             </t>
-        </xpath>
+        </xpath> -->
     </template>
 
+
+    <!-- 
     <template id="payment_cibepay_assets_frontend" inherit_id="web.assets_frontend">
         <xpath expr="link[last()]" position="after">
             <link rel="stylesheet" type="text/css" href="/payment_cib_ipay/static/src/css/cibepay_styles.css" />
