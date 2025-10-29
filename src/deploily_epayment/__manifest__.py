@@ -24,7 +24,7 @@
     ],
     "assets": {
         "web.assets_frontend": [
-            "deploily_epayment/static/src/js/payment_button.js",
+            "deploily_epayment/static/src/js/**",
         ],
     },
     # "installable": True,

@@ -3,11 +3,36 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import  PaymentButton  from "@payment/js/payment_button";  // core Odoo payment form class
 
+
+window.updateSubmit_signup = function () {
+    console.log("✅ reCAPTCHA callback executed!");
+
+    // Find the hidden reCAPTCHA response
+    const captcha = document.querySelector('textarea[name="g-recaptcha-response"]');
+    const terms = document.querySelector('#payment_terms_conditions_checkbox');
+    const submitButton = document.querySelector('button[name="o_payment_submit_button"]');
+
+    // Sanity check
+    if (!submitButton) {
+        console.warn("❌ Submit button not found!");
+        return;
+    }
+
+    // Check both conditions
+    const captchaValid = captcha && captcha.value.trim() !== "";
+    const termsValid = terms && terms.checked;
+
+    if (captchaValid && termsValid) {
+        submitButton.disabled = false;
+        console.log("✅ Button enabled — all good!");
+    } else {
+        submitButton.disabled = true;
+        console.log("⚠️ Button disabled — waiting for conditions.");
+    }
+};
 // Extend the PaymentForm widget
 PaymentButton.include({
     selector: '[name="o_payment_submit_button"],[name="o_payment_tokenize_container"]',
-    // selector: `${PaymentButton.prototype.selector}, [name="o_payment_tokenize_checkbox"]`,
- 
     /**
      * Override _canSubmit to include reCAPTCHA validation
      * @override
@@ -23,41 +48,13 @@ PaymentButton.include({
 
         // ✅ Add reCAPTCHA validation (for your 'custom' provider only)
         const provider = document.querySelector('input[name="o_payment_radio"]:checked');
-        
-        var terms_conditions=false;
-        var response=false;
         if (provider && provider.dataset.providerCode === 'cibepay'){
-            document.addEventListener('change', (event) => {
-                if (event.target.matches('div[class="g-recaptcha"]')) {
-                  response = grecaptcha.getResponse();
-                console.log("Validating reCAPTCHA...");
-                
-                if (!response) {
-                    console.log("reCAPTCHA validation failed ❌");
-                    return false;
-                }}
-
-                if (terms_conditions && response) {return true;}
-            });
-            document.addEventListener('change', (event) => {
-                if (event.target.matches('input[name="o_payment_tokenize_checkbox"]')) {
-                    console.log('Terms checkbox changed:', event.target.checked);
-                     terms_conditions = event.target.checked;
-                    if (!terms_conditions) {
-                        return false;
-                    }
-                }
-            });
             return false;
     }
-
-
         // Everything OK
         return true;
     },
     
 });
-window.updateSubmit_payment = function () {
-    console.log("Captcha passed ✅");
-};
+
 

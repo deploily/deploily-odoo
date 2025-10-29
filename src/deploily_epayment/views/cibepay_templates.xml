@@ -13,7 +13,7 @@
         <xpath expr='//small[@class="text-600"]' position='replace'>
             <span> J'accepte les </span>
             <a t-att-href="website.terms_conditions_page.url" target="_blank"> conditions d'utilisation </a>
-           
+
             <!-- <t t-if="'cibepay' in providers_sudo">
                     <t t-set="acq_list" t-value="[acq for acq in acquirers if acq.provider == 'cibepay']" />
                     <t t-set="acq" t-value="acq_list[0]" />
@@ -33,8 +33,18 @@
                 </t> -->
 
         </xpath>
+        <xpath expr='//input[@name="o_payment_tokenize_checkbox"]' position='replace'>
+            <input name="o_payment_tokenize_checkbox"
+                type="checkbox"
+                class="form-check-input"
+                id="payment_terms_conditions_checkbox"
+                onchange="updateSubmit_signup();"
+            />
+        </xpath>
         <xpath expr='//div[@class="o-checkbox form-check m-0"]' position='inside'>
-            <t t-call="deploily_signup.recaptcha" />
+            <t t-call="deploily_signup.recaptcha">
+                <t t-set="callback_name">updateSubmit_signup</t>
+            </t>
         </xpath>
         <!-- <xpath expr='//button[@id="o_payment_form_pay"]' position='inside'>
             <t t-set="providers" t-value="[acq.provider for acq in acquirers if acq.state in ['test', 'enabled']]" />
