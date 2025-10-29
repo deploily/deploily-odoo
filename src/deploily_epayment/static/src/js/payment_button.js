@@ -5,7 +5,7 @@ import  PaymentButton  from "@payment/js/payment_button";  // core Odoo payment 
 
 
 window.updateSubmit_signup = function () {
-    console.log("✅ reCAPTCHA callback executed!");
+    console.log("reCAPTCHA callback executed!");
 
     // Find the hidden reCAPTCHA response
     const captcha = document.querySelector('textarea[name="g-recaptcha-response"]');
@@ -14,7 +14,7 @@ window.updateSubmit_signup = function () {
 
     // Sanity check
     if (!submitButton) {
-        console.warn("❌ Submit button not found!");
+        console.warn("Submit button not found!");
         return;
     }
 
@@ -24,7 +24,7 @@ window.updateSubmit_signup = function () {
 
     if (captchaValid && termsValid) {
         submitButton.disabled = false;
-        console.log("✅ Button enabled — all good!");
+        console.log("Button enabled — all good!");
     } else {
         submitButton.disabled = true;
         console.log("⚠️ Button disabled — waiting for conditions.");
@@ -46,7 +46,6 @@ PaymentButton.include({
             return false;
         }
 
-        // ✅ Add reCAPTCHA validation (for your 'custom' provider only)
         const provider = document.querySelector('input[name="o_payment_radio"]:checked');
         if (provider && provider.dataset.providerCode === 'cibepay'){
             return false;

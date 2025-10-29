@@ -13,25 +13,6 @@
         <xpath expr='//small[@class="text-600"]' position='replace'>
             <span> J'accepte les </span>
             <a t-att-href="website.terms_conditions_page.url" target="_blank"> conditions d'utilisation </a>
-
-            <!-- <t t-if="'cibepay' in providers_sudo">
-                    <t t-set="acq_list" t-value="[acq for acq in acquirers if acq.provider == 'cibepay']" />
-                    <t t-set="acq" t-value="acq_list[0]" />
-                    <t t-if="acq.cibepay_captcha_sitekey">
-                        <t t-set="captcha_sitekey">
-                            <t t-esc="acq.cibepay_captcha_sitekey" />
-                        </t>
-                    </t>
-                    <div class="col-md-6">
-                        <div class="g-recaptcha" t-att-data-sitekey="captcha_sitekey" data-callback="updateSubmit" />
-                    </div>
-                    <div class="col-md-6">
-                        <input type="checkbox" name="checkbox" value="check" id="agree" onchange="updateSubmit();" />
-                        <span> J'accepte les </span>
-                        <a t-att-href="acq.cibepay_terms_page" target="_blank"> conditions d'utilisation </a>
-                    </div>
-                </t> -->
-
         </xpath>
         <xpath expr='//input[@name="o_payment_tokenize_checkbox"]' position='replace'>
             <input name="o_payment_tokenize_checkbox"

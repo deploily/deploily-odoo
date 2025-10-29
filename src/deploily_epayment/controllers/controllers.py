@@ -8,6 +8,7 @@ import werkzeug
 from odoo import http
 from odoo.http import request
 import requests
+from odoo.tools.float_utils import float_round, float_repr
 
 import logging
 
@@ -140,12 +141,62 @@ class CIBEPayController(http.Controller):
             return request.redirect("/shop")
 
     @http.route(
+        ["/payment/cibipay/register/"],
+        type="http",
+        auth="public",
+        methods=["GET"],
+    )
+    def cibipay_register(
+        self, reference, confirm_url=confirm_url, fail_url=fail_url, **kwargs
+    ):
+        _logger.info("### cibipay_register ###")
+        cibepay = (
+            request.env["payment.provider"]
+            .search([("provider", "=", "cibepay")])
+            ._get_cibepay_api()
+        )
+        # account_payment = (
+        #     request.env["account.payment"]
+        #     .sudo()
+        #     .search([("reference", "=", reference)])
+        # )
+        _logger.info("### account_payment ###")
+
+        # order_total = float_repr(float_round(account_payment.amount, 2) * 100, 0)
+        order_total = float_repr(float_round(1000, 2) * 100, 0)
+        base_url = "http://localhost:8069"
+        pyment_cibipay = request.env["payment.provider"].search(
+            [("code", "=", "cibepay")]
+        )
+        _confirm_url = base_url + confirm_url
+        _fail_url = base_url + confirm_url
+        _logger.info("################{_confirm_url}")
+        _logger.info("################{_fail_url}")
+        register_params = cibepay.get_cibipay_register_params(
+            "reference100", order_total, _confirm_url, _fail_url
+        )
+        _logger.info("### register_params ###")
+        _logger.info(register_params)
+
+        if register_params["returnCode"] == 200 and register_params["errorCode"] != "5":
+            _logger.info("+++++")
+            _logger.info("### register_params satimOrderId ###")
+            _logger.info(register_params["satimOrderId"])
+            # account_payment.update(
+            #     {
+            #         "satim_order_id": register_params["satimOrderId"],
+            #     }
+            # )
+
+        return json.dumps(register_params)
+
+    @http.route(
         ["/payment/cibepay/transaction"], type="json", auth="public", website=True
     )
     def cibepay_payment_transaction(
         self,
-        acquirer_id,
-        final_prepare_tx_url,
+        provider_id,
+        register_url,
         check_terms,
         captcha,
         save_token=False,
@@ -154,7 +205,6 @@ class CIBEPayController(http.Controller):
         token=None,
         **kwargs
     ):
-
         website = request.website.get_current_website()
         # base_url = website.get_base_url()
         base_url = request.env["ir.config_parameter"].sudo().get_param("web.base.url")
@@ -176,7 +226,7 @@ class CIBEPayController(http.Controller):
         # return formPayement
 
         params = {
-            "provider_id": acquirer_id,
+            "provider_id": provider_id,
             "save_token": save_token,
             "so_id": so_id,
             "access_token": access_token,
@@ -184,10 +234,19 @@ class CIBEPayController(http.Controller):
         }
         params.update(kwargs)
 
-        url = base_url + final_prepare_tx_url
+        url = base_url + register_url
 
         headers = request.httprequest.headers
-
+        _logger.info(
+            "aaaaaaaaaaaaaaaaaaaCIBEPay payment transaction request to URL: {}".format(
+                url
+            )
+        )
+        _logger.info(
+            "bbbbbbbbbbbbbbbbbCIBEPay payment transaction request with params: {}".format(
+                params
+            )
+        )
         response = requests.post(
             url, headers=headers, data=json.dumps({"params": params})
         )
@@ -197,11 +256,12 @@ class CIBEPayController(http.Controller):
 
     def _check_google_recaptcha(self, client_key):
 
-        acquirer = (
+        provider = (
             request.env["payment.provider"].sudo().search([("code", "=", "cibepay")])
         )
+        website = request.website.get_current_website()
 
-        secret_key = acquirer.cibepay_captcha_secret
+        secret_key = website.recaptcha_secret_key
 
         captcha_data = {"secret": secret_key, "response": client_key}
 
