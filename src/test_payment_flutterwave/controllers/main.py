@@ -22,13 +22,12 @@ class TestFlutterwaveController(FlutterwaveController):
     _webhook_url = "/payment/flutterwave/webhook"
 
     @http.route(_return_url, type="http", methods=["GET"], auth="public")
-    def test_flutterwave_return_from_checkout(self, **data):
-        res = self.flutterwave_return_from_checkout(self, **data)
+    def flutterwave_return_from_checkout(self, **data):
+        _logger.info("zzzzzzzzzzzzzzzzzzzzzzzz")
         """Process the notification data sent by Flutterwave after redirection from checkout.
         
         :param dict data: The notification data.
         """
-        _logger.info("zzzzzzzzzzzzzzzzzzzzzzzz")
         _logger.info(
             "Handling redirection from Flutterwave with data:\n%s", pprint.pformat(data)
         )

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="test_redirect_form" inherit_id="payment_flutterwave.redirect_form">
+        <xpath expr='.' position='replace'> kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk <form t-attf-action="#{api_url}" method="get" />
+        </xpath>
+    </template>
+
+</odoo>

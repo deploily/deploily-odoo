@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import json
 import logging
 import pprint
 
@@ -69,7 +70,7 @@ class TestPaymentProvider(PaymentProvider):
             )
         return supported_currencies
 
-    def _flutterwave_make_request(self, endpoint, payload=None, method="POST"):
+    def _flutterwave_make_request(self, endpoint, payload=None, method="GET"):
         """Make a request to Flutterwave API at the specified endpoint.
 
         Note: self.ensure_one()
@@ -82,20 +83,33 @@ class TestPaymentProvider(PaymentProvider):
         :raise ValidationError: If an HTTP error occurs.
         """
         self.ensure_one()
+        payload = {
+            "userName": "SAT2510260704",
+            "password": "satim120",
+            "language": "fr",
+            "currency": "012",
+            "jsonParams": "{'force_terminal_id':'E010902021','udf1':'2018105301346','udf5':'ggsf85s42524s5uhgsf'}".replace(
+                "'", '"'
+            ),
+            "returnUrl": "https://example.com/payment/return",
+            "failUrl": "https://example.com/payment/fail",
+            "orderNumber": "12344pqw",
+            "amount": "10000",
+            "description": "Test Payment",
+        }
 
-        url = url_join("https://api.flutterwave.com/v3/", endpoint)
-        headers = {"Authorization": f"Bearer {self.flutterwave_secret_key}"}
-        _logger.info("ddddddddddddddddddddddddddddddddddddddddddddddddddd")
+        url = "https://test2.satim.dz/payment/rest/register.do"
+        # headers = {"Authorization": f"Bearer {self.flutterwave_secret_key}"}
 
         try:
-            if method == "GET":
-                response = requests.get(
-                    url, params=payload, headers=headers, timeout=10
-                )
-            else:
-                response = requests.post(url, json=payload, headers=headers, timeout=10)
+            _logger.info("aaaaaaaaaaaaaaaaaaaaaaaapayload %s gggg %s", payload, self)
+            response = self.SendReq(url, payload)
+
             try:
-                response.raise_for_status()
+                # response.raise_for_status()
+                _logger.info("response.status_code: %s", response)
+                status = response["status"]
+
             except requests.exceptions.HTTPError:
                 _logger.exception(
                     "Invalid API request at %s with data:\n%s",
@@ -115,13 +129,50 @@ class TestPaymentProvider(PaymentProvider):
             raise ValidationError(
                 "Flutterwave: " + _("Could not establish the connection to the API.")
             )
-        return response.json()
+
+        response = response["json_response"]
+
+        if response["errorCode"] == 0:
+            cibipay_params = {
+                "returnCode": status,
+                "errorCode": response["errorCode"],
+                "satimOrderId": response["orderId"],
+                "formUrl": response["formUrl"],
+            }
+
+        else:
+            cibipay_params = {
+                # "returnCode": response["status"],
+                "errorCode": response["errorCode"],
+                "errorMessage": response["errorMessage"],
+            }
+
+        return cibipay_params
+        # return response.json()
 
     def _get_default_payment_method_codes(self):
         """Override of `payment` to return the default payment method codes."""
         default_codes = super()._get_default_payment_method_codes()
-        _logger.info("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
-
         if self.code != "flutterwave":
             return default_codes
         return const.DEFAULT_PAYMENT_METHOD_CODES
+
+    def SendReq(self, url, params):
+
+        try:
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+        except Exception as e:
+            _logger.error(e)
+            return {"status": "HTTP_ERR", "text_error": e}
+
+        status_code = response.status_code
+
+        # Check for errors
+        if status_code == requests.codes.ok:
+            # Success
+            _logger.info(response.text)
+            return {"status": 200, "json_response": json.loads(response.text)}
+        else:
+            _logger.error(response.text)
+            return {"status": "ERR", "text_error": response.text}

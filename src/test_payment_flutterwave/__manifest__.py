@@ -9,13 +9,15 @@
     "description": " ",  # Non-empty string to avoid loading the README file.
     "depends": ["payment", "payment_flutterwave"],
     "data": [
-        # 'views/payment_flutterwave_templates.xml',
+        "views/payment_flutterwave_templates.xml",
         # 'views/payment_provider_views.xml',
         # 'data/payment_provider_data.xml',
     ],
     "assets": {
         "web.assets_frontend": [
-            # "payment_flutterwave/static/src/js/payment_form.js",
+            'payment_flutterwave/static/src/js/payment_form.js',  # existing
+
+            "test_payment_flutterwave/static/src/js/payment_form.js",
         ],
     },
     "post_init_hook": "post_init_hook",

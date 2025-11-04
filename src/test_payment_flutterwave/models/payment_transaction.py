@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import html
 import logging
 import pprint
 
@@ -11,7 +12,10 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment_flutterwave import const
 from odoo.addons.payment_flutterwave.controllers.main import FlutterwaveController
-from odoo.addons.payment_flutterwave.models.payment_transaction import PaymentTransaction
+from odoo.addons.payment_flutterwave.models.payment_transaction import (
+    PaymentTransaction,
+)
+from werkzeug.urls import url_encode
 
 
 _logger = logging.getLogger(__name__)
@@ -30,6 +34,8 @@ class TestPaymentTransaction(PaymentTransaction):
         """
         res = super()._get_specific_processing_values(processing_values)
         if self._flutterwave_is_authorization_pending():
+            _logger.info("wwwwwwwwwwwwwwwwwwwwwwwww %s", self.provider_reference),
+
             res["redirect_form_html"] = self.env["ir.qweb"]._render(
                 self.provider_id.redirect_form_view_id.id,
                 {"api_url": self.provider_reference},
@@ -45,40 +51,43 @@ class TestPaymentTransaction(PaymentTransaction):
         :return: The dict of provider-specific processing values.
         :rtype: dict
         """
-        res = super()._get_specific_rendering_values(processing_values)
+
         if self.provider_code != "flutterwave":
+            res = super()._get_specific_rendering_values(processing_values)
             return res
 
         # Initiate the payment and retrieve the payment link data.
         base_url = self.provider_id.get_base_url()
+
         payload = {
-            "tx_ref": self.reference,
-            "amount": self.amount,
-            "currency": self.currency_id.name,
-            "redirect_url": urls.url_join(base_url, FlutterwaveController._return_url),
-            "customer": {
-                "email": self.partner_email,
-                "name": self.partner_name,
-                "phonenumber": self.partner_phone,
-            },
-            "customizations": {
-                "title": self.company_id.name,
-                "logo": urls.url_join(
-                    base_url, f"web/image/res.company/{self.company_id.id}/logo"
-                ),
-            },
-            "payment_options": const.PAYMENT_METHODS_MAPPING.get(
-                self.payment_method_code, self.payment_method_code
-            ),
+            "userName": "SAT2510260704",
+            "password": "satim120",
+            "language": "fr",
+            "currency": "012",
+            "jsonParams": "{'force_terminal_id':'E010902021','udf1':'2018105301346','udf5':'ggsf85s42524s5uhgsf'}",
+            "returnUrl": "https://example.com/payment/return",
+            "failUrl": "https://example.com/payment/fail",
+            "orderNumber": "123456a",
+            "amount": "10000",
+            "description": "Test Payment",
         }
+        _logger.info("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
         payment_link_data = self.provider_id._flutterwave_make_request(
             "payments", payload=payload
         )
+        _logger.info(
+            "mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s",
+            html.escape(payment_link_data["formUrl"]),
+        )
+        base_url = (
+            "https://test.satim.dz/payment/epg/merchants/merchantsatim/payment.html"
+        )
 
+        # Build query parameters safely
+        params = {"mdOrder": "LkWh5fk2xJdtUIAAA2D3", "language": "fr"}
+        query_string = url_encode(params)
         # Extract the payment link URL and embed it in the redirect form.
-        rendering_values = {
-            "api_url": payment_link_data["data"]["link"],
-        }
+        rendering_values = {"api_url": payment_link_data["formUrl"]}
         return rendering_values
 
     def _send_payment_request(self):
@@ -101,21 +110,33 @@ class TestPaymentTransaction(PaymentTransaction):
 
         first_name, last_name = payment_utils.split_partner_name(self.partner_name)
         base_url = self.provider_id.get_base_url()
+        # data = {
+        #     "token": self.token_id.provider_ref,
+        #     "email": self.token_id.flutterwave_customer_email,
+        #     "amount": self.amount,
+        #     "currency": self.currency_id.name,
+        #     "country": self.company_id.country_id.code,
+        #     "tx_ref": self.reference,
+        #     "first_name": first_name,
+        #     "last_name": last_name,
+        #     "ip": payment_utils.get_customer_ip_address(),
+        #     "redirect_url": urls.url_join(
+        #         base_url, FlutterwaveController._auth_return_url
+        #     ),
+        # }
         data = {
-            "token": self.token_id.provider_ref,
-            "email": self.token_id.flutterwave_customer_email,
-            "amount": self.amount,
-            "currency": self.currency_id.name,
-            "country": self.company_id.country_id.code,
-            "tx_ref": self.reference,
-            "first_name": first_name,
-            "last_name": last_name,
-            "ip": payment_utils.get_customer_ip_address(),
-            "redirect_url": urls.url_join(
-                base_url, FlutterwaveController._auth_return_url
-            ),
+            "userName": "SAT2510260704",
+            "password": "satim120",
+            "language": "fr",
+            "currency": "012",
+            "jsonParams": "{'force_terminal_id':'E010902021','udf1':'2018105301346','udf5':'ggsf85s42524s5uhgsf'}",
+            "returnUrl": "https://example.com/payment/return",
+            "failUrl": "https://example.com/payment/fail",
+            "orderNumber": "123456",
+            "amount": "10000",
+            "description": "Test Payment",
         }
-
+        _logger.info("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         # Make the payment request to Flutterwave.
         response_content = self.provider_id._flutterwave_make_request(
             "tokenized-charges", payload=data
@@ -127,7 +148,7 @@ class TestPaymentTransaction(PaymentTransaction):
             self.reference,
             pprint.pformat(response_content),
         )
-        self._handle_notification_data("flutterwave", response_content["data"])
+        # self._handle_notification_data("flutterwave", response_content["data"])
 
     def _get_tx_from_notification_data(self, provider_code, notification_data):
         """Override of payment to find the transaction based on Flutterwave data.
@@ -169,7 +190,7 @@ class TestPaymentTransaction(PaymentTransaction):
         :raise ValidationError: If inconsistent data were received.
         """
         super()._process_notification_data(notification_data)
-        if self.provider_code != "flutterwave":
+        if self.provider_code == "flutterwave":
             return
 
         # Verify the notification data.
