@@ -22,19 +22,20 @@ class TestFlutterwaveController(FlutterwaveController):
     _webhook_url = "/payment/flutterwave/webhook"
 
     @http.route(_return_url, type="http", methods=["GET"], auth="public")
-    def flutterwave_return_from_checkout(self, **data):
+    def flutterwave_return_from_checkout(self, orderId=None, **data):
         _logger.info("zzzzzzzzzzzzzzzzzzzzzzzz")
         """Process the notification data sent by Flutterwave after redirection from checkout.
         
         :param dict data: The notification data.
         """
         _logger.info(
-            "Handling redirection from Flutterwave with data:\n%s", pprint.pformat(data)
+            "Handling redirection from Flutterwave with data:\n%s",
+            pprint.pformat(orderId),
         )
 
         # Handle the notification data.
-        if data.get("status") != "cancelled":
-            request.env["payment.transaction"].sudo()._handle_notification_data(
+        if orderId:
+            request.env["payment.transaction"].sudo()._get_tx_from_notification_data(
                 "flutterwave", data
             )
         else:  # The customer cancelled the payment by clicking on the close button.

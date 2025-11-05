@@ -5,7 +5,7 @@ import logging
 import pprint
 
 from werkzeug import urls
-
+from odoo import _, fields, models
 from odoo import _, models
 from odoo.exceptions import UserError, ValidationError
 
@@ -23,6 +23,8 @@ _logger = logging.getLogger(__name__)
 
 class TestPaymentTransaction(PaymentTransaction):
     _inherit = "payment.transaction"
+
+    satim_order_id = fields.Char(string="SATIM order ID", readonly=True)
 
     def _get_specific_processing_values(self, processing_values):
         """Override of payment to redirect pending token-flow transactions.
@@ -79,15 +81,12 @@ class TestPaymentTransaction(PaymentTransaction):
             "mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s",
             html.escape(payment_link_data["formUrl"]),
         )
-        base_url = (
-            "https://test.satim.dz/payment/epg/merchants/merchantsatim/payment.html"
-        )
 
-        # Build query parameters safely
-        params = {"mdOrder": "LkWh5fk2xJdtUIAAA2D3", "language": "fr"}
-        query_string = url_encode(params)
         # Extract the payment link URL and embed it in the redirect form.
-        rendering_values = {"api_url": payment_link_data["formUrl"]}
+        rendering_values = {
+            "api_url": payment_link_data["formUrl"],
+            "mdOrder": payment_link_data.get("satimOrderId"),
+        }
         return rendering_values
 
     def _send_payment_request(self):
@@ -148,9 +147,12 @@ class TestPaymentTransaction(PaymentTransaction):
             self.reference,
             pprint.pformat(response_content),
         )
-        # self._handle_notification_data("flutterwave", response_content["data"])
+        self._handle_notification_data("flutterwave", response_content)
 
     def _get_tx_from_notification_data(self, provider_code, notification_data):
+        _logger.info("hhhhhhhhhhhhhhhhhhhhhhhh")
+        _logger.info(self)
+        _logger.info(provider_code)
         """Override of payment to find the transaction based on Flutterwave data.
 
         :param str provider_code: The code of the provider that handled the transaction.
@@ -160,25 +162,44 @@ class TestPaymentTransaction(PaymentTransaction):
         :raise ValidationError: If inconsistent data were received.
         :raise ValidationError: If the data match no transaction.
         """
-        tx = super()._get_tx_from_notification_data(provider_code, notification_data)
-        if provider_code != "flutterwave" or len(tx) == 1:
+        # tx = super()._get_tx_from_notification_data(provider_code, notification_data)
+        if provider_code == "flutterwave":
+            # self.satim_order_id = notification_data
+            reference = notification_data.get("tx_ref") or notification_data.get(
+                "txRef"
+            )
+            tx = self.search(
+                [("reference", "=", reference), ("provider_code", "=", "flutterwave")]
+            )
+            tx.write(
+                {
+                    "satim_order_id": "sfqdfsegsgrgrhrth",
+                }
+            )
+            _logger.info("hhhhhhhhhhhhhhhhhhhhhhhh")
+            _logger.info(tx)
+            _logger.info(notification_data)
+
             return tx
+        return self
+        # tx = super()._get_tx_from_notification_data(provider_code, notification_data)
+        # if provider_code != "flutterwave" or len(tx) == 1:
+        #     return tx
 
-        reference = notification_data.get("tx_ref") or notification_data.get("txRef")
-        if not reference:
-            raise ValidationError(
-                "Flutterwave: " + _("Received data with missing reference.")
-            )
+        # if not reference:
+        #     raise ValidationError(
+        #         "Flutterwave: " + _("Received data with missing reference.")
+        #     )
 
-        tx = self.search(
-            [("reference", "=", reference), ("provider_code", "=", "flutterwave")]
-        )
-        if not tx:
-            raise ValidationError(
-                "Flutterwave: "
-                + _("No transaction found matching reference %s.", reference)
-            )
-        return tx
+        # tx = self.search(
+        #     [("reference", "=", reference), ("provider_code", "=", "flutterwave")]
+        # )
+        # if not tx:
+        #     raise ValidationError(
+        #         "Flutterwave: "
+        #         + _("No transaction found matching reference %s.", reference)
+        #     )
+        # return tx
 
     def _process_notification_data(self, notification_data):
         """Override of payment to process the transaction based on Flutterwave data.
@@ -189,66 +210,9 @@ class TestPaymentTransaction(PaymentTransaction):
         :return: None
         :raise ValidationError: If inconsistent data were received.
         """
-        super()._process_notification_data(notification_data)
         if self.provider_code == "flutterwave":
+
             return
-
-        # Verify the notification data.
-        verification_response_content = self.provider_id._flutterwave_make_request(
-            "transactions/verify_by_reference",
-            payload={"tx_ref": self.reference},
-            method="GET",
-        )
-        verified_data = verification_response_content["data"]
-
-        # Update the provider reference.
-        self.provider_reference = verified_data["id"]
-
-        # Update payment method.
-        payment_method_type = verified_data.get("payment_type", "")
-        if payment_method_type == "card":
-            payment_method_type = verified_data.get("card", {}).get("type").lower()
-        payment_method = self.env["payment.method"]._get_from_code(
-            payment_method_type, mapping=const.PAYMENT_METHODS_MAPPING
-        )
-        self.payment_method_id = payment_method or self.payment_method_id
-
-        # Update the payment state.
-        payment_status = verified_data["status"].lower()
-        if payment_status in const.PAYMENT_STATUS_MAPPING["pending"]:
-            auth_url = (
-                notification_data.get("meta", {})
-                .get("authorization", {})
-                .get("redirect")
-            )
-            if auth_url:
-                # will be set back to the actual value after moving away from pending
-                self.provider_reference = auth_url
-            self._set_pending()
-        elif payment_status in const.PAYMENT_STATUS_MAPPING["done"]:
-            self._set_done()
-            has_token_data = "token" in verified_data.get("card", {})
-            if self.tokenize and has_token_data:
-                self._flutterwave_tokenize_from_notification_data(verified_data)
-        elif payment_status in const.PAYMENT_STATUS_MAPPING["cancel"]:
-            self._set_canceled()
-        elif payment_status in const.PAYMENT_STATUS_MAPPING["error"]:
-            self._set_error(
-                _(
-                    "An error occurred during the processing of your payment (status %s). Please try "
-                    "again.",
-                    payment_status,
-                )
-            )
-        else:
-            _logger.warning(
-                "Received data with invalid payment status (%s) for transaction with reference %s.",
-                payment_status,
-                self.reference,
-            )
-            self._set_error(
-                "Flutterwave: " + _("Unknown payment status: %s", payment_status)
-            )
 
     def _flutterwave_tokenize_from_notification_data(self, notification_data):
         """Create a new token based on the notification data.

@@ -91,9 +91,9 @@ class TestPaymentProvider(PaymentProvider):
             "jsonParams": "{'force_terminal_id':'E010902021','udf1':'2018105301346','udf5':'ggsf85s42524s5uhgsf'}".replace(
                 "'", '"'
             ),
-            "returnUrl": "https://example.com/payment/return",
+            "returnUrl": "http://localhost:8069/payment/flutterwave/return",
             "failUrl": "https://example.com/payment/fail",
-            "orderNumber": "12344pqw",
+            "orderNumber": "aezezdse19",
             "amount": "10000",
             "description": "Test Payment",
         }
@@ -139,7 +139,6 @@ class TestPaymentProvider(PaymentProvider):
                 "satimOrderId": response["orderId"],
                 "formUrl": response["formUrl"],
             }
-
         else:
             cibipay_params = {
                 # "returnCode": response["status"],
