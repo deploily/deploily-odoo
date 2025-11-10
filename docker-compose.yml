@@ -24,6 +24,11 @@ services:
       - web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ./src:/mnt/extra-addons
+
+    command: sh -c "/entrypoint.sh odoo -u deploily_signup -d odoo"
+
+
+
 volumes:
   db-data:
     driver: local
