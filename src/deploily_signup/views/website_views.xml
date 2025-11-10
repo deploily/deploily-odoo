@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_website_form_inherit_legal_pages" model="ir.ui.view">
+            <field name="name">website.form.inherit.legal.pages</field>
+            <field name="model">website</field>
+            <field name="inherit_id" ref="website.view_website_form" />
+            <field name="arch" type="xml">
+                <!-- Add after existing 'Custom Code' tab -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Legal Pages" name="page_legal_pages">
+                        <group>
+                            <field name="terms_conditions_page"
+                            />
+                            <field name="privacy_policy_page"
+                            />
+                        </group>
+                    </page>
+                    <page string="reCAPTCHA keys" name="page_recaptcha">
+                        <group>
+                            <field name="recaptcha_site_key"
+                            />
+                            <field name="recaptcha_secret_key"
+                            />
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
