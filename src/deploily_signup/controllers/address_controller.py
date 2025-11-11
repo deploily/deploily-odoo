@@ -98,9 +98,11 @@ class DeploilyWebsiteSale(WebsiteSale):
             ]
 
         if error_messages:
+            messages = [msg for msgs in error_messages.values() for msg in msgs]
+
             return json.dumps({
                 'invalid_fields': list(invalid_fields | missing_fields),
-                'messages': error_messages,
+                'messages': messages,
             })
 
         is_new_address = False

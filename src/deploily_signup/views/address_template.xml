@@ -37,7 +37,6 @@
                 <a t-att-href="terms_conditions_page" target="_blank">Terms of Use</a> and
                 <a t-att-href="privacy_policy_page" target="_blank">Privacy Policy</a>, and you consent to the processing of your personal data in accordance with <strong>Law 18-07 on the Protection of Individuals</strong>.
             </label>
-            <div class="invalid-feedback"/>
         </div>
         
         </xpath>
