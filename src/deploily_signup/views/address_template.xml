@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <template id="deploily_address" inherit_id="website_sale.address" name="Address Management">
+        <xpath expr="//div[@class='d-flex flex-column flex-md-row align-items-center justify-content-between mt32 mb32']" position="before">
+
+        <div class="mb-3 field-training_source mt-3">
+            <label for="x_training_source" class="form-label">Où avez-vous entendu parler de cette formation</label>
+            <select name="x_training_source" id="x_training_source" class="form-select">
+                <option value="">Sélectionnez...</option>
+                <t t-foreach="request.env['res.partner']._fields['x_training_source'].selection" t-as="option">
+                    <option t-att-value="option[0]" t-esc="option[1]"/>
+                </t>
+            </select>
+        </div>
+        <div class="mb-3 field-status">
+            <label for="x_status" class="form-label">Status</label>
+
+        <select name="x_status" id="x_status" class="form-select">
+            <option value="">Sélectionnez...</option>
+            <t t-foreach="request.env['res.partner']._fields['x_status'].selection" t-as="option">
+                <option t-att-value="option[0]" t-esc="option[1]"
+                        t-att-selected="option[0] == partner_sudo.x_status"/>
+            </t>
+        </select>
+        </div>
+        
+        <div class="mb-3 field-terms o_field_widget d-flex align-items-start gap-2" data-field-name="terms_conditions">
+            <input type="checkbox"
+                   name="terms_conditions"
+                   id="terms_conditions"
+                   required="required"
+                   class="form-check-input mt-1"/>
+            <label for="terms_conditions" class="form-check-label text-muted small">
+                <t t-esc="website.terms_conditions_text"/>
+                <a t-att-href="terms_conditions_page" target="_blank">Terms of Use</a> and
+                <a t-att-href="privacy_policy_page" target="_blank">Privacy Policy</a>, and you consent to the processing of your personal data in accordance with <strong>Law 18-07 on the Protection of Individuals</strong>.
+            </label>
+        </div>
+        
+        </xpath>
+    </template>
+    
+
+
+</odoo>
