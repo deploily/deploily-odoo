@@ -11,6 +11,7 @@
                 <xpath expr="//notebook" position="inside">
                     <page string="Legal Pages" name="page_legal_pages">
                         <group>
+                            <field name="terms_conditions_text"></field>
                             <field name="terms_conditions_page"
                             />
                             <field name="privacy_policy_page"
