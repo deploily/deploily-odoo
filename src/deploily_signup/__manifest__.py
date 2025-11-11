@@ -18,6 +18,7 @@
         "views/website_views.xml",
         "views/modal_ticket_registration.xml",
         "views/address_template.xml",
+        "views/res_partner_view.xml",
         "data/contactus_templates.xml",
     ],
     "license": "Other proprietary",
