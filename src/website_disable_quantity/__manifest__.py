@@ -13,7 +13,9 @@
     "depends": ["base", "website","website_slides","website_sale","sale_management","sale"],
     # always loaded
     "data": [
-        # "views/product_configurator_dialog.xml",
+                "views/res_partner_view.xml",
+                "views/address_template.xml",
+
     ],
     "license": "Other proprietary",
     "assets": {

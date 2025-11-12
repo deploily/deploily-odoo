@@ -67,7 +67,13 @@ class DeploilyWebsiteSale(WebsiteSale):
 
         # Parse form data into address values, and extract incompatible data as extra form data.
         address_values, extra_form_data = self._parse_form_data(form_data)
+        if 'x_status' in form_data:
+            address_values['x_status'] = form_data.get('x_status')
+        if 'x_training_source' in form_data:
+            address_values['x_training_source'] = form_data.get('x_training_source')
         
+     
+       
         is_anonymous_cart = order_sudo._is_anonymous_cart()
         is_main_address = is_anonymous_cart or order_sudo.partner_id.id == partner_sudo.id
         # Validate the address values and highlights the problems in the form, if any.
@@ -84,13 +90,7 @@ class DeploilyWebsiteSale(WebsiteSale):
         if not isinstance(error_messages, dict):
             error_messages = {}
 
-        # Check terms_conditions
-        if not form_data.get('terms_conditions'):
-            invalid_fields.add('terms_conditions')
-            error_messages['terms_conditions'] = [
-                _("You must accept the Terms and Conditions and the Privacy Policy to continue.")
-            ]
-
+       
         if error_messages:
             messages = [msg for msgs in error_messages.values() for msg in msgs]
 
