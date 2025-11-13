@@ -2,9 +2,14 @@
 
 import logging
 import pprint
+import html
 
+from ..controllers.controllers import CibEpayController
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare, float_repr, float_round
+
+_logger = logging.getLogger(__name__)
 
 
 class PaymentTransactionCibIPay(models.Model):
@@ -34,166 +39,69 @@ class PaymentTransactionCibIPay(models.Model):
     )
     cibipay_resp_code = fields.Char(string="Code de réponse", readonly=True)
 
-    # @api.model
-    # def create(self, vals):
-    #     return super(PaymentTransactionCibIPay, self).create(vals)
+    def _get_specific_processing_values(self, processing_values):
+        """Override of payment to redirect pending token-flow transactions.
 
-    # def form_feedback(self, data, acquirer_name):
-    #     return super(PaymentTransactionCibIPay, self).form_feedback(data, acquirer_name)
+        If the financial institution insists on 3-D Secure authentication, this
+        override will redirect the user to the provided authorization page.
 
-    # @api.model
-    # def _cibipay_form_get_tx_from_data(self, data):
+        Note: `self.ensure_one()`
+        """
+        res = super()._get_specific_processing_values(processing_values)
+        if self._flutterwave_is_authorization_pending():
+            res["redirect_form_html"] = self.env["ir.qweb"]._render(
+                self.provider_id.redirect_form_view_id.id,
+                {"api_url": self.provider_reference},
+            )
+        return res
 
-    #     satimOrderId = data.get("orderId")
-    #     if not satimOrderId:
-    #         _logger.info(
-    #             "CIBIPay: received data with missing reference ({}) ".format(
-    #                 satimOrderId
-    #             )
-    #         )
-    #         raise ValidationError(
-    #             _("CIBIPay: received data with missing reference ({})").format(
-    #                 satimOrderId
-    #             )
-    #         )
+    def _get_specific_rendering_values(self, processing_values):
+        """Override of payment to return Flutterwave-specific rendering values.
 
-    #     acquirer = self.env["payment.acquirer"].search([("provider", "=", "cibipay")])
-    #     cibipay = acquirer._get_cibipay_api()
+        Note: self.ensure_one() from `_get_processing_values`
 
-    #     result = cibipay.get_payment_status(satimOrderId)
+        :param dict processing_values: The generic and specific processing values of the transaction
+        :return: The dict of provider-specific processing values.
+        :rtype: dict
+        """
 
-    #     if result["returnCode"] != 200:
-    #         raise ValidationError(
-    #             "Server access error! Please contact the site administrator."
-    #         )
+        if self.provider_code != "cibepay":
+            res = super()._get_specific_rendering_values(processing_values)
+            return res
 
-    #     order_id = result["orderId"]
+        # Initiate the payment and retrieve the payment link data.
+        base_url = self.provider_id.get_base_url()
+        cibepay = self.provider_id._get_cibepay_api()
+        url = (
+            base_url
+            + cibepay.get_cibepay_urls(cibepay.is_testing_mode)["cibepay_register_url"]
+        )
+        amount = float_repr(float_round(self.amount, 2) * 100, 0)
+        payload = {
+            "userName": cibepay.user_name,
+            "password": cibepay.password,
+            "language": cibepay.language,
+            "currency": cibepay.currency,
+            "jsonParams": cibepay.json_params,
+            "returnUrl": base_url + CibEpayController.confirm_url,
+            "failUrl": base_url + CibEpayController.fail_url,
+            "orderNumber": self.reference,
+            "amount": amount,
+            "description": "Test Payment",
+        }
+        _logger.info("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+        _logger.info(payload)
+        payment_link_data = self.provider_id._cibepay_make_request(
+            url, cibepay, "payments", payload=payload
+        )
+        _logger.info(
+            "mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s",
+            html.escape(payment_link_data["formUrl"]),
+        )
 
-    #     self._cr.execute(
-    #         """
-    #             SELECT CAST(SUBSTRING(reference FROM '-\d+$') AS INTEGER) AS suffix
-    #             FROM payment_transaction WHERE reference LIKE %s ORDER BY suffix
-    #         """,
-    #         [order_id + "-%"],
-    #     )
-
-    #     query_res = self._cr.fetchone()
-
-    #     reference = "{}-{}".format(order_id, -query_res[0])
-
-    #     txs = self.env["payment.transaction"].search([("reference", "=", reference)])
-
-    #     if not txs or len(txs) > 1:
-    #         error_msg = _("CIBIPay: received data for reference {}".format(reference))
-    #         logger_msg = "CIBIPay: received data for reference {}".format(reference)
-    #         if not txs:
-    #             error_msg += _("; no order found")
-    #             logger_msg += "; no order found"
-    #         else:
-    #             error_msg += _("; multiple order found")
-    #             logger_msg += "; multiple order found"
-    #         _logger.info(logger_msg)
-    #         raise ValidationError(error_msg)
-
-    #     return txs
-
-    # def _cibipay_form_validate(self, data):
-
-    #     if self.state in ["done"]:
-    #         _logger.info(
-    #             "CIBIpay: trying to validate an already validated tx (ref {})".format(
-    #                 self.reference
-    #             )
-    #         )
-    #         return True
-
-    #     satimOrderId = data.get("orderId")
-    #     acquirer = self.env["payment.acquirer"].search([("provider", "=", "cibipay")])
-    #     cibipay = acquirer._get_cibipay_api()
-
-    #     result = cibipay.get_payment_status(satimOrderId)
-
-    #     status = result["returnCode"]
-    #     reference = result["orderId"]
-
-    #     if status != 200:
-    #         raise ValidationError(
-    #             "Server access error! Please contact the site administrator."
-    #         )
-
-    #     res = {
-    #         "acquirer_reference": reference,
-    #         "cibipay_mdorder": result["satimOrderId"],
-    #         "cibipay_approval_code": result["approvalCode"],
-    #         "cibipay_action_code_description": result["actionCodeDescription"],
-    #         "cibipay_auth_code": result["authCode"],
-    #         "cibipay_expiration": result["expiration"],
-    #         "cibipay_cardholder_name": result["cardholderName"],
-    #         "cibipay_deposit_amount": result["depositAmount"],
-    #         "cibipay_order_status": result["orderStatus"],
-    #         "cibipay_error_code": result["errorCode"],
-    #         "cibipay_error_message": result["errorMessage"],
-    #         "cibipay_action_code": result["actionCode"],
-    #         "cibipay_pan": result["pan"],
-    #         "cibipay_ip": result["ip"],
-    #         "cibipay_svfe_response": result["svfeResponse"],
-    #         "cibipay_resp_code_desc": result["respCode_desc"],
-    #         "cibipay_resp_code": result["respCode"],
-    #     }
-
-    #     if (
-    #         result["errorCode"] == "2"
-    #         and result["orderStatus"] == 2
-    #         and result["respCode"] == "00"
-    #     ):
-    #         _logger.info(
-    #             "Validated CIBIPay payment for tx {}: set as done".format(reference)
-    #         )
-    #         date_validate = fields.Datetime.now()
-    #         res.update(date=date_validate)
-    #         res.update(state_message=result["respCode_desc"])
-    #         self.write(res)
-    #         self._set_transaction_done()
-    #         self.execute_callback()
-    #         return True
-
-    #     error = "Notification d'erreur pour Paiement CIBIPay : {} !".format(reference)
-    #     if (
-    #         result["orderStatus"] == 3
-    #         and result["errorCode"] == "0"
-    #         and result["respCode"] == "00"
-    #     ):
-    #         error += "Votre transaction a été rejetée / Your transaction was rejected / تم رفض معاملتك <br/>"
-    #     elif not result["respCode_desc"]:
-    #         error += result["actionCodeDescription"]
-    #     else:
-    #         error += result["respCode_desc"]
-
-    #     _logger.info("CIBIPay error:  {}".format(error))
-    #     res.update(state_message=error)
-    #     self.write(res)
-    #     self._set_transaction_error(error)
-    #     order = self.env["sale.order"].search([("name", "=", reference)])
-    #     order.write({"state": "cancel"})
-    #     return False
-
-    # def action_refund(self):
-    #     _logger.info("call to refund")
-    #     wiz = self.env["payment_cibipay.refund_wizard"].create(
-    #         {
-    #             "transaction_id": self.id,
-    #             "order_id": self.cibipay_mdorder,
-    #             "order_amount": float(self.cibipay_deposit_amount),
-    #             "currency_id": self.currency_id.id,
-    #         }
-    #     )
-    #     return {
-    #         "name": "Refund",
-    #         "type": "ir.actions.act_window",
-    #         "view_type": "form",
-    #         "view_mode": "form",
-    #         "res_model": "payment_cibipay.refund_wizard",
-    #         "target": "new",
-    #         "res_id": wiz.id,
-    #         "context": self.env.context,
-    #     }
+        # Extract the payment link URL and embed it in the redirect form.
+        rendering_values = {
+            "api_url": payment_link_data["formUrl"],
+            "mdOrder": payment_link_data.get("satimOrderId"),
+        }
+        return rendering_values

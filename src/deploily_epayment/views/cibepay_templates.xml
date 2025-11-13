@@ -7,6 +7,12 @@
             <input type="hidden" name="mdOrder" t-att-value="mdOrder" />
         </div>
     </template>
+    <template id="cibepay_redirect_form">
+        <form t-att-action="api_url" method="get">
+            <input type="hidden" name="mdOrder" t-att-value="mdOrder" />
+            <input type="hidden" name="language" value="fr" />
+        </form>
+    </template>
 
 
     <template id="cibepay_payment_method_form" inherit_id="payment.method_form">

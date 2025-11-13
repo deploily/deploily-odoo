@@ -29,17 +29,13 @@ class CibEPayApi:
         self.is_testing_mode = is_testing_mode
         self.json_params = json_params
 
-    def get_cibepay_urls(self, state):
-        """CIB IPay URLS:
-        - standard order: POST address for form-based"""
+    def get_cibepay_urls(self, state="cib"):
+        """CIB IPay URLs"""
         environment = "test" if state == "test" else "cib"
         return {
-            "cibepay_register_url": "https://test2.satim.dz/payment/rest/register.do?"
-            % (environment,),
-            "cibepay_confirm_order_url": "https://test2.satim.dz/payment/rest/public/acknowledgeTransaction.do?	"
-            % (environment,),
-            "cibepay_refund_url": "https://test2.satim.dz/payment/rest/refund.do?"
-            % (environment,),
+            "cibepay_register_url": f"https://test2.satim.dz/payment/rest/register.do?",
+            "cibepay_confirm_order_url": f"https://test2.satim.dz/payment/rest/public/acknowledgeTransaction.do?",
+            "cibepay_refund_url": f"https://{environment}2.satim.dz/payment/rest/refund.do?",
         }
 
     def get_cibipay_register_params(self, order_id, order_total, confirm_url, fail_url):
@@ -113,7 +109,7 @@ class CibEPayApi:
             "dateTime": objDateTime,
             "amount": response["Amount"] / 100.0,
             "actionCodeDescription": response["actionCodeDescription"],
-            "authCode": response["authCode"],
+            # "authCode": response["authCode"],
             "depositAmount": response["depositAmount"] / 100.00,
             "currency": response["currency"],
             "errorCode": response["ErrorCode"],
@@ -171,7 +167,7 @@ class CibEPayApi:
     def SendConfirmOrder(self, order_id):
 
         base_url = self.get_cibepay_urls(self.is_testing_mode)[
-            "cibipay_confirm_order_url"
+            "cibepay_confirm_order_url"
         ]
 
         params = {

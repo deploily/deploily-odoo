@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import pprint
+import requests
 from odoo import models, fields, api
 import json
 import base64
 from odoo.tools.float_utils import float_compare, float_repr, float_round
 from odoo.exceptions import ValidationError
 
-from odoo.addons.deploily_epayment.controllers.controllers import CIBEPayController
+# from odoo.addons.deploily_epayment.controllers.controllers import CibEpayController
 
-from odoo.addons.deploily_epayment.models.cibepay_api import CibEPayApi
-
+# from odoo.addons.deploily_epayment.models.cibepay_api import CibEPayApi
+from ..models.cibepay_api import CibEPayApi
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -91,48 +93,121 @@ class CibepaymentProvider(models.Model):
             self.cibepay_currency,
         )
 
-    @api.model
-    def cibepay_form_generate_values(self, values):
-        # base_url = self.get_base_url()
-        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+    # @api.model
+    # def cibepay_form_generate_values(self, values):
+    #     # base_url = self.get_base_url()
+    #     base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
 
-        cibipay = self._get_cibepay_api()
+    #     cibipay = self._get_cibepay_api()
 
-        ref = values["reference"].split("-")
-        order_id = ref[0]
-        order_total = float_repr(float_round(values["amount"], 2) * 100, 0)
-        confirm_url = base_url + CIBEPayController.confirm_url
-        fail_url = base_url + CIBEPayController.fail_url
+    #     ref = values["reference"].split("-")
+    #     order_id = ref[0]
+    #     order_total = float_repr(float_round(values["amount"], 2) * 100, 0)
+    #     confirm_url = base_url + CIBEPayController.confirm_url
+    #     fail_url = base_url + CIBEPayController.fail_url
 
-        register_params = cibipay.get_cibipay_register_params(
-            order_id, order_total, confirm_url, fail_url
+    #     register_params = cibipay.get_cibipay_register_params(
+    #         order_id, order_total, confirm_url, fail_url
+    #     )
+
+    #     status = register_params["returnCode"]
+
+    #     if status != 200:
+    #         raise ValidationError(
+    #             "Server access error! Please contact the site administrator."
+    #         )
+
+    #     # TODO Handle this error
+    #     # odoo.addons.payment_cib_ipay.models.cibipay_api:
+    #     # {"errorCode":"1","errorMessage":"Order number is duplicated, order with given order number is processed already"}
+    #     # WARNING odoo.http: Request error! Please contact the site administrator.
+
+    #     if register_params["errorCode"] != "0":
+    #         raise ValidationError(
+    #             "Request error! Please contact the site administrator."
+    #         )
+
+    #     self.formUrl = register_params["formUrl"]
+
+    #     cibipay_tx_values = dict(values)
+    #     cibipay_tx_values.update({"mdOrder": register_params["satimOrderId"]})
+
+    #     return cibipay_tx_values
+
+    # @api.model
+    # def cibipay_get_form_action_url(self):
+    #     self.ensure_one()
+    #     return self.formUrl
+
+    # todo The new functiçon
+    def _compute_feature_support_fields(self):
+        """Override of `payment` to enable additional features."""
+        super()._compute_feature_support_fields()
+        self.filtered(lambda p: p.code == "cibepay").update(
+            {
+                "support_tokenization": True,
+            }
         )
 
-        status = register_params["returnCode"]
+    def _cibepay_make_request(self, endpoint, payload=None, method="GET"):
+        """Make a request to CibEpay API at the specified endpoint.
 
-        if status != 200:
-            raise ValidationError(
-                "Server access error! Please contact the site administrator."
-            )
+        Note: self.ensure_one()
 
-        # TODO Handle this error
-        # odoo.addons.payment_cib_ipay.models.cibipay_api:
-        # {"errorCode":"1","errorMessage":"Order number is duplicated, order with given order number is processed already"}
-        # WARNING odoo.http: Request error! Please contact the site administrator.
-
-        if register_params["errorCode"] != "0":
-            raise ValidationError(
-                "Request error! Please contact the site administrator."
-            )
-
-        self.formUrl = register_params["formUrl"]
-
-        cibipay_tx_values = dict(values)
-        cibipay_tx_values.update({"mdOrder": register_params["satimOrderId"]})
-
-        return cibipay_tx_values
-
-    @api.model
-    def cibipay_get_form_action_url(self):
+        :param str endpoint: The endpoint to be reached by the request.
+        :param dict payload: The payload of the request.
+        :param str method: The HTTP method of the request.
+        :return The JSON-formatted content of the response.
+        :rtype: dict
+        :raise ValidationError: If an HTTP error occurs.
+        """
         self.ensure_one()
-        return self.formUrl
+
+        url = "https://test2.satim.dz/payment/rest/register.do"
+
+        try:
+            _logger.info("aaaaaaaaaaaaaaaaaaaaaaaapayload %s gggg %s", payload, self)
+            cibepay = self._get_cibepay_api()
+            response = cibepay.SendReq(url, payload)
+
+            try:
+                # response.raise_for_status()
+                _logger.info("response.status_code: %s", response)
+
+            except requests.exceptions.HTTPError:
+                _logger.exception(
+                    "Invalid API request at %s with data:\n%s",
+                    url,
+                    pprint.pformat(payload),
+                )
+                raise ValidationError(
+                    "CibEpay: "
+                    + _(
+                        "The communication with the API failed. Flutterwave gave us the following "
+                        "information: '%s'",
+                        response.json().get("message", ""),
+                    )
+                )
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+            _logger.exception("Unable to reach endpoint at %s", url)
+            raise ValidationError(
+                "Flutterwave: " + _("Could not establish the connection to the API.")
+            )
+
+        response = response["json_response"]
+
+        # if response["errorCode"] == 0:
+        #     cibipay_params = {
+        #         "returnCode": status,
+        #         "errorCode": response["errorCode"],
+        #         "satimOrderId": response["orderId"],
+        #         "formUrl": response["formUrl"],
+        #     }
+        # else:
+        #     cibipay_params = {
+        #         # "returnCode": response["status"],
+        #         "errorCode": response["errorCode"],
+        #         "errorMessage": response["errorMessage"],
+        #     }
+
+        return response

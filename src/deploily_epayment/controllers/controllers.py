@@ -15,7 +15,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class CIBEPayController(http.Controller):
+class CibEpayController(http.Controller):
     confirm_url = "payment/cibepay/confirm/"
     fail_url = "payment/cibepay/fail/"
 
