@@ -9,7 +9,7 @@
             t-att-class="{'o_sale_product_configurator_table_optional': this.props.areProductsOptional}">
             <thead t-if="!this.props.areProductsOptional">
                 <tr>
-                    <th class="px-0 border-bottom-0" colspan="2">Product</th>
+                    <th class="px-0 border-bottom-0" colspan="2">Service</th>
                     <th
                         class="px-0 text-end border-bottom-0"
                         t-if="env.showPrice"
