@@ -19,6 +19,7 @@
         "views/modal_ticket_registration.xml",
         "views/address_template.xml",
         "views/menus.xml",
+        "views/newsletter_template.xml",
         "data/contactus_templates.xml",
     ],
     "license": "Other proprietary",
