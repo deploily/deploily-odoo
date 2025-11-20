@@ -15,7 +15,7 @@
     "data": [
                 "views/res_partner_view.xml",
                 "views/address_template.xml",
-                "report/disable_quantity_report.xml",
+                "report/event_ticket.xml",
 
     ],
     "license": "Other proprietary",
