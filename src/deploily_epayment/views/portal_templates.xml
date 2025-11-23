@@ -2,11 +2,43 @@
 <odoo>
     <template id="cibepay_payment_status" name="Payment Status" inherit_id="payment.payment_status">
         <xpath expr="//div[contains(@class, 'text-bg-light') and contains(@class, 'row-cols-md-2')]" position="inside">
-            <t t-call="payment.summary_item">
-                <t t-set="name" t-value="'satim_order_id'" />
-                <t t-set="label">satim_order_id</t>
-                <t t-set="value" t-value="tx.satim_order_id" />
-                <t t-set="include_separator" t-value="True" />
+            <t t-if="tx.cibepay_resp_code=='00' and tx.cibepay_error_code=='0' and tx.cibepay_order_status='2'">
+                <t t-call="payment.summary_item">
+                    <t t-set="name" t-value="'satim_order_id'" />
+                    <t t-set="label">Satim order id </t>
+                    <t t-set="value" t-value="tx.cibepay_mdorder" />
+                    <t t-set="include_separator" t-value="True" />
+                </t>
+                <t t-call="payment.summary_item">
+                    <t t-set="name" t-value="'satim_order_id'" />
+                    <t t-set="label">Approval Code</t>
+                    <t t-set="value" t-value="tx.cibepay_approval_code" />
+                    <t t-set="include_separator" t-value="True" />
+                </t>
+                <t t-call="payment.summary_item">
+                    <t t-set="name" t-value="'satim_order_id'" />
+                    <t t-set="label">Transaction date an time</t>
+                    <t t-set="value" t-value="tx.cibepay_approval_code" />
+                    <t t-set="include_separator" t-value="True" />
+                </t>
+                <t t-call="payment.summary_item">
+                    <t t-set="name" t-value="'satim_order_id'" />
+                    <t t-set="label">Response code</t>
+                    <t t-set="value" t-value="tx.cibepay_resp_code_desc" />
+                    <t t-set="include_separator" t-value="True" />
+                </t>
+                <t t-call="payment.summary_item">
+                    <t t-set="name" t-value="'satim_order_id'" />
+                    <t t-set="label">Payment methos</t>
+                    <t t-set="value" t-value="tx.provider_id.name" />
+                    <t t-set="include_separator" t-value="True" />
+                </t>
+                <t t-call="payment.summary_item">
+                    <t t-set="name" t-value="'satim_order_id'" />
+                    <t t-set="label">Client code</t>
+                    <t t-set="value" t-value="tx.provider_id.name" />
+                    <t t-set="include_separator" t-value="True" />
+                </t>
             </t>
         </xpath>
     </template>
