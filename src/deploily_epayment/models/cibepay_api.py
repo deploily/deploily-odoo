@@ -38,7 +38,7 @@ class CibEPayApi:
             "cibepay_refund_url": f"https://{environment}2.satim.dz/payment/rest/refund.do?",
         }
 
-    def get_cibipay_register_params(self, order_id, order_total, confirm_url, fail_url):
+    def get_cibepay_register_params(self, order_id, order_total, confirm_url, fail_url):
 
         result = self.sendRegisterOrder(order_id, order_total, confirm_url, fail_url)
 
@@ -50,7 +50,7 @@ class CibEPayApi:
         response = result["json_response"]
 
         if response["errorCode"] == "0":
-            cibipay_params = {
+            cibepay_params = {
                 "returnCode": status,
                 "errorCode": response["errorCode"],
                 "satimOrderId": response["orderId"],
@@ -58,19 +58,19 @@ class CibEPayApi:
             }
 
         else:
-            cibipay_params = {
+            cibepay_params = {
                 "returnCode": result["status"],
                 "errorCode": response["errorCode"],
                 "errorMessage": response["errorMessage"],
             }
 
-        return cibipay_params
+        return cibepay_params
 
     def sendRegisterOrder(
         self, order_id, order_total, confirm_url, fail_url, description=""
     ):
 
-        base_url = self.get_cibepay_urls(self.is_testing_mode)["cibipay_register_url"]
+        base_url = self.get_cibepay_urls(self.is_testing_mode)["cibepay_register_url"]
 
         params = {
             "userName": self.user_name,
@@ -223,7 +223,7 @@ class CibEPayApi:
 
     def SendRefundOrder(self, order_id, amount):
 
-        base_url = self.get_cibepay_urls(self.is_testing_mode)["cibipay_refund_url"]
+        base_url = self.get_cibepay_urls(self.is_testing_mode)["cibepay_refund_url"]
 
         params = {
             "userName": self.user_name,

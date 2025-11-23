@@ -11,7 +11,11 @@
         <form t-att-action="api_url" method="get">
             <input type="hidden" name="mdOrder" t-att-value="mdOrder" />
             <input type="hidden" name="language" value="fr" />
+            <!-- <div class="alert alert-danger" role="alert">
+                Payment redirection failed.
+            </div> -->
         </form>
+
     </template>
 
 

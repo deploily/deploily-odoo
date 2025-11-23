@@ -24,30 +24,30 @@ class CibepaymentProvider(models.Model):
         selection_add=[("cibepay", "CIB Epay")], ondelete={"cibepay": "set default"}
     )
 
-    cibipay_username = fields.Char("User name")
-    cibipay_password = fields.Char("Password")
-    cibipay_terminal_id = fields.Char("Terminal ID")
-    cibipay_udf1 = fields.Char("User defined value 1", default="")
-    cibipay_udf2 = fields.Char("User defined value 2", default="")
-    cibipay_udf3 = fields.Char("User defined value 3", default="")
-    cibipay_udf4 = fields.Char("User defined value 4", default="")
-    cibipay_udf5 = fields.Char("User defined value 5", default="")
+    cibepay_username = fields.Char("User name")
+    cibepay_password = fields.Char("Password")
+    cibepay_terminal_id = fields.Char("Terminal ID")
+    cibepay_udf1 = fields.Char("User defined value 1", default="")
+    cibepay_udf2 = fields.Char("User defined value 2", default="")
+    cibepay_udf3 = fields.Char("User defined value 3", default="")
+    cibepay_udf4 = fields.Char("User defined value 4", default="")
+    cibepay_udf5 = fields.Char("User defined value 5", default="")
 
-    cibipay_captcha_sitekey = fields.Char(
+    cibepay_captcha_sitekey = fields.Char(
         "reCaptcha v2 site key", default="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
     )
-    cibipay_captcha_secret = fields.Char(
+    cibepay_captcha_secret = fields.Char(
         "reCaptcha v2 secret key", default="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
     )
-    cibipay_language = fields.Selection(
+    cibepay_language = fields.Selection(
         [("fr", "French"), ("ar", "Arabic"), ("en", "English")],
         string="Language",
         default="fr",
     )
-    cibipay_currency = fields.Selection(
+    cibepay_currency = fields.Selection(
         [("012", "Algerian Dinars (DZD)")], string="Curency", default="012"
     )
-    cibipay_terms_page = fields.Char("Terms and conditions page", default="terms")
+    cibepay_terms_page = fields.Char("Terms and conditions page", default="terms")
     formUrl = fields.Char("formUrl", default="")
 
     # def _get_feature_support(self):
@@ -98,7 +98,7 @@ class CibepaymentProvider(models.Model):
     #     # base_url = self.get_base_url()
     #     base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
 
-    #     cibipay = self._get_cibepay_api()
+    #     cibepay = self._get_cibepay_api()
 
     #     ref = values["reference"].split("-")
     #     order_id = ref[0]
@@ -106,7 +106,7 @@ class CibepaymentProvider(models.Model):
     #     confirm_url = base_url + CIBEPayController.confirm_url
     #     fail_url = base_url + CIBEPayController.fail_url
 
-    #     register_params = cibipay.get_cibipay_register_params(
+    #     register_params = cibepay.get_cibepay_register_params(
     #         order_id, order_total, confirm_url, fail_url
     #     )
 
@@ -118,7 +118,7 @@ class CibepaymentProvider(models.Model):
     #         )
 
     #     # TODO Handle this error
-    #     # odoo.addons.payment_cib_ipay.models.cibipay_api:
+    #     # odoo.addons.payment_cib_ipay.models.cibepay_api:
     #     # {"errorCode":"1","errorMessage":"Order number is duplicated, order with given order number is processed already"}
     #     # WARNING odoo.http: Request error! Please contact the site administrator.
 
@@ -129,13 +129,13 @@ class CibepaymentProvider(models.Model):
 
     #     self.formUrl = register_params["formUrl"]
 
-    #     cibipay_tx_values = dict(values)
-    #     cibipay_tx_values.update({"mdOrder": register_params["satimOrderId"]})
+    #     cibepay_tx_values = dict(values)
+    #     cibepay_tx_values.update({"mdOrder": register_params["satimOrderId"]})
 
-    #     return cibipay_tx_values
+    #     return cibepay_tx_values
 
     # @api.model
-    # def cibipay_get_form_action_url(self):
+    # def cibepay_get_form_action_url(self):
     #     self.ensure_one()
     #     return self.formUrl
 
@@ -149,7 +149,7 @@ class CibepaymentProvider(models.Model):
             }
         )
 
-    def _cibepay_make_request(self, endpoint, payload=None, method="GET"):
+    def _cibepay_make_request(self, endpoint, cibepay, payload=None, method="GET"):
         """Make a request to CibEpay API at the specified endpoint.
 
         Note: self.ensure_one()
@@ -163,12 +163,10 @@ class CibepaymentProvider(models.Model):
         """
         self.ensure_one()
 
-        url = "https://test2.satim.dz/payment/rest/register.do"
-
         try:
             _logger.info("aaaaaaaaaaaaaaaaaaaaaaaapayload %s gggg %s", payload, self)
-            cibepay = self._get_cibepay_api()
-            response = cibepay.SendReq(url, payload)
+            # cibepay = self._get_cibepay_api()
+            response = cibepay.SendReq(endpoint, payload)
 
             try:
                 # response.raise_for_status()
@@ -177,7 +175,7 @@ class CibepaymentProvider(models.Model):
             except requests.exceptions.HTTPError:
                 _logger.exception(
                     "Invalid API request at %s with data:\n%s",
-                    url,
+                    endpoint,
                     pprint.pformat(payload),
                 )
                 raise ValidationError(
@@ -185,29 +183,15 @@ class CibepaymentProvider(models.Model):
                     + _(
                         "The communication with the API failed. Flutterwave gave us the following "
                         "information: '%s'",
-                        response.json().get("message", ""),
+                        response.json().get("errorMessage", ""),
                     )
                 )
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
-            _logger.exception("Unable to reach endpoint at %s", url)
+            _logger.exception("Unable to reach endpoint at %s", endpoint)
             raise ValidationError(
                 "Flutterwave: " + _("Could not establish the connection to the API.")
             )
 
         response = response["json_response"]
-
-        # if response["errorCode"] == 0:
-        #     cibipay_params = {
-        #         "returnCode": status,
-        #         "errorCode": response["errorCode"],
-        #         "satimOrderId": response["orderId"],
-        #         "formUrl": response["formUrl"],
-        #     }
-        # else:
-        #     cibipay_params = {
-        #         # "returnCode": response["status"],
-        #         "errorCode": response["errorCode"],
-        #         "errorMessage": response["errorMessage"],
-        #     }
 
         return response

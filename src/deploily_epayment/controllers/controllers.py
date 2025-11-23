@@ -141,15 +141,15 @@ class CibEpayController(http.Controller):
             return request.redirect("/shop")
 
     @http.route(
-        ["/payment/cibipay/register/"],
+        ["/payment/cibepay/register/"],
         type="http",
         auth="public",
         methods=["GET"],
     )
-    def cibipay_register(
+    def cibepayregister(
         self, reference, confirm_url=confirm_url, fail_url=fail_url, **kwargs
     ):
-        _logger.info("### cibipay_register ###")
+        _logger.info("### cibepay_register ###")
         cibepay = (
             request.env["payment.provider"]
             .search([("provider", "=", "cibepay")])
@@ -165,14 +165,14 @@ class CibEpayController(http.Controller):
         # order_total = float_repr(float_round(account_payment.amount, 2) * 100, 0)
         order_total = float_repr(float_round(1000, 2) * 100, 0)
         base_url = "http://localhost:8069"
-        pyment_cibipay = request.env["payment.provider"].search(
+        pyment_cibepay = request.env["payment.provider"].search(
             [("code", "=", "cibepay")]
         )
         _confirm_url = base_url + confirm_url
         _fail_url = base_url + confirm_url
         _logger.info("################{_confirm_url}")
         _logger.info("################{_fail_url}")
-        register_params = cibepay.get_cibipay_register_params(
+        register_params = cibepay.get_cibepay_register_params(
             "reference100", order_total, _confirm_url, _fail_url
         )
         _logger.info("### register_params ###")

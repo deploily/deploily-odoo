@@ -15,29 +15,29 @@ _logger = logging.getLogger(__name__)
 class PaymentTransactionCibIPay(models.Model):
     _inherit = "payment.transaction"
 
-    cibipay_mdorder = fields.Char(string="SATIM order ID", readonly=True)
+    cibepay_mdorder = fields.Char(string="SATIM order ID", readonly=True)
 
-    cibipay_approval_code = fields.Char(string="Code d'pprobation", readonly=True)
-    cibipay_action_code_description = fields.Char(
+    cibepay_approval_code = fields.Char(string="Code d'pprobation", readonly=True)
+    cibepay_action_code_description = fields.Char(
         string="Code de description d'action", readonly=True
     )
-    cibipay_auth_code = fields.Char(string="code d'autentification", readonly=True)
-    cibipay_expiration = fields.Char(string="Expiration", readonly=True)
-    cibipay_cardholder_name = fields.Char(
+    cibepay_auth_code = fields.Char(string="code d'autentification", readonly=True)
+    cibepay_expiration = fields.Char(string="Expiration", readonly=True)
+    cibepay_cardholder_name = fields.Char(
         string="Nom du propriétaire de la carte", readonly=True
     )
-    cibipay_deposit_amount = fields.Char(string="Montant déposé", readonly=True)
-    cibipay_order_status = fields.Integer(string="Statut de la commande", readonly=True)
-    cibipay_error_code = fields.Char(string="Code d'erreur", readonly=True)
-    cibipay_error_message = fields.Char(string="Message d'erreur", readonly=True)
-    cibipay_action_code = fields.Char(string="Code d'action", readonly=True)
-    cibipay_pan = fields.Char(string="PAN", readonly=True)
-    cibipay_ip = fields.Char(string="IP", readonly=True)
-    cibipay_svfe_response = fields.Char(string="Réponse SVFE", readonly=True)
-    cibipay_resp_code_desc = fields.Char(
+    cibepay_deposit_amount = fields.Char(string="Montant déposé", readonly=True)
+    cibepay_order_status = fields.Integer(string="Statut de la commande", readonly=True)
+    cibepay_error_code = fields.Char(string="Code d'erreur", readonly=True)
+    cibepay_error_message = fields.Char(string="Message d'erreur", readonly=True)
+    cibepay_action_code = fields.Char(string="Code d'action", readonly=True)
+    cibepay_pan = fields.Char(string="PAN", readonly=True)
+    cibepay_ip = fields.Char(string="IP", readonly=True)
+    cibepay_svfe_response = fields.Char(string="Réponse SVFE", readonly=True)
+    cibepay_resp_code_desc = fields.Char(
         string="Description du code de réponse", readonly=True
     )
-    cibipay_resp_code = fields.Char(string="Code de réponse", readonly=True)
+    cibepay_resp_code = fields.Char(string="Code de réponse", readonly=True)
 
     def _get_specific_processing_values(self, processing_values):
         """Override of payment to redirect pending token-flow transactions.
@@ -72,10 +72,7 @@ class PaymentTransactionCibIPay(models.Model):
         # Initiate the payment and retrieve the payment link data.
         base_url = self.provider_id.get_base_url()
         cibepay = self.provider_id._get_cibepay_api()
-        url = (
-            base_url
-            + cibepay.get_cibepay_urls(cibepay.is_testing_mode)["cibepay_register_url"]
-        )
+        url = cibepay.get_cibepay_urls(cibepay.is_testing_mode)["cibepay_register_url"]
         amount = float_repr(float_round(self.amount, 2) * 100, 0)
         payload = {
             "userName": cibepay.user_name,
@@ -91,17 +88,21 @@ class PaymentTransactionCibIPay(models.Model):
         }
         _logger.info("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
         _logger.info(payload)
+        _logger.info("mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s", url)
         payment_link_data = self.provider_id._cibepay_make_request(
-            url, cibepay, "payments", payload=payload
-        )
-        _logger.info(
-            "mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s",
-            html.escape(payment_link_data["formUrl"]),
+            url, cibepay, payload=payload
         )
 
         # Extract the payment link URL and embed it in the redirect form.
-        rendering_values = {
-            "api_url": payment_link_data["formUrl"],
-            "mdOrder": payment_link_data.get("satimOrderId"),
-        }
+        if payment_link_data and payment_link_data["errorCode"] == 0:
+            rendering_values = {
+                "api_url": payment_link_data["formUrl"],
+                "mdOrder": payment_link_data.get("orderId"),
+            }
+        else:
+            # todo Handle the error properly on front-end
+            rendering_values = {
+                "errorCode": payment_link_data["errorCode"],
+                "errorMessage": payment_link_data.get("errorMessage"),
+            }
         return rendering_values
