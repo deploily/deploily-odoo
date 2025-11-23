@@ -3,8 +3,9 @@
 import logging
 import pprint
 import html
+from odoo.http import request
 
-from ..controllers.controllers import CibEpayController
+from ..controllers.main import CibEpayController
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare, float_repr, float_round
@@ -38,6 +39,10 @@ class PaymentTransactionCibIPay(models.Model):
         string="Description du code de réponse", readonly=True
     )
     cibepay_resp_code = fields.Char(string="Code de réponse", readonly=True)
+    provider_code = fields.Selection(
+        related="provider_id.code",
+        store=False,
+    )
 
     def _get_specific_processing_values(self, processing_values):
         """Override of payment to redirect pending token-flow transactions.
@@ -74,21 +79,26 @@ class PaymentTransactionCibIPay(models.Model):
         cibepay = self.provider_id._get_cibepay_api()
         url = cibepay.get_cibepay_urls(cibepay.is_testing_mode)["cibepay_register_url"]
         amount = float_repr(float_round(self.amount, 2) * 100, 0)
+        return_url = (
+            base_url + CibEpayController._return_url[1:]
+            if CibEpayController._return_url.startswith("/")
+            else CibEpayController._return_url
+        )
         payload = {
             "userName": cibepay.user_name,
             "password": cibepay.password,
             "language": cibepay.language,
             "currency": cibepay.currency,
             "jsonParams": cibepay.json_params,
-            "returnUrl": base_url + CibEpayController.confirm_url,
-            "failUrl": base_url + CibEpayController.fail_url,
+            "returnUrl": return_url,
+            "failUrl": return_url,
             "orderNumber": self.reference,
             "amount": amount,
             "description": "Test Payment",
         }
         _logger.info("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
         _logger.info(payload)
-        _logger.info("mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s", url)
+        _logger.info("mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s", self.provider_id)
         payment_link_data = self.provider_id._cibepay_make_request(
             url, cibepay, payload=payload
         )
@@ -106,3 +116,108 @@ class PaymentTransactionCibIPay(models.Model):
                 "errorMessage": payment_link_data.get("errorMessage"),
             }
         return rendering_values
+
+    def _get_tx_from_notification_data(self, provider_code, notification_data):
+        _logger.info("hhhhhhhhhhhhhhhhhhhhhhhh i am in _get_tx_from_notification_data")
+        _logger.info(self)
+        _logger.info(provider_code)
+        """Override of payment to find the transaction based on Flutterwave data.
+
+        :param str provider_code: The code of the provider that handled the transaction.
+        :param dict notification_data: The notification data sent by the provider.
+        :return: The transaction if found.
+        :rtype: recordset of `payment.transaction`
+        :raise ValidationError: If inconsistent data were received.
+        :raise ValidationError: If the data match no transaction.
+        """
+        # tx = super()._get_tx_from_notification_data(provider_code, notification_data)
+        if provider_code == "cibepay":
+            # self.satim_order_id = notification_data
+            satim_order_id = notification_data.get("orderId") or notification_data.get(
+                "txRef"
+            )
+            _logger.info("mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s", self.provider_id)
+
+            cibepay = (
+                self.env["payment.provider"]
+                .sudo()
+                .search([("code", "=", provider_code)], limit=1)
+                ._get_cibepay_api()
+            )
+            result = cibepay.get_payment_status(satim_order_id)
+
+            print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrresult")
+            print(result)
+            reference = result["orderId"]
+
+            tx = self.search(
+                [
+                    ("reference", "=", reference),
+                    ("provider_code", "=", "cibepay"),
+                ]
+            )
+            tx.write(
+                {
+                    "cibepay_mdorder": satim_order_id if satim_order_id else False,
+                    "cibepay_approval_code": (
+                        result["approvalCode"] if "approvalCode" in result else False
+                    ),
+                    "cibepay_action_code_description": (
+                        result["actionCodeDescription"]
+                        if "actionCodeDescription" in result
+                        else False
+                    ),
+                    "cibepay_auth_code": (
+                        result["authorizationResponseId"]
+                        if "authorizationResponseId" in result
+                        else False
+                    ),
+                    "cibepay_expiration": (
+                        result["expiration"] if "expiration" in result else False
+                    ),
+                    "cibepay_cardholder_name": (
+                        result["cardholderName"]
+                        if "cardholderName" in result
+                        else False
+                    ),
+                    "cibepay_deposit_amount": (
+                        result["depositAmount"] if "depositAmount" in result else False
+                    ),
+                    "cibepay_order_status": (
+                        result["orderStatus"] if "orderStatus" in result else False
+                    ),
+                    "cibepay_error_code": (
+                        result["errorCode"] if "errorCode" in result else False
+                    ),
+                    "cibepay_error_message": (
+                        result["errorMessage"] if "errorMessage" in result else False
+                    ),
+                    "cibepay_action_code": (
+                        result["actionCode"] if "actionCode" in result else False
+                    ),
+                    "cibepay_pan": result["pan"] if "pan" in result else False,
+                    "cibepay_ip": result["ip"] if "ip" in result else False,
+                    "cibepay_svfe_response": (
+                        result["svfeResponse"] if "svfeResponse" in result else False
+                    ),
+                    "cibepay_resp_code_desc": (
+                        result["respCode_desc"] if "respCode_desc" in result else False
+                    ),
+                    "cibepay_resp_code": (
+                        result["respCode"] if "respCode" in result else False
+                    ),
+                }
+            )
+            return tx
+        return self
+
+    def _process_notification_data(self, notification_data):
+        """Override of payment to process the transaction based on Flutterwave data.
+
+        Note: self.ensure_one()
+
+        :param dict notification_data: The notification data sent by the provider.
+        :return: None
+        :raise ValidationError: If inconsistent data were received.
+        """
+        super()._process_notification_data(notification_data)

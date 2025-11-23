@@ -19,6 +19,7 @@
         "views/payment_provider_views.xml",
         "views/payment_transaction_views.xml",
         "views/cibepay_templates.xml",
+        "views/portal_templates.xml",
         "data/payment_method_data.xml",
         "data/payment_provider_data.xml",
     ],

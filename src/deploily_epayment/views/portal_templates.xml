@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cibepay_payment_status" name="Payment Status" inherit_id="payment.payment_status">
+        <xpath expr="//div[contains(@class, 'text-bg-light') and contains(@class, 'row-cols-md-2')]" position="inside">
+            <t t-call="payment.summary_item">
+                <t t-set="name" t-value="'satim_order_id'" />
+                <t t-set="label">satim_order_id</t>
+                <t t-set="value" t-value="tx.satim_order_id" />
+                <t t-set="include_separator" t-value="True" />
+            </t>
+        </xpath>
+    </template>
+</odoo>

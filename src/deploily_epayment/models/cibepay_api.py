@@ -138,7 +138,7 @@ class CibEPayApi:
         payment_status["respCode_desc"] = ""
         payment_status["respCode"] = ""
 
-        if response["params"]:
+        if "params" in response and response["params"]:
             params = response["params"]
             payment_status["respCode_desc"] = (
                 params["respCode_desc"] if "respCode_desc" in params.keys() else ""

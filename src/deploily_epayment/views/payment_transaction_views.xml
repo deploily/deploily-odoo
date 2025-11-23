@@ -8,10 +8,10 @@
         <field name="inherit_id" ref="payment.payment_transaction_form" />
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button invisible="provider_id.code != 'cibepay'" type="object" name="action_refund" string="Refund" class="oe_highlight" />
+                <button invisible="provider_code != 'cibepay'" type="object" name="action_refund" string="Refund" class="oe_highlight" />
             </xpath>
-            <xpath expr="//sheet/group[1]" position="after">
-                <group invisible="provider_id.code != 'cibepay'">
+            <xpath expr="//sheet" position="inside">
+                <group invisible="provider_code != 'cibepay'">
                     <group>
                         <field name="cibepay_mdorder" readonly="1" />
                         <field name="cibepay_approval_code" readonly="1" />
@@ -34,37 +34,6 @@
     </record>
 
 
-    <!-- <record id="cibepay_transaction_form" model="ir.ui.view">
-        <field name="name">payment.cibepay.transaction.form</field>
-        <field name="model">payment.transaction</field>
-        <field name="inherit_id" ref="payment.transaction_form" />
-        <field name="arch" type="xml">
-            <xpath expr="//header" position="inside">
-                <button t-if="acquirer_id.provider == 'cibepay'" type="object" name="action_refund" states="done" string="Refund" class="oe_highlight" />
-            </xpath>
-            <xpath expr="//sheet/group[1]" position="after">
-                <t t-if="acquirer_id.provider == 'cibepay'">
-                    <t t-esc="state" />
-                    <group>
-                        <group>
-                            <field name="cibepay_mdorder" readonly="1" />
-                            <field name="cibepay_approval_code" readonly="1" />
-                            <field name="cibepay_auth_code" readonly="1" />
-                            <field name="cibepay_expiration" readonly="1" />
-                            <field name="cibepay_cardholder_name" readonly="1" />
-                        </group>
-                        <group>
-                            <field name="cibepay_deposit_amount" readonly="1" />
-                            <field name="cibepay_order_status" readonly="1" />
-                            <field name="cibepay_error_code" readonly="1" />
-                            <field name="cibepay_error_message" readonly="1" />
-                            <field name="cibepay_pan" readonly="1" />
-                            <field name="cibepay_ip" readonly="1" />
-                        </group>
-                    </group>
-                </t>
-            </xpath>
-        </field>
-    </record> -->
+   
 
 </odoo>
