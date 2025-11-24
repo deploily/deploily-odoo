@@ -206,6 +206,7 @@ class PaymentTransactionCibIPay(models.Model):
                     "cibepay_resp_code": (
                         result["respCode"] if "respCode" in result else False
                     ),
+                    "state": "done" if result["orderStatus"] == 2 else "error",
                 }
             )
             return tx

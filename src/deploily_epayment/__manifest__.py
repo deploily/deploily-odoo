@@ -13,7 +13,7 @@
     "category": "Accounting/Payment Providers",
     "version": "2.0",
     # any module necessary for this one to work correctly
-    "depends": ["payment", "deploily_signup"],
+    "depends": ["payment", "deploily_signup", "website_sale"],
     # always loaded
     "data": [
         "views/payment_provider_views.xml",
