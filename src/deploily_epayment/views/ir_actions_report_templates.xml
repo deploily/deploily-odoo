@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="cibepay_report_saleorder_document" name="Payment Status" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[contains(@id, 'informations')]" position="inside">
+            <span t-esc="doc"></span>
+            <div t-if="doc.user_id.name" class="col">
+                <strong>Salesperson</strong>
+                <div t-field="doc.user_id">Mitchell Admin</div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
