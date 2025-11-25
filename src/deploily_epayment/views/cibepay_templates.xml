@@ -45,6 +45,18 @@
         </xpath> -->
     </template>
 
+    <template id="payment_cibepay_sale_confirmation_sendmail" name="Products">
+        <t t-call="website.layout">
+            <t t-set="additional_title"> Confirmation de mail </t>
+            <div class="text-left p-4">
+                <h5>
+                    <span> Un mail a été transmis à l'adresse suivant : </span>
+                    <em t-esc="mail_address" />
+                </h5>
+            </div>
+        </t>
+    </template>
+
 
     <!-- 
     <template id="payment_cibepay_assets_frontend" inherit_id="web.assets_frontend">

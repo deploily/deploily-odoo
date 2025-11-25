@@ -140,10 +140,60 @@
 
             </t>
         </xpath>
+        <xpath expr="//div[@class='card mt-3']" position="after">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div class="">
+                        <span> En cas de problème de paiement, veuillez contacter le numéro vert de la SATIM
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img src="/deploily_epayment/static/src/images/satim_3020.png" height="50" width="110" alt="numero vert SATIM" />
+                        <img src="/deploily_epayment/static/src/images/logo_cib.png" height="47" alt="logo CIB" />
+                    </div>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='d-flex justify-content-between align-items-center']" position="inside">
+
+            <!-- <a role="button" class="d-none d-md-inline-block btn btn-primary ms-auto" href="/shop/print" target="_blank" aria-label="Print" title="Print"><i class="fa fa-print me-2"></i>Print</a> -->
+
+
+            <button type="button" class="d-none d-md-inline-block btn btn-primary ms-auto"
+                data-bs-toggle="modal" data-bs-target="#input_email_box">
+                <i class="fa fa-envelope"></i> Send mail </button>
+
+            <div id="input_email_box" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Envoyer par mail </h5>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" method="GET" action="/shop/cibepay/sendbymail" target="_blank">
+                                <div class="form-group">
+                                    <label for="receiver_mail"> Email de destination </label>
+                                    <input class="form-control" id="receiver_mail" name="receiver_mail"
+                                        placeholder="Email de destination" required='1' />
+                                </div>
+                                <div class="form-group mt-2">
+                                    <button type="submit" class="btn btn-primary d-none d-md-inline-block">
+                                        <i class="fa fa-envelope"></i>
+                                        <span> Envoyer </span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </xpath>
     </template>
     <template id="cibepay_payment_confirmation_status" inherit_id="website_sale.payment_confirmation_status">
-        <xpath expr="//t[contains(@t-if, 'done')]" position="replace">
-            <t t-if="tx_sudo.state == 'done'">
+        <xpath expr="//t[contains(@t-if, 'done' )]" position="replace">
+            <t t-if="tx_sudo.state== 'done'">
                 <span t-if='tx_sudo.cibepay_action_code_description' t-out="tx_sudo.cibepay_action_code_description" />
             </t>
         </xpath>
