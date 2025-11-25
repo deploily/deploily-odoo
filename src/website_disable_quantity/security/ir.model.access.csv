@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_channel_category_user,access.channel.category.user,model_channel_category,base.group_user,1,1,1,1
 access_channel_category_manager,access.channel.category.manager,model_channel_category,base.group_system,1,1,1,1
+access_channel_category_public,access.channel.category.public,model_channel_category,base.group_public,1,0,0,0
