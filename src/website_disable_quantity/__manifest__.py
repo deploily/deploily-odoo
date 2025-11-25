@@ -16,6 +16,8 @@
                 "views/res_partner_view.xml",
                 "views/address_template.xml",
                 "report/event_ticket.xml",
+                "views/channel_category.xml",
+                "security/ir.model.access.csv",
 
     ],
     "license": "Other proprietary",
