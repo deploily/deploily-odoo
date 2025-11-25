@@ -8,7 +8,7 @@
             <field name="model">channel.category</field>
             <field name="arch" type="xml">
                 <list string="Category" >
-                    <field name="sequence" widget="handle"/>
+                    <!-- <field name="sequence" widget="handle"/> -->
 
                     <field name="name"/>
                     <field name="description"/>
