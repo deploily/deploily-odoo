@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 
 class ChannelCategory(models.Model):
     _name = "channel.category"
-    _order = "id desc"
+    _order = "sequence asc, id desc"
     _description = "Channel Category"
     _rec_name = "name"
 
@@ -19,7 +19,8 @@ class ChannelCategory(models.Model):
     )
     image=fields.Image("Image")
     description = fields.Html("Description")
-    
+    sequence = fields.Integer("Sequence", default=10)
+
 
 class SlideChannel(models.Model):
     _inherit = "slide.channel"
