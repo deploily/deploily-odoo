@@ -20,10 +20,21 @@
 
 
     <template id="cibepay_payment_method_form" inherit_id="payment.method_form">
-
-        <xpath expr='//small[@class="text-600"]' position='replace'>
-            <span> J'accepte les </span>
-            <a t-att-href="website.terms_conditions_page.url" target="_blank"> conditions d'utilisation </a>
+        <xpath expr='//div[@name="o_payment_tokenize_container"]' position='replace'>
+            <div t-if="mode == 'payment'
+            and pm_sudo.code=='cibepay'"
+                name="o_term_conditions"
+                class="o-checkbox form-check m-0"
+            >
+                <label>
+                    <input name="o_payment_tokenize_checkbox"
+                        type="checkbox"
+                        class="form-check-input"
+                    />
+                    <span> J'accepte les </span>
+                    <a t-att-href="website.terms_conditions_page.url" target="_blank"> conditions d'utilisation </a>
+                </label>
+            </div>
         </xpath>
         <xpath expr='//input[@name="o_payment_tokenize_checkbox"]' position='replace'>
             <input name="o_payment_tokenize_checkbox"
@@ -47,22 +58,13 @@
     </template>
     <template id="cibepay_submit_button" inherit_id="payment.submit_button">
         <xpath expr='//button[@name="o_payment_submit_button"]' position='replace'>
-            
-            <t t-if="'cibepay' not in  providers_sudo">
-                <button name="o_payment_submit_button"
-                    type="submit"
-                    t-out="submit_button_label"
-                    class="btn btn-primary w-100 w-md-auto ms-auto px-5"
-                />
-            </t>
-            <t t-else="">
-                <button name="o_payment_submit_button"
-                    type="submit"
-                    class="btn btn-primary w-100 w-md-auto ms-auto px-5"
-                    disabled="true"
-                > Pay now <img src="/deploily_epayment/static/src/images/logo_cib.png" height="37" alt="logo CIB" />
-                </button>
-            </t>
+
+            <button name="o_payment_submit_button"
+                type="submit"
+                class="btn btn-primary w-100 w-md-auto ms-auto px-5"
+                disabled="true"
+            > Pay now <img id="cib_logo" class="cib-hidden" src="/deploily_epayment/static/src/images/logo_cib.png" height="37" alt="logo CIB" />
+            </button>
 
         </xpath>
     </template>

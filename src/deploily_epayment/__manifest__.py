@@ -33,6 +33,7 @@
     "assets": {
         "web.assets_frontend": [
             "deploily_epayment/static/src/js/**",
+            "deploily_epayment/static/src/scss/**",
         ],
     },
     # "installable": True,

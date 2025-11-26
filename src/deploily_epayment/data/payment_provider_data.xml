@@ -9,9 +9,15 @@
         <field name="payment_method_ids"
             eval="[Command.set([
                   ref('payment_method_cibepay'),
-                  ref('payment.payment_method_card'),
 
               ])]"
         />
+        <!-- <field name="payment_method_ids"
+            eval="[Command.set([
+                  ref('payment_method_cibepay'),
+                  ref('payment.payment_method_card'),
+
+              ])]"
+        /> -->
     </record>
 </odoo>

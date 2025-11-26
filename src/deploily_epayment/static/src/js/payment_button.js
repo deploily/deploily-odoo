@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 import publicWidget from "@web/legacy/js/public/public_widget";
-import  PaymentButton  from "@payment/js/payment_button";  // core Odoo payment form class
+import PaymentButton from "@payment/js/payment_button";  // core Odoo payment form class
 
 
 window.updateSubmit_signup = function () {
@@ -46,14 +46,22 @@ PaymentButton.include({
             return false;
         }
 
+        const logo = document.querySelector('#cib_logo');
         const provider = document.querySelector('input[name="o_payment_radio"]:checked');
-        if (provider && provider.dataset.providerCode === 'cibepay'){
+        if (provider && provider.dataset.providerCode === 'cibepay') {
+            if (logo) {
+                logo.classList.remove('cib-hidden');
+            }
             return false;
-    }
+        }
+        if (logo) {
+            logo.classList.add('cib-hidden');
+        }
+
         // Everything OK
         return true;
     },
-    
+
 });
 
 
