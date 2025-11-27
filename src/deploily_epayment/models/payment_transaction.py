@@ -44,21 +44,6 @@ class PaymentTransactionCibIPay(models.Model):
         store=False,
     )
 
-    def _get_specific_processing_values(self, processing_values):
-        """Override of payment to redirect pending token-flow transactions.
-
-        If the financial institution insists on 3-D Secure authentication, this
-        override will redirect the user to the provided authorization page.
-
-        Note: `self.ensure_one()`
-        """
-        res = super()._get_specific_processing_values(processing_values)
-        if self._flutterwave_is_authorization_pending():
-            res["redirect_form_html"] = self.env["ir.qweb"]._render(
-                self.provider_id.redirect_form_view_id.id,
-                {"api_url": self.provider_reference},
-            )
-        return res
 
     def _get_specific_rendering_values(self, processing_values):
         """Override of payment to return Flutterwave-specific rendering values.
