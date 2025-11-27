@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">CIB Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form" />
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position='inside'>
+                <group invisible="code != 'cibepay'">
+                    <field name="cibepay_username"
+                        required="code == 'cibepay' and state != 'disabled'" />
+                    <field name="cibepay_password"
+                        required="code == 'cibepay' and state != 'disabled'" />
+                    <field name="cibepay_terminal_id"
+                        required="code == 'cibepay' and state != 'disabled'" />
+                    <field name="cibepay_udf1" />
+                    <field name="cibepay_udf2" />
+                    <field name="cibepay_udf3" />
+                    <field name="cibepay_udf4" />
+                    <field name="cibepay_udf5" />
+                    <field name="cibepay_captcha_sitekey" />
+                    <field name="cibepay_captcha_secret" />
+                    <field name="cibepay_language" widget="radio" />
+                    <field name="cibepay_currency" widget="radio" />
+                    <field name="cibepay_terms_page" default="terms" />
+                </group>
+            </group>
+            <group name="provider_config" position='before'>
+                <div invisible="code != 'cibepay' or not capture_manually"
+                    class="alert alert-warning"
+                    role="alert">
+                    <strong>Warning:</strong> To capture the amount manually, you also need to set the Capture Delay to manual on your New Adyen account settings. <widget name="documentation_link" path="/applications/finance/payment_providers/adyen.html#place-a-hold-on-a-card" label="Learn More" />
+                </div>
+            </group>
+        </field>
+    </record>
+
+</odoo>

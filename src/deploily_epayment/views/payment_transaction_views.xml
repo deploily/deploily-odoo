@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="cibepay_payment_transaction_form" model="ir.ui.view">
+        <field name="name">payment.cibepay.transaction.form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button invisible="provider_code != 'cibepay'" type="object" name="action_refund" string="Refund" class="oe_highlight" />
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <group invisible="provider_code != 'cibepay'">
+                    <group>
+                        <field name="cibepay_mdorder" readonly="1" />
+                        <field name="cibepay_approval_code" readonly="1" />
+                        <!-- <field name="cibepay_order_status_description" readonly="1" /> -->
+                        <field name="cibepay_auth_code" readonly="1" />
+                        <field name="cibepay_expiration" readonly="1" />
+                        <field name="cibepay_cardholder_name" readonly="1" />
+                    </group>
+                    <group>
+                        <field name="cibepay_deposit_amount" readonly="1" />
+                        <field name="cibepay_order_status" readonly="1" />
+                        <field name="cibepay_error_code" readonly="1" />
+                        <field name="cibepay_error_message" readonly="1" />
+                        <field name="cibepay_pan" readonly="1" />
+                        <field name="cibepay_ip" readonly="1" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+   
+
+</odoo>

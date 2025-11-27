@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cibepay_payment_status" name="Payment Status" inherit_id="payment.payment_status">
+        <!-- <t t-if="tx.provider_code == 'cibepay'"> -->
+
+        <xpath expr="//div[contains(@class, 'text-bg-light') and contains(@class, 'row-cols-md-2')]" position="inside">
+            <t t-if="tx.provider_id.code == 'cibepay'">
+                <t t-if="tx.cibepay_resp_code=='00' and tx.cibepay_error_code=='0' and tx.cibepay_order_status==2">
+
+                    <t t-call="payment.summary_item">
+                        <t t-set="name" t-value="'cibepay_mdorder'" />
+                        <t t-set="label">Satim order id </t>
+                        <t t-set="value" t-value="tx.cibepay_mdorder" />
+                        <t t-set="include_separator" t-value="True" />
+                    </t>
+                    <t t-call="payment.summary_item">
+                        <t t-set="name" t-value="'cibepay_approval_code'" />
+                        <t t-set="label">Approval Code</t>
+                        <t t-set="value" t-value="tx.cibepay_approval_code" />
+                        <t t-set="include_separator" t-value="True" />
+                    </t>
+                    <t t-call="payment.summary_item">
+                        <t t-set="name" t-value="'cibepay_approval_code'" />
+                        <t t-set="label">Transaction date an time</t>
+                        <t t-set="value" t-value="tx.cibepay_approval_code" />
+                        <t t-set="include_separator" t-value="True" />
+                    </t>
+                    <t t-call="payment.summary_item">
+                        <t t-set="name" t-value="'cibepay_resp_code_desc'" />
+                        <t t-set="label">Response code</t>
+                        <t t-set="value" t-value="tx.cibepay_resp_code_desc" />
+                        <t t-set="include_separator" t-value="True" />
+                    </t>
+                    <t t-call="payment.summary_item">
+                        <t t-set="name" t-value="'provider_id'" />
+                        <t t-set="label">Payment methos</t>
+                        <t t-set="value" t-value="tx.provider_id.name" />
+                        <t t-set="include_separator" t-value="True" />
+                    </t>
+
+                </t>
+                <t t-else="">
+
+                    <t t-if="tx.cibepay_resp_code=='00' and tx.cibepay_error_code=='0' and tx.cibepay_order_status==3">
+                        <div class="alert alert-danger" role="alert">
+                            Votre transaction a été rejetée/ Your transaction was rejected/ تم رفض معاملتك
+                        </div>
+                    </t>
+
+                    <t t-else="">
+                        <div class="alert alert-danger" role="alert">
+                            <t t-if="tx.cibepay_resp_code_desc" t-esc="tx.cibepay_resp_code_desc" />
+                            <t t-else="" t-esc="tx.cibepay_action_code_description"></t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </xpath>
+
+    </template>
+    <template id="cibepay_state_header" inherit_id="payment.state_header">
+        <!-- <t t-if="tx.provider_code == 'cibepay'"> -->
+        <xpath t-if="tx.provider_id.code == 'cibepay'" expr="//t[contains(@t-elif, 'error')]" position="replace">
+            <t t-elif="tx.state == 'error'">
+                <t t-set="alert_style" t-value="'danger'" />
+                <t t-if="tx.cibepay_resp_code=='00' and tx.cibepay_error_code=='0' and tx.cibepay_order_status==3">
+                    Votre transaction a été rejetée/ Your transaction was rejected/ تم رفض معاملتك
+                </t>
+                <t t-else="">
+                    <t t-if="tx.cibepay_resp_code_desc" t-esc="tx.cibepay_resp_code_desc" />
+                    <t t-else="" t-esc="tx.cibepay_action_code_description"></t>
+                </t>
+                <t t-if="tx.operation == 'validation'" t-set="status_message">
+                    <p class="mb-0">An error occurred while saving your payment method.</p>
+                </t>
+                <t t-else="" t-set="status_message">
+                    <p class="mb-0">An error occurred during the processing of your payment.</p>
+                </t>
+            </t>
+        </xpath>
+
+        <!-- </t> -->
+    </template>
+    <template id="cibepay_confirmation" inherit_id="website_sale.confirmation">
+        <xpath expr="//tbody" position="replace">
+            <t t-if="tx_sudo.cibepay_resp_code=='00' and tx_sudo.cibepay_error_code=='0' and tx_sudo.cibepay_order_status==2">
+                <tr>
+                    <td colspan="2" class="ps-0">
+                        <strong class="text-black-50">Payment method</strong>
+                    </td>
+                    <td class="text-end pe-0" width="100">
+                        <t t-esc="tx_sudo.provider_id.name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="ps-0">
+                        <strong class="text-black-50">Satim order id</strong>
+                    </td>
+                    <td class="text-end pe-0" width="100">
+                        <t t-esc="tx_sudo.cibepay_mdorder" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="ps-0">
+                        <strong class="text-black-50">Approval Code</strong>
+                    </td>
+                    <td class="text-end pe-0" width="100">
+                        <t t-esc="tx_sudo.cibepay_approval_code" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="ps-0">
+                        <strong class="text-black-50">Transaction date an time</strong>
+                    </td>
+                    <td class="text-end pe-0" width="100">
+                        <t t-esc="tx_sudo.create_date" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="ps-0">
+                        <strong class="text-black-50">Response code</strong>
+                    </td>
+                    <td class="text-end pe-0" width="100">
+                        <t t-esc="tx_sudo.cibepay_resp_code_desc" />
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="2" class="ps-0">
+                        <strong>Client code</strong>
+                    </td>
+                    <td class="text-end pe-0" width="100">
+                        <t t-esc="tx_sudo.cibepay_resp_code_desc" />
+                    </td>
+                </tr> -->
+
+            </t>
+        </xpath>
+        <xpath expr="//div[@class='card mt-3']" position="after">
+            <div t-if="tx_sudo.provider_id.code == 'cibepay'" class="card mt-3">
+                <div class="card-body">
+                    <div class="">
+                        <span> En cas de problème de paiement, veuillez contacter le numéro vert de la SATIM
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img src="/deploily_epayment/static/src/images/satim_3020.png" height="50" width="110" alt="numero vert SATIM" />
+                        <img src="/deploily_epayment/static/src/images/logo_cib.png" height="47" alt="logo CIB" />
+                    </div>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='d-flex justify-content-between align-items-center']" position="inside">
+
+            <t t-if="tx_sudo.provider_id.code == 'cibepay'">
+                <button type="button" class="d-none d-md-inline-block btn btn-primary ms-auto"
+                    data-bs-toggle="modal" data-bs-target="#input_email_box">
+                    <i class="fa fa-envelope"></i> Send mail </button>
+
+                <div id="input_email_box" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"> Envoyer par mail </h5>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" method="GET" action="/shop/cibepay/sendbymail" target="_blank">
+                                    <div class="form-group">
+                                        <label for="receiver_mail"> Email de destination </label>
+                                        <input class="form-control" id="receiver_mail" name="receiver_mail"
+                                            placeholder="Email de destination" required='1' />
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <button type="submit" class="btn btn-primary d-none d-md-inline-block">
+                                            <i class="fa fa-envelope"></i>
+                                            <span> Envoyer </span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+        </xpath>
+    </template>
+    <template id="cibepay_payment_confirmation_status" inherit_id="website_sale.payment_confirmation_status">
+        <xpath expr="//t[contains(@t-if, 'done' )]" position="replace">
+            <t t-if="tx_sudo.state== 'done' and tx_sudo.provider_id.code=='cibepay'">
+                <span t-if='tx_sudo.cibepay_action_code_description' t-out="tx_sudo.cibepay_action_code_description" />
+            </t>
+        </xpath>
+        <xpath expr="//t[contains(@t-if, 'error')]" position="replace">
+            <t t-if="tx_sudo.state == 'error' and tx_sudo.provider_id.code=='cibepay'">
+                <t t-if="tx_sudo.cibepay_resp_code=='00' and tx_sudo.cibepay_error_code=='0' and tx_sudo.cibepay_order_status==3">
+                    Votre transaction a été rejetée/ Your transaction was rejected/ تم رفض معاملتك
+                </t>
+                <t t-else="">
+                    <t t-if="tx_sudo.cibepay_resp_code_desc" t-esc="tx_sudo.cibepay_resp_code_desc" />
+                    <t t-else="" t-esc="tx_sudo.cibepay_action_code_description"></t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>
