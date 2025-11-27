@@ -16,9 +16,9 @@
     "depends": [
         "payment",
         "deploily_signup",
-        "website_sale",
         "sale_management",
         "sale",
+        "website_sale",
     ],
     # always loaded
     "data": [

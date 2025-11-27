@@ -135,7 +135,7 @@
 
             </t>
         </xpath>
-        <xpath expr="//div[contains(@class, 'card mt-3' )]" position="after">
+        <xpath expr="//div[contains(@id, 'oe_structure_website_sale_confirmation_2' )]" position="before">
             <div t-if="tx_sudo.provider_id.code == 'cibepay'" class="card mt-3">
                 <div class="card-body">
                     <div class="">
