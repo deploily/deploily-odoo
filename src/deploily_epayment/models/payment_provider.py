@@ -8,9 +8,6 @@ import base64
 from odoo.tools.float_utils import float_compare, float_repr, float_round
 from odoo.exceptions import ValidationError
 
-# from odoo.addons.deploily_epayment.controllers.controllers import CibEpayController
-
-# from odoo.addons.deploily_epayment.models.cibepay_api import CibEPayApi
 from ..models.cibepay_api import CibEPayApi
 import logging
 
@@ -33,12 +30,8 @@ class CibepaymentProvider(models.Model):
     cibepay_udf4 = fields.Char("User defined value 4", default="")
     cibepay_udf5 = fields.Char("User defined value 5", default="")
 
-    cibepay_captcha_sitekey = fields.Char(
-        "reCaptcha v2 site key", default="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-    )
-    cibepay_captcha_secret = fields.Char(
-        "reCaptcha v2 secret key", default="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
-    )
+    cibepay_captcha_sitekey = fields.Char("reCaptcha v2 site key", default="")
+    cibepay_captcha_secret = fields.Char("reCaptcha v2 secret key", default="")
     cibepay_language = fields.Selection(
         [("fr", "French"), ("ar", "Arabic"), ("en", "English")],
         string="Language",
@@ -49,22 +42,6 @@ class CibepaymentProvider(models.Model):
     )
     cibepay_terms_page = fields.Char("Terms and conditions page", default="terms")
     formUrl = fields.Char("formUrl", default="")
-
-    # def _get_feature_support(self):
-    #     """Get advanced feature support by provider.
-
-    #     Each provider should add its technical in the corresponding
-    #     key for the following features:
-    #         * fees: support payment fees computations
-    #         * authorize: support authorizing payment (separates
-    #                      authorization and capture)
-    #         * tokenize: support saving payment data in a payment.tokenize
-    #                     object
-    #     """
-    #     res = super(CibepaymentProvider, self)._get_feature_support()
-    #     res["authorize"].append("cibepay")
-    #     res["tokenize"].append("cibepay")
-    #     return res
 
     def _get_cibepay_api(self):
 
@@ -93,53 +70,6 @@ class CibepaymentProvider(models.Model):
             self.cibepay_currency,
         )
 
-    # @api.model
-    # def cibepay_form_generate_values(self, values):
-    #     # base_url = self.get_base_url()
-    #     base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
-
-    #     cibepay = self._get_cibepay_api()
-
-    #     ref = values["reference"].split("-")
-    #     order_id = ref[0]
-    #     order_total = float_repr(float_round(values["amount"], 2) * 100, 0)
-    #     confirm_url = base_url + CIBEPayController.confirm_url
-    #     fail_url = base_url + CIBEPayController.fail_url
-
-    #     register_params = cibepay.get_cibepay_register_params(
-    #         order_id, order_total, confirm_url, fail_url
-    #     )
-
-    #     status = register_params["returnCode"]
-
-    #     if status != 200:
-    #         raise ValidationError(
-    #             "Server access error! Please contact the site administrator."
-    #         )
-
-    #     # TODO Handle this error
-    #     # odoo.addons.payment_cib_ipay.models.cibepay_api:
-    #     # {"errorCode":"1","errorMessage":"Order number is duplicated, order with given order number is processed already"}
-    #     # WARNING odoo.http: Request error! Please contact the site administrator.
-
-    #     if register_params["errorCode"] != "0":
-    #         raise ValidationError(
-    #             "Request error! Please contact the site administrator."
-    #         )
-
-    #     self.formUrl = register_params["formUrl"]
-
-    #     cibepay_tx_values = dict(values)
-    #     cibepay_tx_values.update({"mdOrder": register_params["satimOrderId"]})
-
-    #     return cibepay_tx_values
-
-    # @api.model
-    # def cibepay_get_form_action_url(self):
-    #     self.ensure_one()
-    #     return self.formUrl
-
-    # todo The new functiçon
     def _compute_feature_support_fields(self):
         """Override of `payment` to enable additional features."""
         super()._compute_feature_support_fields()
@@ -164,8 +94,6 @@ class CibepaymentProvider(models.Model):
         self.ensure_one()
 
         try:
-            _logger.info("aaaaaaaaaaaaaaaaaaaaaaaapayload %s gggg %s", payload, self)
-            # cibepay = self._get_cibepay_api()
             response = cibepay.SendReq(endpoint, payload)
 
             try:

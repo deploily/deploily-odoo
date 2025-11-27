@@ -22,15 +22,8 @@ class CibEpayController(http.Controller):
 
     @http.route(_return_url, type="http", methods=["GET"], auth="public")
     def cibepay_return_from_checkout(self, **data):
-        _logger.info(
-            "zzzzzzzzzzzzzzzzzzzzzzzz i am in flutterwave_return_from_checkout"
-        )
-        _logger.info(
-            "Handling redirection from Flutterwave with data:\n%s",
-            pprint.pformat(data),
-        )
         """Process the notification data sent by Flutterwave after redirection from checkout.
-        
+
         :param dict data: The notification data.
         """
         # Handle the notification data.
@@ -54,8 +47,6 @@ class CibEpayController(http.Controller):
     )
     def print_saleorder(self, receiver_mail, **kwargs):
         sale_order_id = request.session.get("sale_last_order_id")
-        _logger.info("ttttttttttttttttttttttttttttttttt")
-        _logger.info(receiver_mail)
         if not sale_order_id:
             return request.redirect("/shop")
 
@@ -64,11 +55,6 @@ class CibEpayController(http.Controller):
 
         from_email = order.company_id.email or "contact@mycompany.com"
 
-        # ✅ Correct PDF generation: pass record, not list
-        _logger.info(
-            "PDF generated for sale order %s",
-            request.env.ref("sale.action_report_saleorder").sudo().search([]),
-        )
         if order:
             pdf, _ = (
                 request.env["ir.actions.report"]

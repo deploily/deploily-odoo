@@ -157,8 +157,6 @@
         </xpath>
         <xpath expr="//div[@class='d-flex justify-content-between align-items-center']" position="inside">
 
-            <!-- <a role="button" class="d-none d-md-inline-block btn btn-primary ms-auto" href="/shop/print" target="_blank" aria-label="Print" title="Print"><i class="fa fa-print me-2"></i>Print</a> -->
-
             <t t-if="tx_sudo.provider_id.code == 'cibepay'">
                 <button type="button" class="d-none d-md-inline-block btn btn-primary ms-auto"
                     data-bs-toggle="modal" data-bs-target="#input_email_box">

@@ -109,7 +109,6 @@ class CibEPayApi:
             "dateTime": objDateTime,
             "amount": response["Amount"] / 100.0,
             "actionCodeDescription": response["actionCodeDescription"],
-            # "authCode": response["authCode"],
             "depositAmount": response["depositAmount"] / 100.00,
             "currency": response["currency"],
             "errorCode": response["ErrorCode"],
@@ -203,23 +202,6 @@ class CibEPayApi:
         }
 
         return refund_status
-
-    # Send a <refund-order> command to the SATIM Checkout server
-    # @param string $order_number the order id in the accepter system
-    # @param double $amount the amount to be refunded
-    #
-    # @return array the status code and body of the response
-    #
-    #
-    # Value	Description (the errorCode field)
-    # 0	No system error
-    # 5	The user must change his password
-    # 5	[orderId] is empty
-    # 6	Wrong order number.
-    # 7	Payment must be in a correct state.
-    # 7	Wrong deposit amount (less than 1 currency unit, e.g. 1 euro).
-    # 7	System error.
-    #
 
     def SendRefundOrder(self, order_id, amount):
 

@@ -96,9 +96,6 @@ class PaymentTransactionCibIPay(models.Model):
             "amount": amount,
             "description": "Test Payment",
         }
-        _logger.info("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
-        _logger.info(payload)
-        _logger.info("mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s", self.provider_id)
         payment_link_data = self.provider_id._cibepay_make_request(
             url, cibepay, payload=payload
         )
@@ -118,9 +115,6 @@ class PaymentTransactionCibIPay(models.Model):
         return rendering_values
 
     def _get_tx_from_notification_data(self, provider_code, notification_data):
-        _logger.info("hhhhhhhhhhhhhhhhhhhhhhhh i am in _get_tx_from_notification_data")
-        _logger.info(self)
-        _logger.info(provider_code)
         """Override of payment to find the transaction based on Flutterwave data.
 
         :param str provider_code: The code of the provider that handled the transaction.
@@ -136,8 +130,6 @@ class PaymentTransactionCibIPay(models.Model):
             satim_order_id = notification_data.get("orderId") or notification_data.get(
                 "txRef"
             )
-            _logger.info("mmmmmmmmmmmmmmmmmmmmmmmmbase_url: %s", self.provider_id)
-
             cibepay = (
                 self.env["payment.provider"]
                 .sudo()
@@ -145,9 +137,6 @@ class PaymentTransactionCibIPay(models.Model):
                 ._get_cibepay_api()
             )
             result = cibepay.get_payment_status(satim_order_id)
-
-            print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrresult")
-            print(result)
             reference = result["orderId"]
 
             tx = self.search(
