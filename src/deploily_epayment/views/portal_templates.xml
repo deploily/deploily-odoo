@@ -102,6 +102,14 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="ps-0">
+                        <strong class="text-black-50">Order number</strong>
+                    </td>
+                    <td class="text-end pe-0" width="100">
+                        <t t-esc="tx_sudo.reference" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="ps-0">
                         <strong class="text-black-50">Approval Code</strong>
                     </td>
                     <td class="text-end pe-0" width="100">
@@ -110,7 +118,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="ps-0">
-                        <strong class="text-black-50">Transaction date an time</strong>
+                        <strong class="text-black-50">Transaction date and time</strong>
                     </td>
                     <td class="text-end pe-0" width="100">
                         <t t-esc="tx_sudo.create_date" />
@@ -124,14 +132,7 @@
                         <t t-esc="tx_sudo.cibepay_resp_code_desc" />
                     </td>
                 </tr>
-                <!-- <tr>
-                    <td colspan="2" class="ps-0">
-                        <strong>Client code</strong>
-                    </td>
-                    <td class="text-end pe-0" width="100">
-                        <t t-esc="tx_sudo.cibepay_resp_code_desc" />
-                    </td>
-                </tr> -->
+
 
             </t>
         </xpath>
