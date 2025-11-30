@@ -2,6 +2,12 @@
 <odoo>
 
     <template id="deploily_signup_fields" inherit_id="auth_signup.fields">
+        <xpath expr="//input[@id='password']" position="after">
+            <small class="form-text text-primary  mb-2" style="font-size: 0.60rem;">
+                Password must contain at least 8 characters, including uppercase and lowercase letters, a number, and a special character.
+            </small>
+            
+        </xpath>
         <xpath expr="//div[@class='mb-3 field-confirm_password']" position="after">
             <div class="mb-3 field-terms d-flex align-items-start gap-2">
                 <input type="checkbox"
@@ -15,6 +21,15 @@
             </div>
         </xpath>
     </template>
+
+    <template id="deploily_login" inherit_id="web.login" name="Log in">
+        <xpath expr="//div[@class='oe_login_buttons text-center gap-1 d-grid mb-1 pt-3']" position="before">
+            <!-- <t t-call="deploily_signup.recaptcha" /> -->
+        </xpath>
+
+    </template>
+
+
     <template id="deploily_signup" inherit_id="auth_signup.signup" name="Sign up">
         <xpath expr="//div[@class='text-center oe_login_buttons d-grid pt-3']" position="before">
             <t t-call="deploily_signup.recaptcha" />

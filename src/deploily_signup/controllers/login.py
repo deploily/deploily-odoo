@@ -32,8 +32,10 @@ from odoo.http import request
 from odoo.osv import expression
 
 from odoo.addons.auth_signup.controllers.main import AuthSignupHome
+from odoo.addons.web.controllers.home import Home
 from odoo.addons.auth_signup.models.res_users import SignupError
 from odoo import http, tools, _
+import re
 
 _logger = logging.getLogger(__name__)
 
@@ -103,6 +105,11 @@ class DeploilySignup(AuthSignupHome):
                 verify_url = "https://www.google.com/recaptcha/api/siteverify"
                 response = requests.post(verify_url, data=payload)
                 result = response.json()
+                # ---- PASSWORD COMPLEXITY VALIDATION ----
+                password = kw.get("password")
+                if not password:
+                    raise UserError("Password is required.")
+                self.validate_password_complexity(password)
                 self.do_signup(qcontext)
 
                 if not result.get("success"):
@@ -127,6 +134,8 @@ class DeploilySignup(AuthSignupHome):
                 )
                 if user_sudo and template:
                     template.sudo().send_mail(user_sudo.id, force_send=True)
+
+                    
                 return self.web_login(*args, **kw)
             except UserError as e:
                 qcontext["error"] = e.args[0]
@@ -167,3 +176,76 @@ class DeploilySignup(AuthSignupHome):
         response.headers["X-Frame-Options"] = "SAMEORIGIN"
         response.headers["Content-Security-Policy"] = "frame-ancestors 'self'"
         return response
+
+
+    def validate_password_complexity(self,password):
+        if len(password) < 8:
+            raise UserError("Password must be at least 8 characters long.")
+        if len(password) > 32:
+            raise UserError("Password cannot exceed 32 characters.")
+        if not re.search(r"[A-Z]", password):
+            raise UserError("Password must contain at least one uppercase letter.")
+        if not re.search(r"[a-z]", password):
+            raise UserError("Password must contain at least one lowercase letter.")
+        if not re.search(r"[0-9]", password):
+            raise UserError("Password must contain at least one number.")
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+            raise UserError("Password must contain at least one special character.")
+
+        if len(password) < 12:
+            raise UserError(
+                "We recommend using at least 12 characters for improved security."
+            )
+        return True
+    
+
+    def validate_username(self, username):
+        """Validates username (login) for length and allowed characters."""
+        if not username:
+            raise UserError("Username is required.")
+        if len(username) < 3 or len(username) > 50:
+            raise UserError("Username must be between 3 and 50 characters.")
+        
+        # Only allow alphanumeric, underscore, dash, dot
+        if not re.match(r"^[a-zA-Z0-9_.-]+$", username):
+            raise UserError(
+                "Username can only contain letters, numbers, underscores (_), dashes (-), and dots (.)"
+            )
+
+    def validate_email(self, email):
+        """Basic email format validation."""
+        if not email:
+            raise UserError("Email is required.")
+        pattern = r"^[^@]+@[^@]+\.[^@]+$"
+        if not re.match(pattern, email):
+            raise UserError("Invalid email format.")
+
+
+class DeploilyLogin(Home):
+
+    @http.route("/web/login", type="http", auth="public", website=True)
+    def web_login(self, **post):
+        if request.httprequest.method == "POST":
+            recaptcha_response = post.get('g-recaptcha-response')
+            website = request.env["website"].sudo().get_current_website()
+
+            secret_key = website.recaptcha_secret_key
+
+            payload = {
+                'secret': secret_key,
+                'response': recaptcha_response,
+                'remoteip': request.httprequest.remote_addr,
+            }
+            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=payload)
+            result = r.json()
+
+            if not result.get('success'):
+                return request.render('web.login', {
+                    'error': 'Please verify that you are not a robot.',
+                    'login': post.get('login'),
+                    'databases': request.env['ir.config_parameter'].sudo().get_param('list_of_databases'),
+                })
+
+        # proceed with normal login
+        return super(DeploilyLogin, self).web_login(**post)
+    
