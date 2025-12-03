@@ -186,13 +186,13 @@ class PaymentTransactionCibIPay(models.Model):
             return tx
         return self
 
-    def _process_notification_data(self, notification_data):
-        """Override of payment to process the transaction based on Flutterwave data.
+    # def _process_notification_data(self, notification_data):
+    #     """Override of payment to process the transaction based on Flutterwave data.
 
-        Note: self.ensure_one()
+    #     Note: self.ensure_one()
 
-        :param dict notification_data: The notification data sent by the provider.
-        :return: None
-        :raise ValidationError: If inconsistent data were received.
-        """
-        super()._process_notification_data(notification_data)
+    #     :param dict notification_data: The notification data sent by the provider.
+    #     :return: None
+    #     :raise ValidationError: If inconsistent data were received.
+    #     """
+    #     super()._process_notification_data(notification_data)
