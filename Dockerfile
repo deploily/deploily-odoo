@@ -19,6 +19,6 @@ RUN apt-get install -y curl software-properties-common
 RUN pip3 install --break-system-packages --ignore-installed --upgrade pip setuptools wheel \
  && pip3 install --break-system-packages pyOpenSSL
 
-COPY src /mnt/extra-addons
+COPY src /mnt/deploily-addons
 
 ENTRYPOINT [ "/entrypoint.sh", "odoo" ]
