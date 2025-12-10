@@ -67,6 +67,7 @@ class DeploilyWebsiteSale(WebsiteSale):
 
         # Parse form data into address values, and extract incompatible data as extra form data.
         address_values, extra_form_data = self._parse_form_data(form_data)
+            
         if 'x_status' in form_data:
             address_values['x_status'] = form_data.get('x_status')
         if 'x_training_source' in form_data:
@@ -89,6 +90,12 @@ class DeploilyWebsiteSale(WebsiteSale):
 
         if not isinstance(error_messages, dict):
             error_messages = {}
+        if not form_data.get('terms_conditions'):
+            invalid_fields.add('terms_conditions')
+            error_messages['terms_conditions'] = [
+                _("You must accept the Terms and Conditions and the Privacy Policy to continue.")
+            ]
+
 
        
         if error_messages:

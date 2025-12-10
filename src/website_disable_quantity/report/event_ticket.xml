@@ -33,7 +33,6 @@
                                         t-as="question" t-out="question.answer_ids[0].name"/>
                                 </div>
                             </div>
-                       
 
 
                             <div t-attf-class="row gy-3 gx-0 #{'o_event_full_page_left_details_bottom_qr_only' if not event.use_barcode else ''}">
@@ -86,9 +85,8 @@
                             
                             </div>
                             
-                         
                         </div>
-                        <div t-attf-class="o_event_full_page_ticket_barcode text-center text-sm-start #{'o_event_full_page_ticket_qr_only' if not event.use_barcode else ''}">
+                        <!-- <div t-attf-class="o_event_full_page_ticket_barcode text-center text-sm-start #{'o_event_full_page_ticket_qr_only' if not event.use_barcode else ''}">
                             <div class="o_event_full_page_ticket_barcode_container px-2">
                                 <t t-if="not attendee or (attendee and attendee.barcode)">
                                     <div t-att-class="'pb-3' if event.use_barcode else ''">
@@ -99,7 +97,7 @@
                                     </t>
                                 </t>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div t-if="not responsive_html" t-field="event.ticket_instructions" class="o_event_full_page_extra_instructions ps-3 pt-3 pb-2 pe-2"/>
                 </div>

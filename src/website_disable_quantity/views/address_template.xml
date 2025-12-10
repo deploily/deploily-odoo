@@ -26,7 +26,7 @@
         </select>
         </div>
         
-        <!-- <div class="mb-3 field-terms o_field_widget d-flex align-items-start gap-2" data-field-name="terms_conditions">
+        <div class="mb-3 field-terms o_field_widget d-flex align-items-start gap-2" data-field-name="terms_conditions">
             <input type="checkbox"
                    name="terms_conditions"
                    id="terms_conditions"
@@ -37,7 +37,7 @@
                 <a t-att-href="terms_conditions_page" target="_blank">Terms of Use</a> and
                 <a t-att-href="privacy_policy_page" target="_blank">Privacy Policy</a>, and you consent to the processing of your personal data in accordance with <strong>Law 18-07 on the Protection of Individuals</strong>.
             </label>
-        </div> -->
+        </div>
         
         </xpath>
     </template>
