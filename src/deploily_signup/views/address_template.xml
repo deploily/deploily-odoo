@@ -2,7 +2,7 @@
 <odoo>
 
 
-    <template id="deploily_address" inherit_id="website_sale.address" name="Address Management">
+    <!-- <template id="deploily_address" inherit_id="website_sale.address" name="Address Management">
         <xpath expr="//div[@class='d-flex flex-column flex-md-row align-items-center justify-content-between mt32 mb32']" position="before">
 
         
@@ -20,7 +20,7 @@
         </div>
         
         </xpath>
-    </template>
+    </template> -->
     
 
 
