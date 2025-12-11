@@ -24,7 +24,7 @@
 
     <template id="deploily_login" inherit_id="web.login" name="Log in">
         <xpath expr="//div[@class='oe_login_buttons text-center gap-1 d-grid mb-1 pt-3']" position="before">
-            <!-- <t t-call="deploily_signup.recaptcha" /> -->
+            <t t-call="deploily_signup.recaptcha" />
         </xpath>
 
     </template>
