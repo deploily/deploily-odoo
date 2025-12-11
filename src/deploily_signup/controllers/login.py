@@ -221,31 +221,5 @@ class DeploilySignup(AuthSignupHome):
             raise UserError("Invalid email format.")
 
 
-class DeploilyLogin(Home):
 
-    @http.route("/web/login", type="http", auth="public", website=True)
-    def web_login(self, **post):
-        if request.httprequest.method == "POST":
-            recaptcha_response = post.get('g-recaptcha-response')
-            website = request.env["website"].sudo().get_current_website()
-
-            secret_key = website.recaptcha_secret_key
-
-            payload = {
-                'secret': secret_key,
-                'response': recaptcha_response,
-                'remoteip': request.httprequest.remote_addr,
-            }
-            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=payload)
-            result = r.json()
-
-            if not result.get('success'):
-                return request.render('web.login', {
-                    'error': 'Please verify that you are not a robot.',
-                    'login': post.get('login'),
-                    'databases': request.env['ir.config_parameter'].sudo().get_param('list_of_databases'),
-                })
-
-        # proceed with normal login
-        return super(DeploilyLogin, self).web_login(**post)
     
