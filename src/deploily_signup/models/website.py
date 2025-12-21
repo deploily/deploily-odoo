@@ -14,7 +14,7 @@ class DeploilyWebsite(models.Model):
     terms_conditions_page = fields.Many2one(
         "website.page", string="Terms and Conditions Page"
     )
-    terms_conditions_text=fields.Char(string="Terms and Conditions Text",default="By creating an account, you confirm that you have read and agree to our")
+    terms_conditions_text=fields.Char(string="Terms and Conditions Text",default="By creating an account, you confirm that you have read and agree to our", translate=True )
     privacy_policy_page = fields.Many2one("website.page", string="Privacy Policy Page")
     recaptcha_site_key = fields.Char(string="reCAPTCHA Site Key")
     recaptcha_secret_key = fields.Char(string="reCAPTCHA Secret Key")
