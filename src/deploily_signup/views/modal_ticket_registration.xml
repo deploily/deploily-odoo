@@ -12,10 +12,8 @@
 
             <label for="terms_conditions" class="form-check-label text-muted small">
                 <t t-esc="website.terms_conditions_text"/>
-                <a t-att-href="terms_conditions_page" target="_blank">Terms of Use</a> and <a t-att-href="privacy_policy_page" target="_blank">Privacy
-                Policy</a>, and you consent to the processing of your personal data in accordance with <strong>Law 18-07 on the Protection of Individuals</strong>. </label>
+                <a t-att-href="terms_conditions_page" target="_blank">Conditions d’utilisation</a> et <a t-att-href="privacy_policy_page" target="_blank">Politique de confidentialité</a>,   et vous consentez au traitement de vos données personnelles conformément à <strong>la loi 18-07 sur la protection des individus</strong>. </label>
         </div>
-        
         
     </xpath>
                 
