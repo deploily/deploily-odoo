@@ -33,7 +33,7 @@
                     </t>
                     <t t-call="payment.summary_item">
                         <t t-set="name" t-value="'provider_id'" />
-                        <t t-set="label">Payment methos</t>
+                        <t t-set="label">Payment method</t>
                         <t t-set="value" t-value="tx.provider_id.name" />
                         <t t-set="include_separator" t-value="True" />
                     </t>
