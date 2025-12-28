@@ -44,7 +44,6 @@ class PaymentTransactionCibIPay(models.Model):
         store=False,
     )
 
-
     def _get_specific_rendering_values(self, processing_values):
         """Override of payment to return Flutterwave-specific rendering values.
 
@@ -69,6 +68,10 @@ class PaymentTransactionCibIPay(models.Model):
             if CibEpayController._return_url.startswith("/")
             else CibEpayController._return_url
         )
+        # ORDER ID
+        ref = self.reference.split("-")
+        order_id = ref[0]
+
         payload = {
             "userName": cibepay.user_name,
             "password": cibepay.password,
@@ -77,7 +80,7 @@ class PaymentTransactionCibIPay(models.Model):
             "jsonParams": cibepay.json_params,
             "returnUrl": return_url,
             "failUrl": return_url,
-            "orderNumber": self.reference,
+            "orderNumber": order_id,
             "amount": amount,
             "description": "Test Payment",
         }
@@ -122,7 +125,18 @@ class PaymentTransactionCibIPay(models.Model):
                 ._get_cibepay_api()
             )
             result = cibepay.get_payment_status(satim_order_id)
+            order_id = result["orderId"]
+            self._cr.execute(
+                """
+                SELECT CAST(SUBSTRING(reference FROM '-\d+$') AS INTEGER) AS suffix
+                FROM payment_transaction WHERE reference LIKE %s ORDER BY suffix
+            """,
+                [order_id + "-%"],
+            )
             reference = result["orderId"]
+            query_res = self._cr.fetchone()
+            if query_res:
+                reference = "{}-{}".format(order_id, -query_res[0])
 
             tx = self.search(
                 [
@@ -180,19 +194,36 @@ class PaymentTransactionCibIPay(models.Model):
                     "cibepay_resp_code": (
                         result["respCode"] if "respCode" in result else False
                     ),
-                    "state": "done" if result["orderStatus"] == 2 else "error",
+                }
+            )
+            if (
+                result["errorCode"] == "2"
+                and result["orderStatus"] == 2
+                and result["respCode"] == "00"
+            ):
+                tx._set_done()
+                return tx
+            error = "Notification d'erreur pour Paiement CIBIPay : {} !".format(
+                reference
+            )
+            if (
+                result["orderStatus"] == 3
+                and result["errorCode"] == "0"
+                and result["respCode"] == "00"
+            ):
+                error += "Votre transaction a été rejetée / Your transaction was rejected / تم رفض معاملتك <br/>"
+            elif not result["respCode_desc"]:
+                error += result["actionCodeDescription"]
+            else:
+                error += result["respCode_desc"]
+
+            tx._set_error(error)
+            order = self.env["sale.order"].search([("name", "=", reference)])
+            order.write({"state": "cancel"})
+            new_order = order.sudo().copy(
+                {
+                    "state": "draft",
                 }
             )
             return tx
         return self
-
-    # def _process_notification_data(self, notification_data):
-    #     """Override of payment to process the transaction based on Flutterwave data.
-
-    #     Note: self.ensure_one()
-
-    #     :param dict notification_data: The notification data sent by the provider.
-    #     :return: None
-    #     :raise ValidationError: If inconsistent data were received.
-    #     """
-    #     super()._process_notification_data(notification_data)
