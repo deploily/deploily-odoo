@@ -21,4 +21,6 @@ RUN pip3 install --break-system-packages --ignore-installed --upgrade pip setupt
 
 COPY src /mnt/deploily-addons
 
+USER odoo
+
 ENTRYPOINT [ "/entrypoint.sh", "odoo" ]
