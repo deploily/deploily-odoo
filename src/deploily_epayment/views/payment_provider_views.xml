@@ -19,8 +19,6 @@
                     <field name="cibepay_udf3" />
                     <field name="cibepay_udf4" />
                     <field name="cibepay_udf5" />
-                    <field name="cibepay_captcha_sitekey" />
-                    <field name="cibepay_captcha_secret" />
                     <field name="cibepay_language" widget="radio" />
                     <field name="cibepay_currency" widget="radio" />
                     <field name="cibepay_terms_page" default="terms" />
