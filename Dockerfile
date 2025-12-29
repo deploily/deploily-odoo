@@ -21,6 +21,9 @@ RUN pip3 install --break-system-packages --ignore-installed --upgrade pip setupt
 
 COPY src /mnt/deploily-addons
 
+RUN mkdir -p /var/lib/odoo/.local/share/Odoo/addons/18.0 \
+ && chown -R odoo:odoo /var/lib/odoo/.local
+
 USER odoo
 
 ENTRYPOINT [ "/entrypoint.sh", "odoo" ]
