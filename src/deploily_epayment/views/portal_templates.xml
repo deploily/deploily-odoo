@@ -102,14 +102,6 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="ps-0">
-                        <strong class="text-black-50">Order number</strong>
-                    </td>
-                    <td class="text-end pe-0" width="100">
-                        <t t-esc="tx_sudo.reference" />
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="ps-0">
                         <strong class="text-black-50">Approval Code</strong>
                     </td>
                     <td class="text-end pe-0" width="100">

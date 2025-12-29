@@ -51,12 +51,6 @@
                     </div>
                     <div class="col-4" t-field="tx.cibepay_mdorder"></div>
                 </div>
-                <div t-if="tx.cibepay_mdorder" class="row">
-                    <div class="col-4">
-                        <strong>Order number</strong>
-                    </div>
-                    <div class="col-4" t-field="tx.reference"></div>
-                </div>
                 <div t-if="tx.create_date" class="row">
                     <div class="col-4">
                         <strong>Transaction date an time</strong>
