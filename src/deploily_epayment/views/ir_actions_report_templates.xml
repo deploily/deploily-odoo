@@ -39,30 +39,32 @@
                 </div>
 
                 <t t-set="tx" t-value="([t for t in doc.transaction_ids if t.state== 'done'] or [None])[0]"></t>
-                <div t-if="tx.provider_code" class="row">
-                    <div class="col-4">
-                        <strong>Payment method</strong>
+                <t t-if="tx">
+                    <div t-if="tx.provider_code" class="row">
+                        <div class="col-4">
+                            <strong>Payment method</strong>
+                        </div>
+                        <div class="col-4" t-field="tx.provider_id.name"></div>
                     </div>
-                    <div class="col-4" t-field="tx.provider_id.name"></div>
-                </div>
-                <div t-if="tx.cibepay_mdorder" class="row">
-                    <div class="col-4">
-                        <strong>Satim order id</strong>
+                    <div t-if="tx.cibepay_mdorder" class="row">
+                        <div class="col-4">
+                            <strong>Satim order id</strong>
+                        </div>
+                        <div class="col-4" t-field="tx.cibepay_mdorder"></div>
                     </div>
-                    <div class="col-4" t-field="tx.cibepay_mdorder"></div>
-                </div>
-                <div t-if="tx.create_date" class="row">
-                    <div class="col-4">
-                        <strong>Transaction date an time</strong>
+                    <div t-if="tx.create_date" class="row">
+                        <div class="col-4">
+                            <strong>Transaction date an time</strong>
+                        </div>
+                        <div class="col-4" t-field="tx.create_date"></div>
                     </div>
-                    <div class="col-4" t-field="tx.create_date"></div>
-                </div>
-                <div t-if="tx.cibepay_resp_code_desc" class="row">
-                    <div class="col-4">
-                        <strong>Response code</strong>
+                    <div t-if="tx.cibepay_resp_code_desc" class="row">
+                        <div class="col-4">
+                            <strong>Response code</strong>
+                        </div>
+                        <div class="col-4" t-field="tx.cibepay_resp_code_desc"></div>
                     </div>
-                    <div class="col-4" t-field="tx.cibepay_resp_code_desc"></div>
-                </div>
+                </t>
             </div>
         </xpath>
         <xpath expr="//div[@class='page']" position="inside">
