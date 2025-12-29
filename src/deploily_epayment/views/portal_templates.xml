@@ -33,7 +33,7 @@
                     </t>
                     <t t-call="payment.summary_item">
                         <t t-set="name" t-value="'provider_id'" />
-                        <t t-set="label">Payment methos</t>
+                        <t t-set="label">Payment method</t>
                         <t t-set="value" t-value="tx.provider_id.name" />
                         <t t-set="include_separator" t-value="True" />
                     </t>
@@ -102,14 +102,6 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="ps-0">
-                        <strong class="text-black-50">Order number</strong>
-                    </td>
-                    <td class="text-end pe-0" width="100">
-                        <t t-esc="tx_sudo.reference" />
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="ps-0">
                         <strong class="text-black-50">Approval Code</strong>
                     </td>
                     <td class="text-end pe-0" width="100">
@@ -144,7 +136,7 @@
                         </span>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <img src="/deploily_epayment/static/src/images/satim_3020.png" height="50" width="110" alt="numero vert SATIM" />
+                        <img src="/deploily_epayment/static/src/images/satim_3020_image.png" height="50" width="110" alt="numero vert SATIM" />
                         <img src="/deploily_epayment/static/src/images/logo_cib.png" height="47" alt="logo CIB" />
                     </div>
                 </div>

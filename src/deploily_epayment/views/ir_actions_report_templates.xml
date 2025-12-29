@@ -39,36 +39,32 @@
                 </div>
 
                 <t t-set="tx" t-value="([t for t in doc.transaction_ids if t.state== 'done'] or [None])[0]"></t>
-                <div t-if="tx.provider_code" class="row">
-                    <div class="col-4">
-                        <strong>Payment method</strong>
+                <t t-if="tx">
+                    <div t-if="tx.provider_code" class="row">
+                        <div class="col-4">
+                            <strong>Payment method</strong>
+                        </div>
+                        <div class="col-4" t-field="tx.provider_id.name"></div>
                     </div>
-                    <div class="col-4" t-field="tx.provider_id.name"></div>
-                </div>
-                <div t-if="tx.cibepay_mdorder" class="row">
-                    <div class="col-4">
-                        <strong>Satim order id</strong>
+                    <div t-if="tx.cibepay_mdorder" class="row">
+                        <div class="col-4">
+                            <strong>Satim order id</strong>
+                        </div>
+                        <div class="col-4" t-field="tx.cibepay_mdorder"></div>
                     </div>
-                    <div class="col-4" t-field="tx.cibepay_mdorder"></div>
-                </div>
-                <div t-if="tx.cibepay_mdorder" class="row">
-                    <div class="col-4">
-                        <strong>Order number</strong>
+                    <div t-if="tx.create_date" class="row">
+                        <div class="col-4">
+                            <strong>Transaction date an time</strong>
+                        </div>
+                        <div class="col-4" t-field="tx.create_date"></div>
                     </div>
-                    <div class="col-4" t-field="tx.reference"></div>
-                </div>
-                <div t-if="tx.create_date" class="row">
-                    <div class="col-4">
-                        <strong>Transaction date an time</strong>
+                    <div t-if="tx.cibepay_resp_code_desc" class="row">
+                        <div class="col-4">
+                            <strong>Response code</strong>
+                        </div>
+                        <div class="col-4" t-field="tx.cibepay_resp_code_desc"></div>
                     </div>
-                    <div class="col-4" t-field="tx.create_date"></div>
-                </div>
-                <div t-if="tx.cibepay_resp_code_desc" class="row">
-                    <div class="col-4">
-                        <strong>Response code</strong>
-                    </div>
-                    <div class="col-4" t-field="tx.cibepay_resp_code_desc"></div>
-                </div>
+                </t>
             </div>
         </xpath>
         <xpath expr="//div[@class='page']" position="inside">
@@ -77,8 +73,8 @@
                     <span> En cas de problème de paiement, veuillez contacter le numéro vert de la SATIM
                     </span>
                 </div>
-                <div class="d-flex justify-content-center">
-                    <img src="/deploily_epayment/static/src/images/satim_3020.png" height="50" width="110" alt="numero vert SATIM" />
+                <div class="d-flex justify-content-center mt-4">
+                    <img src="/deploily_epayment/static/src/images/satim_3020_image.png" height="50" width="110" alt="numero vert SATIM" />
                     <img src="/deploily_epayment/static/src/images/logo_cib.png" height="47" alt="logo CIB" />
                 </div>
             </div>

@@ -49,7 +49,7 @@
                 <t t-set="callback_name">updateSubmit_signup</t>
             </t>
         </xpath>
-       
+
     </template>
     <template id="cibepay_submit_button" inherit_id="payment.submit_button">
         <xpath expr='//button[@name="o_payment_submit_button"]' position='replace'>
@@ -74,6 +74,22 @@
                 </h5>
             </div>
         </t>
+    </template>
+
+    <template id="deploily_epayment.payment" inherit_id="website_sale.payment">
+        <xpath expr='//div[@id="address_on_payment"]' position='before'>
+            <!-- <t t-set="providers" t-value="[acq.provider for acq in acquirers if acq.state in ['test', 'enabled']]" /> -->
+            <!-- <t t-if="'cibipay' in providers"> -->
+            <div class="mt-4 ">
+                <h4 class="fs-6 small text-uppercase fw-bolder">
+                    <span> Numéro de la Commande : </span>
+                    <b>
+                        <em t-esc='website_sale_order.name' />
+                    </b>
+                </h4>
+            </div>
+            <!-- </t> -->
+        </xpath>
     </template>
 
 
