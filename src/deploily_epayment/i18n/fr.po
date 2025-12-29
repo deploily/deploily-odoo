@@ -1,0 +1,498 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* deploily_epayment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0-20251008\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-24 10:21+0000\n"
+"PO-Revision-Date: 2025-12-24 10:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "2023-12-31"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid ""
+"<i class=\"fa fa-envelope\"/>\n"
+"                                            <span> Envoyer </span>"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "<i class=\"fa fa-envelope\"/> Send mail"
+msgstr "<i class=\"fa fa-envelope\"/> Envoyer un email"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid ""
+"<span> En cas de problème de paiement, veuillez contacter le numéro vert de la SATIM\n"
+"                        </span>"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid ""
+"<span> En cas de problème de paiement, veuillez contacter le numéro vert de la SATIM\n"
+"                    </span>"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_method_form
+msgid "<span> J'accepte les </span>"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.payment_cibepay_sale_confirmation_sendmail
+msgid "<span> Un mail a été transmis à l'adresse suivant : </span>"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "<strong class=\"text-black-50\">Approval Code</strong>"
+msgstr "<strong class=\"text-black-50\">Code d’autorisation</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "<strong class=\"text-black-50\">Order number</strong>"
+msgstr "Numéro de commande"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "<strong class=\"text-black-50\">Payment method</strong>"
+msgstr "Mode de paiement"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "<strong class=\"text-black-50\">Response code</strong>"
+msgstr "<strong class=\"text-black-50\">Code de réponse</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "<strong class=\"text-black-50\">Satim order id</strong>"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "<strong class=\"text-black-50\">Transaction date and time</strong>"
+msgstr "<strong class=\"text-black-50\">Date et heure de la transaction</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Expiration</strong>"
+msgstr "<strong>Date d’expiration</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Issued Date</strong>"
+msgstr "<strong>Date d’émission</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Order Date</strong>"
+msgstr "<strong>Date de commande</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Order number</strong>"
+msgstr "<strong>Numéro de commande</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Payment method</strong>"
+msgstr "<strong>Mode de paiement</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Quotation Date</strong>"
+msgstr "<strong>Date du devis</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Response code</strong>"
+msgstr "<strong>Code de réponse</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Commercial</strong>"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Satim order id</strong>"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Transaction date an time</strong>"
+msgstr "<strong>ID de commande SATIM</strong>"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.payment_provider_form
+msgid ""
+"<strong>Warning:</strong> To capture the amount manually, you also need to "
+"set the Capture Delay to manual on your New Adyen account settings."
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "<strong>Your Reference</strong>"
+msgstr "Votre référence"
+
+#. module: deploily_epayment
+#: model:ir.model.fields.selection,name:deploily_epayment.selection__payment_provider__cibepay_currency__012
+msgid "Algerian Dinars (DZD)"
+msgstr "Dinar algérien (DZD)"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_state_header
+msgid "An error occurred during the processing of your payment."
+msgstr "Une erreur est survenue lors du traitement de votre paiement."
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_state_header
+msgid "An error occurred while saving your payment method."
+msgstr "Une erreur est survenue lors de l’enregistrement de votre moyen de paiement."
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_status
+msgid "Approval Code"
+msgstr "Code d’autorisation"
+
+#. module: deploily_epayment
+#: model:ir.model.fields.selection,name:deploily_epayment.selection__payment_provider__cibepay_language__ar
+msgid "Arabic"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields.selection,name:deploily_epayment.selection__payment_provider__code__cibepay
+msgid "CIB Epay"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:payment.method,name:deploily_epayment.payment_method_cibepay
+#: model:payment.provider,name:deploily_epayment.payment_provider_cibepay
+msgid "CIB/EDAHABIYA Payment Gateway"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__code
+msgid "Code"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_action_code
+msgid "Code d'action"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_error_code
+msgid "Code d'erreur"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_approval_code
+msgid "Code d'pprobation"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_action_code_description
+msgid "Code de description d'action"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_resp_code
+msgid "Code de réponse"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.payment_cibepay_sale_confirmation_sendmail
+msgid "Confirmation de mail"
+msgstr ""
+
+#. module: deploily_epayment
+#. odoo-python
+#: code:addons/deploily_epayment/models/payment_provider.py:0
+msgid "Could not establish the connection to the API."
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_currency
+msgid "Curency"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_resp_code_desc
+msgid "Description du code de réponse"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "Email de destination"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields.selection,name:deploily_epayment.selection__payment_provider__cibepay_language__en
+msgid "English"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+msgid "Envoyer par mail"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_expiration
+msgid "Expiration"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields.selection,name:deploily_epayment.selection__payment_provider__cibepay_language__fr
+msgid "French"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_ip
+msgid "IP"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_language
+msgid "Language"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.payment_provider_form
+msgid "Learn More"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_error_message
+msgid "Message d'erreur"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "Mitchell Admin"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_deposit_amount
+msgid "Montant déposé"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_cardholder_name
+msgid "Nom du propriétaire de la carte"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_pan
+msgid "PAN"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_password
+msgid "Password"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_submit_button
+msgid "Pay now"
+msgstr "Payer maintenant"
+
+#. module: deploily_epayment
+#: model:ir.model,name:deploily_epayment.model_payment_provider
+msgid "Payment Provider"
+msgstr "Fournisseur de paiement"
+
+#. module: deploily_epayment
+#: model:ir.model,name:deploily_epayment.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Transaction de paiement"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_status
+msgid "Payment method"
+msgstr "Mode de paiement"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__provider_code
+msgid "Provider Code"
+msgstr "Code du fournisseur"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_transaction_form
+msgid "Refund"
+msgstr "Rembourser"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_status
+msgid "Response code"
+msgstr "Code de réponse"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_svfe_response
+msgid "Réponse SVFE"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_mdorder
+msgid "SATIM order ID"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "SO0000"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_status
+msgid "Satim order id"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_order_status
+msgid "Statut de la commande"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_terminal_id
+msgid "Terminal ID"
+msgstr "ID de Terminal"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_terms_page
+msgid "Terms and conditions page"
+msgstr "Page des conditions générales"
+
+#. module: deploily_epayment
+#. odoo-python
+#: code:addons/deploily_epayment/models/payment_provider.py:0
+msgid ""
+"The communication with the API failed. Flutterwave gave us the following "
+"information: '%s'"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,help:deploily_epayment.field_payment_provider__code
+#: model:ir.model.fields,help:deploily_epayment.field_payment_transaction__provider_code
+msgid "The technical code of this payment provider."
+msgstr "Le code technique de ce fournisseur de paiement."
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_status
+msgid "Transaction date an time"
+msgstr "Date et heure de la transaction"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_udf1
+msgid "User defined value 1"
+msgstr "Valeur personnalisée 1"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_udf2
+msgid "User defined value 2"
+msgstr "Valeur personnalisée 2"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_udf3
+msgid "User defined value 3"
+msgstr "Valeur personnalisée 3"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_udf4
+msgid "User defined value 4"
+msgstr "Valeur personnalisée 4"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_udf5
+msgid "User defined value 5"
+msgstr "Valeur personnalisée 5"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_username
+msgid "User name"
+msgstr "Nom d'utilisateur"
+
+#. module: deploily_epayment
+#: model_terms:payment.provider,cancel_msg:deploily_epayment.payment_provider_cibepay
+msgid "Votre paiement a été annulé."
+msgstr "Votre paiement a été annulé."
+
+#. module: deploily_epayment
+#: model_terms:payment.provider,auth_msg:deploily_epayment.payment_provider_cibepay
+msgid "Votre paiement a été autorisé."
+msgstr "Votre paiement a été autorisé."
+
+#. module: deploily_epayment
+#: model_terms:payment.provider,pending_msg:deploily_epayment.payment_provider_cibepay
+msgid ""
+"Votre paiement a été traité avec succès mais est en attente de validation."
+msgstr "Votre paiement a été traité avec succès mais est en attente de validation."
+
+#. module: deploily_epayment
+#: model_terms:payment.provider,done_msg:deploily_epayment.payment_provider_cibepay
+msgid "Votre paiement a été traité avec succès."
+msgstr "Votre paiement a été traité avec succès."
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_confirmation_status
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_status
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_state_header
+msgid ""
+"Votre transaction a été rejetée/ Your transaction was rejected/ تم رفض "
+"معاملتك"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_transaction__cibepay_auth_code
+msgid "code d'autentification"
+msgstr "Code d'autentification"
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_method_form
+msgid "conditions d'utilisation"
+msgstr "Conditions d'utilisation"
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__formUrl
+msgid "formUrl"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_submit_button
+msgid "logo CIB"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_confirmation
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_report_saleorder_document
+msgid "numéro vert SATIM"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_captcha_secret
+msgid "reCaptcha v2 secret key"
+msgstr ""
+
+#. module: deploily_epayment
+#: model:ir.model.fields,field_description:deploily_epayment.field_payment_provider__cibepay_captcha_sitekey
+msgid "reCaptcha v2 site key"
+msgstr ""
+
+#. module: deploily_epayment
+#: model_terms:ir.ui.view,arch_db:deploily_epayment.cibepay_payment_method_form
+msgid "updateSubmit_signup"
+msgstr ""

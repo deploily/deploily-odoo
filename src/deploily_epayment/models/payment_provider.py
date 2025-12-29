@@ -30,8 +30,6 @@ class CibepaymentProvider(models.Model):
     cibepay_udf4 = fields.Char("User defined value 4", default="")
     cibepay_udf5 = fields.Char("User defined value 5", default="")
 
-    cibepay_captcha_sitekey = fields.Char("reCaptcha v2 site key", default="")
-    cibepay_captcha_secret = fields.Char("reCaptcha v2 secret key", default="")
     cibepay_language = fields.Selection(
         [("fr", "French"), ("ar", "Arabic"), ("en", "English")],
         string="Language",
