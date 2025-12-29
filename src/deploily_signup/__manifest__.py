@@ -11,7 +11,7 @@
     "category": "Uncategorized",
     "version": "0.1",
     # any module necessary for this one to work correctly
-    "depends": ["base", "contacts","website", "auth_signup","website_event"],
+    "depends": ["base", "contacts","website", "auth_signup","website_event","website_sale"],
     # always loaded
     "data": [
         "views/signup_login_templates.xml",

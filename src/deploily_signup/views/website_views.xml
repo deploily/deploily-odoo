@@ -12,18 +12,14 @@
                     <page string="Legal Pages" name="page_legal_pages">
                         <group>
                             <field name="terms_conditions_text"></field>
-                            <field name="terms_conditions_page"
-                            />
-                            <field name="privacy_policy_page"
-                            />
+                            <field name="terms_conditions_page" />
+                            <field name="privacy_policy_page" />
                         </group>
                     </page>
                     <page string="reCAPTCHA keys" name="page_recaptcha">
                         <group>
-                            <field name="recaptcha_site_key"
-                            />
-                            <field name="recaptcha_secret_key"
-                            />
+                            <field name="recaptcha_site_key" />
+                            <field name="recaptcha_secret_key" />
                         </group>
                     </page>
                 </xpath>
