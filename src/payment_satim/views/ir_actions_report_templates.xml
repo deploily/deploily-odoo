@@ -74,8 +74,8 @@
                     </span>
                 </div>
                 <div class="d-flex justify-content-center mt-4">
-                    <img src="/deploily_epayment/static/src/images/satim_3020_image.png" height="50" width="110" alt="numero vert SATIM" />
-                    <img src="/deploily_epayment/static/src/images/logo_cib.png" height="47" alt="logo CIB" />
+                    <img src="/payment_satim/static/src/images/satim_3020_image.png" height="50" width="110" alt="numero vert SATIM" />
+                    <img src="/payment_satim/static/src/images/logo_cib.png" height="47" alt="logo CIB" />
                 </div>
             </div>
         </xpath>

@@ -45,7 +45,7 @@
             />
         </xpath>
         <xpath expr='//div[@class="o-checkbox form-check m-0"]' position='inside'>
-            <t t-call="deploily_signup.recaptcha">
+            <t t-call="website_terms.recaptcha">
                 <t t-set="callback_name">updateSubmit_signup</t>
             </t>
         </xpath>
@@ -58,7 +58,7 @@
                 type="submit"
                 class="btn btn-primary w-100 w-md-auto ms-auto px-5"
                 disabled="true"
-            > Pay now <img id="cib_logo" class="cib-hidden" src="/deploily_epayment/static/src/images/logo_cib.png" height="37" alt="logo CIB" />
+            > Pay now <img id="cib_logo" class="cib-hidden" src="/payment_satim/static/src/images/logo_cib.png" height="37" alt="logo CIB" />
             </button>
 
         </xpath>
@@ -76,7 +76,7 @@
         </t>
     </template>
 
-    <template id="deploily_epayment.payment" inherit_id="website_sale.payment">
+    <template id="payment_satim.payment" inherit_id="website_sale.payment">
         <xpath expr='//div[@id="address_on_payment"]' position='before'>
             <!-- <t t-set="providers" t-value="[acq.provider for acq in acquirers if acq.state in ['test', 'enabled']]" /> -->
             <!-- <t t-if="'cibipay' in providers"> -->

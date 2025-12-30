@@ -13,13 +13,7 @@
     "category": "Accounting/Payment Providers",
     "version": "2.0",
     # any module necessary for this one to work correctly
-    "depends": [
-        "payment",
-        "deploily_signup",
-        "sale_management",
-        "sale",
-        "website_sale",
-    ],
+    "depends": ["payment", "sale_management", "sale", "website_sale", "website_terms"],
     # always loaded
     "data": [
         "views/payment_provider_views.xml",
@@ -32,8 +26,8 @@
     ],
     "assets": {
         "web.assets_frontend": [
-            "deploily_epayment/static/src/js/**",
-            "deploily_epayment/static/src/scss/**",
+            "payment_satim/static/src/js/**",
+            "payment_satim/static/src/scss/**",
         ],
     },
     # "installable": True,

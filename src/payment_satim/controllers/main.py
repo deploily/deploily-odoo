@@ -104,6 +104,6 @@ class CibEpayController(http.Controller):
 
         values = {"mail_address": receiver_mail}
         return request.render(
-            "deploily_epayment.payment_cibepay_sale_confirmation_sendmail",
+            "payment_satim.payment_cibepay_sale_confirmation_sendmail",
             values,
         )

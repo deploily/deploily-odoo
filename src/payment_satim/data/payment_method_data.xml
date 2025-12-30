@@ -5,7 +5,7 @@
         <field name="name">CIB/EDAHABIYA Payment Gateway</field>
         <field name="code">cibepay</field>
         <field name="sequence">1030</field>
-        <field name="image" type="base64" file="deploily_epayment/static/src/images/logo_cib.png" />
+        <field name="image" type="base64" file="payment_satim/static/src/images/logo_cib.png" />
         <field name="support_tokenization">True</field>
         <field name="support_express_checkout">False</field>
         <field name="support_refund">partial</field>
