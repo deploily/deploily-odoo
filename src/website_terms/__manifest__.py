@@ -14,7 +14,7 @@
     "depends": [
         "base",
         "auth_signup",
-        # "contacts",
+        "contacts",
         "website",
     ],
     # always loaded
