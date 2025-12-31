@@ -19,6 +19,12 @@ RUN apt-get install -y curl software-properties-common
 RUN pip3 install --break-system-packages --ignore-installed --upgrade pip setuptools wheel \
  && pip3 install --break-system-packages pyOpenSSL
 
+ENV TZ=Africa/Algiers
+
+RUN apt-get update && apt-get install -y tzdata && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
 COPY src /mnt/deploily-addons
 
 # RUN mkdir -p /var/lib/odoo/.local/share/Odoo/addons/18.0 \
