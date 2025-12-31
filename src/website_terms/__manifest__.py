@@ -21,7 +21,7 @@
     "data": [
         "views/website_views.xml",
         "views/signup_login_templates.xml",
-        # "views/menus.xml",
+        "views/menus.xml",
         # "views/newsletter_template.xml",
         "data/contactus_templates.xml",
     ],
