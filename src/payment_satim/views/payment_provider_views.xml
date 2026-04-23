@@ -9,6 +9,7 @@
             <group name="provider_credentials" position='inside'>
                 <group invisible="code != 'cibepay'">
                     <field name="cibepay_is_satim_test" widget="boolean_toggle" />
+                    <field name="cibepay_is_emulator" widget="boolean_toggle" />
                     <field name="cibepay_username"
                         required="code == 'cibepay' and state != 'disabled'" />
                     <field name="cibepay_password"

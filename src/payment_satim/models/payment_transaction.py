@@ -89,10 +89,18 @@ class PaymentTransactionCibIPay(models.Model):
 
         # Extract the payment link URL and embed it in the redirect form.
         if payment_link_data and payment_link_data["errorCode"] == 0:
-            rendering_values = {
-                "api_url": payment_link_data["formUrl"],
-                "mdOrder": payment_link_data.get("orderId"),
-            }
+            if cibepay.is_emulator:  # ← check emulator mode
+                rendering_values = {
+                    "api_url": payment_link_data["formUrl"],  # use formUrl directly (has orderId)
+                    "orderId": payment_link_data.get("orderId"),
+                }
+
+            else:
+            
+                rendering_values = {
+                    "api_url": payment_link_data["formUrl"],
+                    "mdOrder": payment_link_data.get("orderId"),
+                }
         else:
             rendering_values = {
                 "errorCode": payment_link_data["errorCode"],

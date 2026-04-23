@@ -42,10 +42,20 @@ class CibepaymentProvider(models.Model):
     formUrl = fields.Char("formUrl", default="")
 
     cibepay_is_satim_test = fields.Boolean(default=False, string="SATIM Test mode")
+    cibepay_is_emulator = fields.Boolean(default=False, string="EMULATOR  mode")
+
+    @api.onchange('cibepay_is_satim_test')
+    def _onchange_satim_test(self):
+        if self.cibepay_is_satim_test:
+            self.cibepay_is_emulator = False
+
+    @api.onchange('cibepay_is_emulator')
+    def _onchange_emulator(self):
+        if self.cibepay_is_emulator:
+            self.cibepay_is_satim_test = False
 
     def _get_cibepay_api(self):
 
-       
         json_params = json.dumps({
             "force_terminal_id": self.cibepay_terminal_id,
             "udf1": self.cibepay_udf1,
@@ -60,6 +70,7 @@ class CibepaymentProvider(models.Model):
             self.cibepay_password,
             json_params,
             self.cibepay_is_satim_test,
+            self.cibepay_is_emulator,
             self.cibepay_language,
             self.cibepay_currency,
         )

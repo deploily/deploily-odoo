@@ -18,6 +18,7 @@ class CibEPayApi:
         password,
         json_params,
         is_satim_test=False,
+        is_emulator=False,
         language="fr",
         currency="012",
     ):
@@ -26,13 +27,26 @@ class CibEPayApi:
         self.language = language
         self.currency = currency
         self.is_satim_test = is_satim_test
+        self.is_emulator = is_emulator
         self.json_params = json_params
 
     def get_cibepay_urls(self):
-        """CIB IPay URLs"""
-        environment = "test2" if self.is_satim_test else "epg"
-
-        return {
+        if self.is_emulator:
+            _logger.info(f"Using CibEpay API URLs for EMULATOR TEST MODE")
+            return {
+            "cibepay_register_url": f"http://172.17.0.1:8000/api/payment/rest/register.do?",
+            "cibepay_confirm_order_url": f"http://172.17.0.1:8000/api/payment/rest/public/acknowledgeTransaction.do?",
+            "cibepay_refund_url": f"http://172.17.0.1:8000/api/payment/rest/refund.do?",
+        #        "cibepay_register_url": f"https://epay-emulator.deploily.app/api/payment/rest/register.do?",
+        #     "cibepay_confirm_order_url": f"https://epay-emulator.deploily.app/api/payment/rest/public/acknowledgeTransaction.do?",
+        #     "cibepay_refund_url": f"https://epay-emulator.deploily.app/api/payment/rest/refund.do?",
+        }
+            
+        else:
+            environment = "test2" if self.is_satim_test else "epg"
+            _logger.info(f"Using CibEpay API URLs for environment: {environment}")
+            """CIB IPay URLs"""
+            return {
             "cibepay_register_url": f"https://{environment}.satim.dz/payment/rest/register.do?",
             "cibepay_confirm_order_url": f"https://{environment}.satim.dz/payment/rest/public/acknowledgeTransaction.do?",
             "cibepay_refund_url": f"https://{environment}2.satim.dz/payment/rest/refund.do?",
@@ -88,6 +102,7 @@ class CibEPayApi:
         return self.SendReq(base_url, params)
 
     def get_payment_status(self, satim_order_id):
+
 
         objDateTime = datetime.now(pytz.timezone("Africa/Algiers")).strftime(
             "%d/%m/%Y %H:%M:%S"
@@ -222,6 +237,9 @@ class CibEPayApi:
     # Utility function to manage HTTP server requests
     #
     def SendReq(self, url, params):
+        if self.is_emulator:
+            _logger.info(f"EMULATOR TEST MODE: Simulating request to CibEpay API at {url} with data:\n{json.dumps(params, indent=2)}")
+            
         if (self.is_satim_test):
             _logger.info(f"Sending request to CibEpay API at {url} with data:\n{json.dumps(params, indent=2)}")
         try:

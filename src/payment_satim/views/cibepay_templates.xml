@@ -4,12 +4,25 @@
     <template id="cibepay_form">
         <div>
             <input type="hidden" name="data_set" t-att-data-action-url="tx_url" data-remove-me="" />
+            <!-- <input type="hidden" name="mdOrder" t-att-value="mdOrder" /> -->
+              <t t-if="orderId">
+            <input type="hidden" name="orderId" t-att-value="orderId" />
+        </t>
+        <t t-else="">
             <input type="hidden" name="mdOrder" t-att-value="mdOrder" />
+        </t>
+           
         </div>
     </template>
     <template id="cibepay_redirect_form">
         <form t-att-action="api_url" method="get">
+
+            <t t-if="orderId">
+            <input type="hidden" name="orderId" t-att-value="orderId" />
+        </t>
+        <t t-else="">
             <input type="hidden" name="mdOrder" t-att-value="mdOrder" />
+        </t>
             <input type="hidden" name="language" value="fr" />
             <!-- <div class="alert alert-danger" role="alert">
                 Payment redirection failed.
