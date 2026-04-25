@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<odoo>
+    <template id="l10n_dz_info_external_layout__inherit_background" inherit_id="web.external_layout_background">
+        <xpath expr="//span[contains(@t-field, 'company.partner_id')]" position="after">
+                
+                <p>
+                    <strong>R.C:  </strong>
+                    <span t-field="company.partner_id.rc" />
+                
+                <br/>
+                
+                    <strong>N.I.F:  </strong>
+                    <span t-field="company.partner_id.nif" />
+                
+                <br/>
+                
+                    <strong>N.I.S:  </strong>
+                    <span t-field="company.partner_id.nis" />
+                
+                <br/>
+                
+                    <strong>Article d'imposition:  </strong>
+                    <span t-field="company.partner_id.ai" />
+                </p>
+            </xpath>
+        
+    </template>
+
+     <template id="l10n_dz_info_external_layout__inherit_boxed" inherit_id="web.external_layout_boxed">
+        <xpath expr="//span[contains(@class, 'company_address')]" position="after">
+               
+
+                <p>
+                    <strong>R.C:  </strong>
+                    <span t-field="company.partner_id.rc" />
+                
+                <br/>
+                
+                    <strong>N.I.F:  </strong>
+                    <span t-field="company.partner_id.nif" />
+                
+                <br/>
+                
+                    <strong>N.I.S:  </strong>
+                    <span t-field="company.partner_id.nis" />
+                
+                <br/>
+                
+                    <strong>Article d'imposition:  </strong>
+                    <span t-field="company.partner_id.ai" />
+                </p>
+            
+            </xpath>
+        
+    </template>
+
+
+    <template id="l10n_dz_info_external_layout__inherit_standard" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[contains(@t-field, 'company.partner_id')]" position="after">
+                
+                <p>
+                    <strong>R.C:  </strong>
+                    <span t-field="company.partner_id.rc" />
+                
+                <br/>
+                
+                    <strong>N.I.F:  </strong>
+                    <span t-field="company.partner_id.nif" />
+                
+                <br/>
+                
+                    <strong>N.I.S:  </strong>
+                    <span t-field="company.partner_id.nis" />
+                
+                <br/>
+                
+                    <strong>Article d'imposition:  </strong>
+                    <span t-field="company.partner_id.ai" />
+                </p>
+            </xpath>
+        
+    </template>
+
+
+</odoo>

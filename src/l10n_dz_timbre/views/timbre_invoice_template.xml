@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	
+	<data>
+		<template id="report_invoice_document_with_timbre" inherit_id="account.report_invoice_document">
+			<xpath expr="//tr[@class='border-black o_total']" position="after">
+                <t t-if="o.currency_id.name == 'DZD'">
+                    <tr class="border-black o_total">
+                        <td>Timbre</td>
+                        <td class="text-right">
+                            <span class="text-nowrap" t-field="o.amount_timbre" />
+                        </td>
+                    </tr>
+                    <tr class="border-black o_total">
+                        <td>
+                            <strong>Montant avec Timbre (si en espèce)</strong>
+                        </td>
+                        <td class="text-right">
+                            <span class="text-nowrap" t-field="o.amount_total_timbre" />
+                        </td>
+                    </tr>
+                </t> 
+			</xpath>
+		</template>
+	</data>
+
+</odoo>

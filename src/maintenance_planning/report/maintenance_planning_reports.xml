@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- reports for maintenance.request -->
+
+        <record id="maintenance_planning_request_report" model="ir.actions.report">
+            <field name="name">Maintenance request (PDF)</field>
+            <field name="model">maintenance.request</field>
+            <field name="report_type">qweb-pdf</field>
+            <!-- <field name="report_type">qweb-html</field> -->
+            <field name="report_name">maintenance_planning.request_report</field>
+            <field name="report_file">maintenance_planning.request_report</field>
+            <field name="print_report_name">'Maintenance request - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="maintenance.model_maintenance_request" />
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="maintenance_planning.request_report_template">
+            <div class="oe_structure" />
+
+            <h4 class="mt16">
+                <span>Maintenance request # </span>
+                <span t-field="request.display_name" />
+            </h4>
+            <br />
+            <t t-if="request.done">
+                <div t-attf-class="font-weight-bold text-center alert-success">
+                                    Request DONE
+                                </div>
+            </t>
+            <t t-if="not request.done">
+                <div t-attf-class="font-weight-bold text-center alert-warning">
+                    <span t-field="request.stage_id" />
+                </div>
+            </t>
+            <t t-if="request.archive">
+                <div t-attf-class="font-weight-bold text-center alert-danger">
+                                    Request Archived
+                                </div>
+            </t>
+
+            <div class="row mt32 mb32" id="informations">
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Equipment:</strong>
+                    <p class="m-0" t-field="request.equipment_id" />
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Category:</strong>
+                    <p class="m-0" t-field="request.category_id" />
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Maintenace type:</strong>
+                    <p class="m-0" t-field="request.maintenance_type" />
+                </div>
+            </div>
+            <div class="row mt32 mb32" id="informations">
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Operation:</strong>
+                    <p class="m-0" t-field="request.maintenance_operation_id" />
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Team:</strong>
+                    <p class="m-0" t-field="request.maintenance_team_id" />
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Responsible:</strong>
+                    <p class="m-0" t-field="request.user_id" />
+                </div>
+            </div>
+            <div class="row mt32 mb32" id="informations">
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Created by User:</strong>
+                    <p class="m-0" t-field="request.owner_user_id" />
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Technician:</strong>
+                    <p class="m-0" t-field="request.user_id" />
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Priority:</strong>
+                    <p class="m-0" t-field="request.priority" />
+                </div>
+            </div>
+            <div class="row mt32 mb32" id="informations">
+                <div class="col-auto col-4 mw-100 mb-2">
+                    <strong>Duration:</strong>
+                    <p class="m-0" t-field="request.duration" />
+                </div>
+                <div class="col-auto col-4 mw-100 mb-2">
+                    <strong>Request date:</strong>
+                    <p class="m-0" t-field="request.request_date" />
+                </div>
+                <div class="col-auto col-4 mw-100 mb-2">
+                    <strong>Schedule date:</strong>
+                    <p class="m-0" t-field="request.schedule_date" />
+                </div>
+                <div class="col-auto col-4 mw-100 mb-2">
+                    <strong>Close date:</strong>
+                    <p class="m-0" t-field="request.close_date" />
+                </div>
+            </div>
+
+            <div class="row mt32 mb32" id="informations">
+                <div class="col-auto col-1 mw-100 mb-2">
+                    <strong>Description:</strong>
+                    <p class="m-0" t-field="request.description" />
+                </div>
+            </div>
+
+            <h5 class="mt16">
+                <span>Required material</span>
+            </h5>
+
+
+            <table class="table table-sm o_main_table">
+                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                <thead style="display: table-row-group">
+                    <tr>
+                        <th name="th_product" class="text-left">Material</th>
+                        <th name="th_quantity" class="text-center">Required quantity</th>
+                        <th name="th_comment" class="text-left">Comment</th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-foreach="request.required_material_ids" t-as="material">
+                        <tr>
+                            <td name="td_product">
+                                <span t-field="material.product_id" />
+                            </td>
+                            <td name="td_quantity" class="text-center">
+                                <span t-field="material.qty_required" />
+                            </td>
+                            <td name="td_comment">
+                                <span t-field="material.comment" />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </template>
+
+        <template id="maintenance_planning.request_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <t t-foreach="docs" t-as="request">
+                            <t t-call="maintenance_planning.request_report_template">
+                                <t t-set="request" t-value="request" />
+                            </t>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!-- reports for maintenance.equipment -->
+
+        <record id="maintenance_planning_equipment_report" model="ir.actions.report">
+            <field name="name">Equipement (PDF)</field>
+            <field name="model">maintenance.equipment</field>
+            <!-- <field name="report_type">qweb-pdf</field> -->
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">maintenance_planning.equipment_report</field>
+            <field name="report_file">maintenance_planning.equipment_report</field>
+            <field name="print_report_name">'Equipement - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="maintenance.model_maintenance_equipment" />
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="maintenance_planning.equipment_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <t t-foreach="docs" t-as="equipment">
+                            <h4 class="mt16">
+                                <span>Equipement # </span>
+                                <span t-field="equipment.display_name" />
+                            </h4>
+
+                            <div class="row mt32 mb32" id="informations">
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Category:</strong>
+                                    <p class="m-0" t-field="equipment.category_id" />
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Supplier:</strong>
+                                    <p class="m-0" t-field="equipment.partner_id" />
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Supplier reference:</strong>
+                                    <p class="m-0" t-field="equipment.partner_ref" />
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32" id="informations">
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Technician:</strong>
+                                    <p class="m-0" t-field="equipment.technician_user_id" />
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Owner:</strong>
+                                    <p class="m-0" t-field="equipment.owner_user_id" />
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Maintenance Team:</strong>
+                                    <p class="m-0" t-field="equipment.maintenance_team_id" />
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32" id="informations">
+                                <div class="col-auto col-4 mw-100 mb-2">
+                                    <strong>Model:</strong>
+                                    <p class="m-0" t-field="equipment.model" />
+                                </div>
+                                <div class="col-auto col-4 mw-100 mb-2">
+                                    <strong>Serial Number:</strong>
+                                    <p class="m-0" t-field="equipment.serial_no" />
+                                </div>
+                                <div class="col-auto col-4 mw-100 mb-2">
+                                    <strong>Location:</strong>
+                                    <p class="m-0" t-field="equipment.location" />
+                                </div>
+                                <div class="col-auto col-4 mw-100 mb-2">
+                                    <strong>Cost:</strong>
+                                    <p class="m-0" t-field="equipment.cost" />
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32" id="informations">
+                                <div class="col-auto col-4 mw-100 mb-2">
+                                    <strong>Assigned Date:</strong>
+                                    <p class="m-0" t-field="equipment.assign_date" />
+                                </div>
+                                <div class="col-auto col-4 mw-100 mb-2">
+                                    <strong>Effective Date:</strong>
+                                    <p class="m-0" t-field="equipment.effective_date" />
+                                </div>
+                                <div class="col-auto col-4 mw-100 mb-2">
+                                    <strong>Warranty Expiration Date:</strong>
+                                    <p class="m-0" t-field="equipment.warranty_date" />
+                                </div>
+                                <div class="col-auto col-4 mw-100 mb-2">
+                                    <strong>Scrap Date:</strong>
+                                    <p class="m-0" t-field="equipment.scrap_date" />
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32" id="informations">
+                                <div class="col-auto col-2 mw-100 mb-2">
+                                    <strong>Maintenance Count:</strong>
+                                    <p class="m-0" t-field="equipment.maintenance_count" />
+                                </div>
+                                <div class="col-auto col-2 mw-100 mb-2">
+                                    <strong>Current Maintenance:</strong>
+                                    <p class="m-0" t-field="equipment.maintenance_open_count" />
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32" id="informations">
+                                <div class="col-auto col-12 mw-100 mb-2">
+                                    <strong>Note:</strong>
+                                    <p class="m-0" t-field="equipment.note" />
+                                </div>
+                            </div>
+
+                            <h5 class="mt16">
+                                <span>Mainetnance operations </span>
+                            </h5>
+
+                            <table class="table table-sm o_main_table">
+                                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                                <thead style="display: table-row-group">
+                                    <tr>
+                                        <th name="th_name" class="text-left">Name</th>
+                                        <th name="th_perdiodicity" class="text-left">Periodicity</th>
+                                        <th name="th_duration" class="text-center">Duration (hours)</th>
+                                        <th name="th_note" class="text-left">Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+                                    <t t-foreach="equipment.maintenance_operation_ids" t-as="operation">
+                                        <tr>
+                                            <td name="td_name">
+                                                <span t-field="operation.name" />
+                                            </td>
+                                            <td name="td_perdiodicity" class="text-center">
+                                                <span t-field="operation.periodicity" />
+                                            </td>
+                                            <td name="td_duration" class="text-center">
+                                                <span t-field="operation.maintenance_duration" />
+                                            </td>
+                                            <td name="td_note">
+                                                <span t-field="operation.note" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <t t-foreach="equipment.maintenance_ids" t-as="request">
+                                <p style="page-break-after:always;"></p>
+                                <t t-call="maintenance_planning.request_report_template">
+                                    <t t-set="docs" t-value="request" />
+                                </t>
+                            </t>
+                        </t>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

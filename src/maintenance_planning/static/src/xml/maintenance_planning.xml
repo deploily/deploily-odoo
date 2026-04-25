@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <div t-name="maintenance_planning.QtyAvailableForMaint">
+        <div>
+            <a tabindex="0" t-attf-class="fa fa-area-chart {{ widget.data.forecasted_issue ? 'text-danger' : 'text-primary' }}"/>
+        </div>
+    </div>
+
+
+    <div t-name="maintenance_planning.QtyDetailPopOver">
+        <strong>Quantity required: </strong><span t-esc="data.qty_required"/> <br/>
+        <strong>Remaining quantity: </strong><span t-esc="data.qty_available_today"/> <br/>
+    </div>
+</templates>

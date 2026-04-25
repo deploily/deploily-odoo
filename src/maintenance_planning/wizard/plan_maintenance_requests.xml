@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="maintenance_planning_plan_requests_wizard_form" model="ir.ui.view">
+            <field name="name">Plan maintenance requests</field>
+            <field name="model">maintenance_planning.plan.requests.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Plan maintenance requests">
+                    <group>
+                        <group>
+                            <field name="start_date" />
+                        </group>
+                        <group>
+                            <field name="end_date" />
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Generate planning" type="object" name="confirm_plan" class="btn btn-primary" />
+                        <button string="Cancel" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

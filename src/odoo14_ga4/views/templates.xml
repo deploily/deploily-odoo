@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+        <template
+            id="ga4_layout"
+            name="GA4 layout"
+            inherit_id="website.layout">
+            <xpath
+                expr="//script[@id='tracking_code']"
+                position="replace">
+                <t t-if="website and website.google_analytics_key and not editable">
+                    <script
+                        id="tracking_code"
+                        async="1"
+                        t-attf-src="https://www.googletagmanager.com/gtag/js?id={{ website.google_analytics_key }}"></script>
+                    <script> 
+                        window.dataLayer = window.dataLayer || []; 
+                        function gtag(){dataLayer.push(arguments);} 
+                        gtag('js', new Date()); 
+                        gtag('config', '<t t-esc="website.google_analytics_key" />'); 
+                    </script>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

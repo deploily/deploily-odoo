@@ -1,0 +1,176 @@
+<odoo>
+  <data>
+
+        <!-- maintenace.request : inherited views -->
+
+        <record id="maintenance_planning_request_view_calendar" model="ir.ui.view">
+          <field name="name">maintenance_planning.request_calendar</field>
+          <field name="model">maintenance.request</field>
+          <field name="inherit_id" ref="maintenance.hr_equipment_view_calendar" />
+          <field name="arch" type="xml">
+            <xpath expr='//calendar' position="attributes">
+              <attribute name="color">color</attribute>
+            </xpath>
+            <xpath expr='//field[@name="maintenance_type"]' position="after">
+              <field name="color" />
+              <field name="equipment_id"/>
+            </xpath>
+          </field>
+        </record>
+
+        <record id="maintenance_planning_request_view_form" model="ir.ui.view">
+          <field name="name">maintenance_planning.request_form</field>
+          <field name="model">maintenance.request</field>
+          <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form" />
+          <field name="arch" type="xml">
+            <xpath expr='//field[@name="maintenance_type"]' position="after">
+              <field name="maintenance_operation_id"/>
+            </xpath>
+             <xpath expr='//field[@name="description"]' position="replace">
+              <notebook>
+                <page name="required_material" string="Required material">
+                  <field name="required_material_ids" >
+                    <tree string="Required material" editable="bottom">
+                      <field name="sequence" widget="handle" />
+                      <field name="product_id" />
+                      <field name="qty_required" />
+                      <field name="qty_available_today"/> 
+                      <field name="forecasted_issue" invisible="1"/>
+                      <widget name="qty_available_for_maint_widget" width="20px"/>
+                      <field name="comment" />
+                    </tree> 
+                  </field>
+                </page>
+                <page name="description" string="Description">
+                  <field name='description' placeholder="Internal Notes"/>
+                </page>
+              </notebook>
+            </xpath>
+          </field>
+        </record>
+
+        <template id="maintenance_planning_required_material_view_list" 
+                  name="maintenance_planning.required_material.view.list" 
+                  inherit_id="web.assets_backend">
+          <xpath expr="." position="inside">
+              <script type="text/javascript" src="/maintenance_planning/static/src/js/QtyAvailableForMaint.js"></script>
+          </xpath>
+      </template>
+    
+    <!-- maintenace.equipement : inherited views -->
+
+    <record id="maintenance_planning_equipment_view_form" model="ir.ui.view">
+      <field name="name">maintenance_planning.equipment_form</field>
+      <field name="model">maintenance.equipment</field>
+      <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+      <field name="arch" type="xml">
+        <xpath expr='//group[@name="maintenance"]' position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <xpath expr='//page[@name="maintenance"]' position='inside'>
+          <field name="maintenance_operation_ids" >
+            <tree string="Operations" editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="periodicity" />
+                <field name="maintenance_duration" />
+                <field name="note" />
+            </tree>
+          </field>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- maintenace.planning : views -->
+    <record id="maintenance_planning_operation_view_form" model="ir.ui.view">
+      <field name="name">maintenance_planning.operation.form</field>
+      <field name="model">maintenance_planning.operation</field>
+      <field name="arch" type="xml">
+        <form string="Maintenance Operations">
+          <sheet>
+            <group>
+              <group>
+                <field name="name" />
+                <field name="equipment_id" />
+              </group>
+              <group>
+                <field name="periodicity" />
+                <label for="maintenance_duration" string="Maintenance Duration" />
+                <div class="o_row">
+                  <field name="maintenance_duration" />
+                  hours
+                </div>
+              </group>
+            </group>
+            <notebook>
+              <page string="Comment" name="comment">
+                <field name="note" />
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="maintenance_planning_operation_view_tree" model="ir.ui.view">
+      <field name="name">maintenance_planning.operation.tree</field>
+      <field name="model">maintenance_planning.operation</field>
+      <field name="arch" type="xml">
+        <tree string="Maintenace operations">
+          <field name="name" string="Name" />
+          <field name="periodicity" />
+          <field name="equipment_id" />
+          <field name="maintenance_duration" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="maintenance_planning_operation_view_search" model="ir.ui.view">
+      <field name="name">maintenance_planning.operation.search</field>
+      <field name="model">maintenance_planning.operation</field>
+      <field name="arch" type="xml">
+        <search string="Search">
+          <field name="name" string="Operation Name" filter_domain="[('name','ilike',self)]" />
+          <group expand='0' string='Group by...'>
+            <filter string='Equipement' name="equipement" domain="[]" context="{'group_by' : 'equipment_id'}" />
+            <filter string='Periodicity' name="periodicity" domain="[]" context="{'group_by' : 'periodicity'}" />
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- maintenace.operations : actions -->
+    <record id="maintenance_planning_operation_action" model="ir.actions.act_window">
+      <field name="name">Maintenance operations</field>
+      <field name="res_model">maintenance_planning.operation</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+                  Add a new Maintenance operation
+              </p>
+      </field>
+    </record>
+
+    <menuitem id="menu_maintenance_planning_operation" 
+              name="Maintenance operations" 
+              parent="maintenance.menu_maintenance_configuration" 
+              action="maintenance_planning_operation_action" 
+              sequence="3" />
+
+    <!-- maintenace.plan.requests : actions -->
+    <record id="maintenance_planning_plan_requests_action" model="ir.actions.act_window">
+      <field name="name">Plan maintenance requests</field>
+      <field name="res_model">maintenance_planning.plan.requests.wizard</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="maintenance_planning_plan_requests_wizard_form"/>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_maintenance_planning_plan_requests" 
+              name="Generate Maintenace planning" 
+              action="maintenance_planning_plan_requests_action" 
+              parent="maintenance.menu_m_request"
+              sequence="3" />
+  </data>
+</odoo>
