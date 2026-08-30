@@ -5,20 +5,22 @@
     <record id="res_company_form_l10n_dz_info" model="ir.ui.view">
         <field name="name">res_company_form_l10n_dz_info</field>
         <field name="model">res.company</field>
-        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="inherit_id" ref="base.view_company_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='state_id']" position="after">
                 <field name="commune_id"
-                       string="Commune"
-                       placeholder="Commune..."
-                       options="{'no_create': True}"/>
+                    string="Commune"
+                    placeholder="Commune..."
+                    options="{'no_create': True}" />
             </xpath>
+            <!-- 
             <xpath expr="//field[@name='company_registry']" position="after">
                 <field name="rc"/>
                 <field name="nif"/>
                 <field name="nis"/>
                 <field name="ai"/>
-            </xpath>
+            </xpath> 
+            -->
         </field>
     </record>
 
@@ -27,24 +29,24 @@
     <record id="res_partner_form_l10n_dz_info" model="ir.ui.view">
         <field name="name">res_partner_form_l10n_dz_info</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('o_address_format')]/field[@name='zip']" position="before">
                 <field name="commune_id"
-                       string="Commune"
-                       placeholder="Commune..."
-                       class="o_address_state"
-                       options="{'no_create': True}"
-                       domain="[('state_id', '=', state_id)]"/>
+                    string="Commune"
+                    placeholder="Commune..."
+                    class="o_address_state"
+                    options="{'no_create': True}"
+                    domain="[('state_id', '=', state_id)]" />
             </xpath>
             <xpath expr="//field[@name='property_account_position_id']" position="after">
-                <field name="rc"/>
-                <field name="nif"/>
-                <field name="nis"/>
-                <field name="ai"/>
+                <field name="rc" />
+                <field name="nif" />
+                <field name="nis" />
+                <field name="ai" />
             </xpath>
         </field>
     </record>
 
-   
+
 </odoo>

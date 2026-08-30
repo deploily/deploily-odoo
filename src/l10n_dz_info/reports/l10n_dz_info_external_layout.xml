@@ -2,126 +2,35 @@
 
 
 <odoo>
-    <template id="l10n_dz_info_external_layout__inherit_external_layout_striped" inherit_id="web.external_layout_striped">
-        <xpath expr="//img[contains(@class, 'o_company_logo_big')]" position="attributes">
-            <attribute name="style">max-width:340px; max-height:340px;</attribute>
-            </xpath>
-        <xpath expr="//span[contains(@t-field, 'company.partner_id')]" position="after">
 
-            <p>
-                <strong>R.C:  </strong>
-                <span t-field="company.partner_id.rc" />
-
-                <br/>
-
-                <strong>N.I.F:  </strong>
-                <span t-field="company.partner_id.nif" />
-
-                <br/>
-
-                <strong>N.I.S:  </strong>
-                <span t-field="company.partner_id.nis" />
-
-                <br/>
-
-                <strong>Article d'imposition:  </strong>
-                <span t-field="company.partner_id.ai" />
+    <template id="l10n_dz_info.l10n_dz_info_additionnal_company_info">
+        <t t-if="partner">
+            <p class="mb-0">
+                <strong>R.C: </strong>
+                <span t-field="partner.rc" />
+                <br />
+                <strong>N.I.F: </strong>
+                <span t-field="partner.nif" />
+                <br />
+                <strong>N.I.S: </strong>
+                <span t-field="partner.nis" />
+                <br />
+                <strong>Article d'imposition: </strong>
+                <span t-field="partner.ai" />
             </p>
-        </xpath>
-
-
-
-    </template>
-
-    <template id="l10n_dz_info_external_layout__inherit_boxed" inherit_id="web.external_layout_boxed">
-        <xpath expr="//img[contains(@class, 'o_company_logo_big')]" position="attributes">
-            <attribute name="style">max-width:340px; max-height:340px;</attribute>
-            </xpath>
-        <xpath expr="//ul[@name='company_address_list']" position="inside">
-            <li>
-                <p class="mb-0">
-                    <strong>R.C: </strong>
-                    <span t-field="company.partner_id.rc"/>
-                    <br/>
-
-
-                    <strong>N.I.F: </strong>
-                    <span t-field="company.partner_id.nif"/>
-                    <br/>
-
-
-                    <strong>N.I.S: </strong>
-                    <span t-field="company.partner_id.nis"/>
-                    <br/>
-
-
-                    <strong>Article d'imposition: </strong>
-                    <span t-field="company.partner_id.ai"/>
-                </p>
-            </li>
-        </xpath>
-
-    </template>
-    <template id="l10n_dz_info_external_layout__inherit_address" inherit_id="web.address_layout">
-
-        <xpath expr="//div[@name='address']" position="inside">
-            <t t-set="partner" t-value="company.partner_id or None"/>
-            <t t-if="partner">
-                <div class="mt-1">
-                    <t t-if="partner.rc">
-                        <strong>R.C:</strong>
-                        <span t-esc="partner.rc"/>
-                        <br/>
-                    </t>
-                    <t t-if="partner.nif">
-                        <strong>N.I.F:</strong>
-                        <span t-esc="partner.nif"/>
-                        <br/>
-                    </t>
-                    <t t-if="partner.nis">
-                        <strong>N.I.S:</strong>
-                        <span t-esc="partner.nis"/>
-                        <br/>
-                    </t>
-                    <t t-if="partner.ai">
-                        <strong>Article d'imposition:</strong>
-                        <span t-esc="partner.ai"/>
-                    </t>
-                </div>
-            </t>
-        </xpath>
-
+        </t>
     </template>
 
     <template id="l10n_dz_info_external_layout__inherit_standard" inherit_id="web.external_layout_standard">
         <xpath expr="//img[contains(@class, 'o_company_logo_small')]" position="attributes">
             <attribute name="style">max-width:340px; max-height:340px;</attribute>
-            </xpath>
-        <xpath expr="//span[contains(@t-field, 'company.partner_id')]" position="after">
-
-            <p>
-                <strong>R.C:  </strong>
-                <span t-field="company.partner_id.rc" />
-
-                <br/>
-
-                <strong>N.I.F:  </strong>
-                <span t-field="company.partner_id.nif" />
-
-                <br/>
-
-                <strong>N.I.S:  </strong>
-                <span t-field="company.partner_id.nis" />
-
-                <br/>
-
-                <strong>Article d'imposition:  </strong>
-                <span t-field="company.partner_id.ai" />
-            </p>
         </xpath>
-
+        <xpath expr="//div[@name='company_address']" position="after">
+            <div class="col-6" name="company_additional_info">
+                <t t-set="partner" t-value="company.partner_id or None" />
+                <t t-call="l10n_dz_info.l10n_dz_info_additionnal_company_info" />
+            </div>
+        </xpath>
     </template>
-
-
 
 </odoo>
