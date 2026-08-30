@@ -12,7 +12,7 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
   web:
     container_name: deploily-odoo
-    image: odoo:18.0-20251008
+    image: odoo:17.0-20260803
     depends_on:
       - db
     ports:
