@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<odoo>
+
+    <!-- FROM https://github.com/odoo/odoo/blob/18.0/addons/account/views/report_invoice.xml -->
+    
+    <template id="l10n_dz_info_invoice.l10n_dz_info_company_addtionnal_info">
+        <t t-if="partner">
+            <strong>R.C: </strong>
+            <span t-field="partner.rc" />
+            <br />
+            <strong>N.I.F: </strong>
+            <span t-field="partner.nif" />
+            <br />
+            <strong>N.I.S: </strong>
+            <span t-field="partner.nis" />
+            <br />
+            <strong>Article d'imposition: </strong>
+            <span t-field="partner.ai" />
+        </t>
+    </template>
+
+    <template id="l10n_dz_info_report_invoice_document" inherit_id="account.report_invoice_document">
+
+        <xpath expr="//div[@name='address_same_as_shipping']" position="replace">
+            <div class="col-6" name="address_same_as_shipping">
+                <t t-set="information_block">
+                    <address class="mb-0" t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    <div t-if="o.partner_id.country_code == 'MA' and o.partner_id.company_registry"> ICE: <a t-field="o.partner_id.company_registry" />
+                    </div>
+                </t>
+            </div>
+            <div class="col-6">
+                <t t-set="address">
+                    <t t-set="partner" t-value="o.partner_id or None" />
+                    <t t-call="l10n_dz_info_invoice.l10n_dz_info_company_addtionnal_info" />
+                </t>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='no_shipping']" position="replace">
+            <div class="col-6" name="no_shipping">
+                <t t-set="information_block">
+                    <address class="mb-0" t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    <div t-if="o.partner_id.country_code == 'MA' and o.partner_id.company_registry"> ICE: <a t-field="o.partner_id.company_registry" />
+                    </div>
+                </t>
+            </div>
+            <div class="col-6">
+                <t t-set="address">
+                    <t t-set="partner" t-value="o.partner_id or None" />
+                    <t t-call="l10n_dz_info_invoice.l10n_dz_info_company_addtionnal_info" />
+                </t>
+            </div>
+        </xpath>
+
+    </template>
+
+</odoo>
