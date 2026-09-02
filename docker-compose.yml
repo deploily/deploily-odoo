@@ -24,6 +24,7 @@ services:
       - web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ./src:/mnt/deploily-addons
+      - ./src_oca:/mnt/oca-addons
 
 volumes:
   db-data:

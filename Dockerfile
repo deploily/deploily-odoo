@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install -y tzdata && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone
 
-COPY src /mnt/deploily-addons
+COPY src/ /mnt/deploily-addons/
+COPY src_oca/ /mnt/deploily-addons/
 
 # RUN mkdir -p /var/lib/odoo/.local/share/Odoo/addons/18.0 \
 #  && chown -R odoo:odoo /var/lib/odoo/.local

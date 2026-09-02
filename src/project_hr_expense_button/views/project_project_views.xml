@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="project_project_view_form_expense_button" model="ir.ui.view">
+        <field name="name">project.project.form.expense.button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    class="oe_stat_button"
+                    name="action_open_project_expenses"
+                    type="object"
+                    icon="fa-money"
+                >
+                    <field
+                        name="expense_total"
+                        widget="statinfo"
+                        string="Expenses"
+                    />
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>
